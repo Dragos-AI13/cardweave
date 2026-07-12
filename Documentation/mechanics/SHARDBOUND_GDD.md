@@ -1,0 +1,476 @@
+# Shardbound — Game Design Document
+
+**Status:** Design phase — viziune completă
+**Dată:** 2026-07-12
+**Gen:** PvP auto-battler cu card crafting din părți
+**Platformă:** PC (Steam) + Web (itch.io demo) + Mobile (post-lansare)
+**Motor:** Godot 4
+
+---
+
+## 0. Filosofie
+
+> „Nu găsești cărți gata făcute. **Ți le construiești singur, din părți.**"
+
+Shardbound este un **PvP auto-battler** unde jucătorii își construiesc singuri cărțile din părți (shard-uri) în timpul unui duel. Fiecare carte e unică, fiecare meci e diferit. Stratul de **profesii** și **blueprint-uri** între dueluri oferă progresie profundă și personalizare.
+
+---
+
+## 1. Fluxul Jocului — High Level
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    ÎNTRE DUELURI (persistent)               │
+│                                                             │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
+│  │ Cercetezi │  │ Craftezi │  │Upgradezi │  │ Înveți   │   │
+│  │Blueprint-│  │  părți   │  │ părți +0 │  │ profesii │   │
+│  │  uri     │  │ de cărți │  │  → +10   │  │          │   │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘   │
+│                                                             │
+│  Materialele se obțin din:                                  │
+│  • Drops la sfârșit de duel                                 │
+│  • Quest-uri / provocări zilnice                            │
+│  • Cufere cumpărate cu monede din joc                       │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     ÎNAINTE DE DUEL                         │
+│                                                             │
+│  1. Jucătorul alege rasa (sau 2-3 cu profesii avansate)    │
+│  2. În funcție de rasă, se determină pool-ul de părți       │
+│     disponibile în shop-ul din duel                          │
+│  3. DA PLAY — începe run-ul                                 │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                   ÎN TIMPUL RUN-ULUI                        │
+│                                                             │
+│  Un run = 13 win-uri sau 3 lose-uri                        │
+│                                                             │
+│  RUNDA 1:                                                   │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │ BUY PHASE                                            │    │
+│  │ • Primești X coins (crește cu runda)                │    │
+│  │ • Deschizi shop-ul — vezi părți random din rasa ta  │    │
+│  │ • Poți rerola shop-ul (costă coins)                 │    │
+│  │ • Cumperi părți individuale                          │    │
+│  │ • Poți combina 2 părți Common → 1 Uncommon          │    │
+│  │ • Asamblezi cărți din părțile tale                   │    │
+│  │ • Plasezi cărțile pe grid-ul arenei                  │    │
+│  │ • Când ești gata → END BUY PHASE                    │    │
+│  └─────────────────────────────────────────────────────┘    │
+│                            │                                 │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │ DUEL PHASE (auto-battle)                             │    │
+│  │ • Cărțile atacă simultan (consumă energie)          │    │
+│  │ • Se luptă până când toate cărțile unui jucător     │    │
+│  │   sunt distruse                                      │    │
+│  │ • Cărțile rămase în viață atacă HP-ul jucătorului   │    │
+│  │ • Când HP-ul unui jucător ajunge la 0 → rundă       │    │
+│  │   pierdută                                           │    │
+│  │ • Câștigătorul primește recompense                   │    │
+│  └─────────────────────────────────────────────────────┘    │
+│                                                             │
+│  RUNDA 2 → RUNDA 3 → ... până la 13 win-uri / 3 lose-uri  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 2. Structura Cărții
+
+Fiecare carte e compusă din **părți independente**, fiecare cu raritatea și proprietățile ei.
+
+```
+┌──────────────────────────────────┐
+│            FRAME                 │ ← Raritatea + aspect vizual
+│  ┌────────────────────────────┐ │
+│  │         NAME               │ │ ← Nume (parte upgrade-abilă)
+│  ├────────────────────────────┤ │
+│  │   ICON (character)         │ │ ← Caracterul rasei
+│  ├────────────────────────────┤ │
+│  │   ATTACK JEWEL             │ │ ← Valoare ofensivă
+│  ├────────────────────────────┤ │
+│  │   DEFENSE JEWEL            │ │ ← Valoare defensivă
+│  ├────────────────────────────┤ │
+│  │   SKILL RECTANGLE          │ │ ← Efectul special al cărții
+│  └────────────────────────────┘ │
+└──────────────────────────────────┘
+```
+
+### 2.1 Părțile Cărții
+
+| Parte | Funcție | Poate fi upgrade-uită? | Rarități |
+|---|---|---|---|
+| **FRAME** | Raritatea vizuală, baza cărții | Da (+0 → +10) | Common→Mythic |
+| **NAME** | Numele cărții, poate influența sinergii | Da (+0 → +10) | Common→Mythic |
+| **ICON** | Caracterul — determină rasa/elementul | Da (+0 → +10) | Common→Mythic |
+| **ATTACK JEWEL** | Damage, power ofensiv | Da (+0 → +10) | Common→Mythic |
+| **DEFENSE JEWEL** | HP, blocare, power defensiv | Da (+0 → +10) | Common→Mythic |
+| **SKILL RECTANGLE** | Efectul special al cărții | Da (+0 → +10) | Common→Mythic |
+
+Cărțile sunt formate prin **asamblarea** acestor părți. Poți face aceeași carte în multe feluri diferite, cu puteri diferite, în funcție de ce părți folosești.
+
+### 2.2 Rarități
+
+| Raritate | Culoare | Putere relativă | Șansă drop |
+|---|---|---|---|
+| Common | Alb/Gri | 1× | 60% |
+| Uncommon | Verde | 1.5× | 25% |
+| Rare | Albastru | 2× | 10% |
+| Epic | Violet | 3× | 4% |
+| Legendary | Auriu | 5× | 0.9% |
+| Mythic | Curcubeu | 8× | 0.1% |
+
+### 2.3 Upgrade-ul Părților (+0 → +10)
+
+- O parte poate fi upgrade-uită în afara duelurilor până la **+10**
+- Upgrade-ul **nu schimbă raritatea** — un Attack Jewel Rare +5 rămâne Rare
+- +X **mărește puterea** (damage, HP, efect)
+- Când o parte ajunge la +10, poate fi **"treită"** — primește un salt de putere la aceeași raritate
+
+---
+
+## 3. Shop-ul în Duel
+
+### 3.1 Reguli de bază
+
+- În fiecare Buy Phase, jucătorul primește **X coins** (crește cu numărul rundei)
+- Shop-ul arată **părți random** din **pool-ul rasei selectate**
+- Jucătorul poate **rerola** shop-ul (costă coins, costul crește cu fiecare rerol)
+- Poate cumpăra **părți individuale** (nu pachete)
+- La finalul Buy Phase, poate **combina** părți
+
+### 3.2 Combinarea Părților în Duel
+
+Similar cu Backpack Battles — combini 2 părți de același tip și aceeași raritate pentru a produce o parte de raritate superioară:
+
+```
+Attack Jewel (Common) + Attack Jewel (Common) 
+→ Attack Jewel (Uncommon) cu putere mai mare
+```
+
+**Reguli:**
+- Se combină DOAR în timpul Buy Phase
+- Se combină DOAR părți de același tip (Jewel + Jewel, Frame + Frame etc.)
+- Se pierd ambele părți originale
+- Partea rezultată are același +X (se păstrează upgrade-ul celui mai slab)
+
+### 3.3 Pool-ul pe Rasă
+
+- Fiecare rasă are un set exclusiv de părți disponibile
+- La început de duel, jucătorul alege **o singură rasă**
+- Profesiile avansate permit **2 sau 3 rase simultan**
+- Cu cât mai multe rase, cu atât pool-ul e mai mare și mai variat, dar mai puțin focusat
+
+---
+
+## 4. Arena — Grid-ul
+
+### 4.1 Structură
+
+- Arena e formată din **pătrățele** (grid)
+- O carte ocupă **9 pătrățele** (3×3 sau altă configurație — **NEDECIS**)
+- Dimensiunea totală a grid-ului — **NEDECIS**
+
+### 4.2 Așezarea Cărților
+
+| Poziție | Efect |
+|---|---|
+| **VERTICAL** | Carte în mod atac — atacă inamicul |
+| **ORIZONTAL** | Carte în mod defensiv — protejează, poate avea efecte defensive |
+
+### 4.3 Spațiul Extensibil
+
+- Jucătorul poate **cumpăra spațiu suplimentar** în arenă (ca în Backpack Battles)
+- Costul crește cu cât arena e mai mare
+- Alegere strategică: „Cumpăr spațiu sau cumpăr părți?"
+
+---
+
+## 5. Duelul — Battle Phase
+
+### 5.1 Energia
+
+- Fiecare carte **consumă energie** pentru a ataca
+- Cărțile puternice consumă mai multă energie
+- Energia poate fi **dezvoltată** prin profesii
+- **NEDECIS:** Se regenerează complet per rundă sau e pool fix?
+
+### 5.2 Atacul Simultaneu
+
+- Toate cărțile atacă **simultan**
+- Damage-ul se aplică în același moment
+- Cărțile se luptă până când toate cărțile unei părți sunt distruse
+- Cărțile rămase în viață atacă **HP-ul jucătorului**
+- Când HP-ul unui jucător ajunge la 0 → rundă pierdută
+- **NEDECIS:** Sistem Speed/Initiative sau atac simultan pur?
+
+### 5.3 Țintirea — Cum Atacă o Carte
+
+**NEDECIS** — de gândit împreună. Posibilități:
+
+| Sistem | Descriere |
+|---|---|
+| **Front Attack** | Atacă cea mai apropiată carte din față |
+| **Row Attack** | Atacă toată linia/rândul |
+| **Skill Target** | Skill Rectangle-ul decide ținta |
+| **Random** | Atacă o carte random adversă |
+| **Direct** | Atacă direct HP-ul jucătorului (cărți speciale) |
+
+---
+
+## 6. Rasele
+
+### 6.1 Concept
+
+- Fiecare rasă are un **element-părinte**
+- Fiecare rasă are un **set exclusiv de părți** (Frame, Name, Icon, Jewels, Skills)
+- Când jucătorul alege o rasă înainte de duel, shop-ul arată **doar părți din acea rasă**
+- Profesiile pot debloca **2 sau 3 rase simultan**
+
+### 6.2 Elemente și Rase (Preliminar)
+
+| Element | Rasă | Stil de joc |
+|---|---|---|
+| 🔥 **Foc** | Pyros | Aggro, damage brut |
+| 💧 **Apă** | Aqua | Control, healing |
+| 🌪️ **Aer** | Sylph | Viteză, draw |
+| 🪨 **Pământ** | Terra | Tank, defensiv |
+| 🔮 **Magie** | Arcanum | Random, versatil |
+| 👤 **Neutru** | Human | Balanced, flexibil |
+
+### 6.3 Progresia Raselor
+
+- La început, jucătorul are acces doar la o rasă (Human / Neutru)
+- Prin **profesii**, deblochează rase noi
+- Fiecare rasă are propriul **arbore de blueprints** de cercetat
+- Fiecare rasă are **caractere proprii** (Icon-uri) care influențează sinergiile
+
+---
+
+## 7. Profesiile
+
+### 7.1 Concept
+
+Profesiile sunt un sistem **profund, elaborat** care controlează:
+- Ce **blueprint-uri** poți cerceta
+- Ce **rase** poți combina în duel
+- Ce **părți** poți crafting
+- **Bonusuri pasive** (energie, spațiu în arenă etc.)
+
+### 7.2 Structură Propusă — Sistem Hibrid
+
+```
+                    ┌── Blade Forging (EDGE / Attack Jewel)
+                    │
+        ┌── Forging ─┼── Jewel Cutting (Jewels)
+        │           │
+        │           └── Frame Crafting (Frame)
+        │
+        │           ┌── Pyros Lore → deblochează rasa Pyros
+        │           │
+RACIAL ─┼── Element ─┼── Aqua Lore → deblochează rasa Aqua
+LORE    │   Lore    │
+        │           ├── Terra Lore → deblochează rasa Terra
+        │           └── ... (câte o profesie per rasă)
+        │
+        │           ┌── Energy Mastery → +energie per rundă
+        └── Combat ─┼── Tactician → bonusuri de poziționare
+                    │
+                    └── Veteran → părți durează mai mult
+```
+
+### 7.3 Ce Deblochează Fiecare Profesie
+
+| Profesie | Level 1 | Level 5 | Level 10 |
+|---|---|---|---|
+| Forging (general) | Poți combina 2 Common → 1 Uncommon (doar Attack Jewel) | Orice parte Common → Uncommon | Poți face Rare din Uncommon |
+| Pyros Lore | Poți juca rasa Pyros | Poți combina Pyros + 1 altă rasă | Deblochezi blueprint-uri Pyros exclusive |
+| Energy Mastery | +1 energie/rundă | +3 energie/rundă | Energia se regenerează 50% între runde |
+| Veteran | Părțile rezistă cu 1 duel mai mult | Părțile rezistă cu 3 dueluri mai mult | Poți repara părți „treite" |
+
+---
+
+## 8. Blueprint-urile
+
+### 8.1 Concept
+
+Un **blueprint** e o rețetă care îți permite să creezi o parte de carte dintr-o rasă specifică. Ce meserie ai îți dictează ce fel de blueprint-uri poți stăpâni și transforma în părți de cărți.
+
+### 8.2 Structură
+
+```
+Blueprint „Sabia de Foc" (Pyros, Attack Jewel Rare)
+  Profesie necesară: Pyros Lore level 3 + Forging level 5
+  Materiale necesare:
+    • 3x Attack Jewel Common (Pyros)
+    • 2x Essence of Fire (material, din dueluri)
+    • 500 gold
+  Rezultat: Attack Jewel Rare (Pyros) — damage 25-35
+```
+
+### 8.3 Cum se Obțin
+
+| Sursă | Descriere |
+|---|---|
+| **Shop între dueluri** | Cumperi cu gold |
+| **Cercetare** | Investești timp + materiale să deblochezi blueprint-ul |
+| **Drops** | La sfârșit de duel, șansă să primești un blueprint |
+| **Quest-uri** | Provocări zilnice/săptămânale |
+| **Cufere** | Cumperi cu monede din joc |
+
+---
+
+## 9. Economia Generală
+
+### 9.1 Monede
+
+| Monedă | Cum se obține | La ce folosește |
+|---|---|---|
+| **Gold** | Drops din dueluri, quest-uri | Cumpărat părți, blueprint-uri, reroluri |
+| **Essence** | Drops speciali, crafting | Material pentru blueprint-uri |
+| **Dust** | Dezasamblare părți | Upgrade +0 → +10 |
+| **Gems** | Premium (sau drops rare) | Cufere speciale, skin-uri |
+
+### 9.2 Ciclul Economic
+
+```
+DUEL → câștigi Gold + Essence + (poate) Blueprint
+  ↓
+ÎNTRE DUELURI:
+  • Cumperi blueprint-uri din shop
+  • Cercetezi blueprint-uri (consumă Essence)
+  • Craftezi părți din blueprint-uri (consumă materiale)
+  • Upgradezi părți (+0 → +10, consumă Dust)
+  • Înveți profesii (consumă Gold + timp)
+  ↓
+ÎNAINTE DE DUEL:
+  • Alegi rasa (în funcție de profesii)
+  • Intri în duel cu pool-ul tău de părți disponibile
+  ↓
+ÎN DUEL:
+  • Cumperi părți (din pool-ul rasei)
+  • Combini părți (2×Common → 1×Uncommon)
+  • Asamblezi cărți pe grid
+  ↓
+BATTLE → câștigi recompense
+```
+
+---
+
+## 10. Sistemul de Security (Fără Web3)
+
+Pentru marketplace/trading viitor:
+
+| Măsură | Descriere |
+|---|---|
+| **HMAC-signing** | Fiecare parte are o semnătură criptografică la creare |
+| **Audit DB** | Toate tranzacțiile înregistrate într-o bază append-only |
+| **Server authoritative** | Serverul validează fiecare tranzacție |
+| **2FA** | Obligatoriu pentru trading de părți Rare+ |
+| **Fraud detection** | Pattern detection automat |
+| **Cold storage** | Cheile de signing în HSM/KMS |
+
+---
+
+## 11. Întrebări Deschise (de Discutat)
+
+### 11.1 Grid-ul
+- [ ] Dimensiunea totală a grid-ului? (6×6? 7×7? 9×6? Altceva?)
+- [ ] O carte ocupă fix 9 pătrățele (3×3) sau poate varia?
+- [ ] Se poate roti cartea între Vertical și Orizontal în timpul Buy Phase?
+
+### 11.2 Atacul
+- [ ] Cum atacă o carte în poziție verticală? (Front? Row? Random?)
+- [ ] Cum funcționează poziția orizontală exact?
+- [ ] Vrem Speed/Initiative system sau atac simultan pur?
+- [ ] Cum interacționează Skill Rectangle-ul cu țintirea?
+
+### 11.3 Energia
+- [ ] Se regenerează complet per rundă sau e pool fix?
+- [ ] Cum se calculează consumul de energie per carte?
+- [ ] Cum scalează energia cu profesii?
+
+### 11.4 Treirea (Part Durability)
+- [ ] După câte dueluri se „trezește" o parte?
+- [ ] Ce se întâmplă exact când se trezește? (dispare? revine la +0? devine Veteran?)
+- [ ] Poate fi reparată?
+- [ ] Attack Jewel vs Defense Jewel — aceeași durabilitate?
+
+### 11.5 Profesiile
+- [ ] Câte profesii în total? (10? 20?)
+- [ ] Nivel maxim per profesie? (5? 10? Nelimitat?)
+- [ ] Cum se învață o profesie? (Gold? Timp? Quest-uri?)
+- [ ] Se poate respec/reseta arborele de profesii?
+
+### 11.6 Blueprint-urile
+- [ ] Câte blueprint-uri per rasă? (10? 50?)
+- [ ] Blueprint-urile se consumă la crafting sau rămân?
+- [ ] Pot fi tranzacționate între jucători?
+
+### 11.7 Rasele
+- [ ] Câte rase la lansare? (4? 6? 10?)
+- [ ] Fiecare rasă are același număr de părți?
+- [ ] Există părți neutre (care apar la orice rasă)?
+
+### 11.8 Partea NAME
+- [ ] Ce influențează NAME-ul? (sinergii? putere? doar cosmetic?)
+- [ ] Cum se generează numele? (din combinația de părți? ales de jucător?)
+
+### 11.9 PvP Flow
+- [ ] Matchmaking pe rating? Pe level? Random?
+- [ ] Vrem și mod casual (fără risc) și ranked?
+- [ ] Se poate face „challenge un prieten" direct?
+
+### 11.10 Combinațiile între părți
+- [ ] Doar în duel sau și între dueluri?
+- [ ] Doar același tip (Jewel+Jewel) sau și între tipuri diferite?
+
+### 11.11 Monede și Economie
+- [ ] Gems — doar cosmétique sau și funcțional?
+- [ ] Cât gold per rundă în duel?
+- [ ] Există inflation protection?
+
+---
+
+## 12. Roadmap Propusă
+
+| Fază | Conținut | Durată |
+|---|---|---|
+| **P0 — Core Design** | Document complet, răspuns la toate întrebările deschise | ACUM |
+| **P1 — Prototype** | Grid-ul, o singură carte cu Attack Jewel + Defense Jewel, auto-battle de bază | 1-2 săptămâni |
+| **P2 — Card Assembly** | Toate părțile, asamblare carte, Buy Phase cu shop + combinare | 1-2 săptămâni |
+| **P3 — Rase + Shop** | 2-3 rase, shop pe rasă, alegere rasă înainte de duel | 1 săptămână |
+| **P4 — Run Loop** | 13 win / 3 lose, coins per rundă, rerol, recompense | 1 săptămână |
+| **P5 — Profesii** | Sistemul de profesii (arbore), 5-10 profesii de bază | 2 săptămâni |
+| **P6 — Blueprint-uri** | Cercetare, crafting, materiale | 2 săptămâni |
+| **P7 — Upgrade + Treire** | +0 → +10, durabilitate | 1 săptămână |
+| **P8 — Polish** | Balance, UI final, efecte vizuale, sunet | 2-3 luni |
+| **P9 — Early Access** | Steam, matchmaking, ranking | — |
+
+---
+
+## 13. Relația cu Tower Run
+
+Shardbound este un **joc nou**, nu o continuare directă a Tower Run.
+
+Ce **păstrăm** din Tower Run:
+- Godot engine + proiectul existent (arhitectura)
+- Combat logic (poate fi adaptată pentru auto-battle)
+- Resursele de card (card.gd — va fi extins)
+- Estetica dark fantasy (poate ajustată)
+
+Ce **lăsăm** din Tower Run (deocamdată):
+- HUB screens (Portal, Museum, Forge, Shop, Guild, Home)
+- Character Collection System (100+ caractere)
+- Map procedural + noduri
+- NPC-uri, evenimente, story
+- Minion System
+
+> Tower Run rămâne ca **mod single-player** viitor, după ce Shardbound e lansat și stabil. Mecanicile de bază (părți de cărți, profesii, blueprint-uri) sunt compatibile cu ambele moduri.
