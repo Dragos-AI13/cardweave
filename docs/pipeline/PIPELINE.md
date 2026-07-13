@@ -1,4 +1,4 @@
-# Pipeline — Shardbound
+# Pipeline — Cardweave
 
 > Tabelul viu — arată stadiul fiecărui feature. Se actualizează după fiecare gate sau ticket finalizat.
 

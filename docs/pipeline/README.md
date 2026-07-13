@@ -1,4 +1,4 @@
-# Shardbound Pipeline — Sistemul nostru de producție
+# Cardweave Pipeline — Sistemul nostru de producție
 
 > Un pipeline formal de game development pentru solo dev + AI, inspirat din studiourile AAA dar adaptat pentru un singur om și un agent AI.
 

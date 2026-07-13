@@ -1,6 +1,6 @@
 # Project Status
 
-> Statusul general al proiectului Shardbound.
+> Statusul general al proiectului Cardweave.
 
 ---
 
@@ -8,7 +8,7 @@
 
 | Proprietate | Valoare |
 |-------------|---------|
-| **Nume** | Shardbound |
+| **Nume** | Cardweave |
 | **Gen** | PvP Auto-battler cu card crafting din părți |
 | **Motor** | Godot 4 |
 | **Platforme** | PC (Steam) + Web (itch.io) + Mobile (post) |

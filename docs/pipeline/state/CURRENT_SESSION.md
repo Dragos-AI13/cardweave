@@ -6,7 +6,7 @@
 
 ## Sesiune: 2026-07-13
 
-**Obiectiv:** Configurare pipeline Shardbound
+**Obiectiv:** Configurare pipeline Cardweave
 
 **Focus:** Crearea sistemului de pipeline (docs/pipeline/)
 

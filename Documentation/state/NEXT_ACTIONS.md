@@ -1,4 +1,4 @@
-# Next Actions — Shardbound
+# Next Actions — Cardweave
 
 Păstrează doar următoarele 3-7 acțiuni în ordine strictă de execuție.
 

@@ -1,6 +1,6 @@
 # Card Part System
 
-> Primul feature din pipeline Shardbound.
+> Primul feature din pipeline Cardweave.
 > Folder pregătit, urmează Game Design.
 
 ---

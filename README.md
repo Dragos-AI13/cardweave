@@ -1,8 +1,8 @@
-# Shardbound
+# Cardweave
 
 > **„Nu găsești cărți gata făcute. Ți le construiești singur, din părți."**
 
-Shardbound este un **PvP auto-battler** unde jucătorii își construiesc singuri cărțile din părți (shard-uri) în timpul unui duel. Fiecare carte e unică, fiecare meci e diferit.
+Cardweave este un **PvP auto-battler** unde jucătorii își construiesc singuri cărțile din părți (shard-uri) în timpul unui duel. Fiecare carte e unică, fiecare meci e diferit.
 
 **Motor:** Godot 4  
 **Platforme:** PC (Steam) + Web (itch.io demo) + Mobile (post-lansare)  
@@ -12,7 +12,7 @@ Shardbound este un **PvP auto-battler** unde jucătorii își construiesc singur
 
 ## Documentație
 
-- [Game Design Document](./Documentation/mechanics/SHARDBOUND_GDD.md) — viziunea completă
+- [Game Design Document](./Documentation/mechanics/CARDWEAVE_GDD.md) — viziunea completă
 
 ---
 
@@ -22,7 +22,7 @@ Shardbound este un **PvP auto-battler** unde jucătorii își construiesc singur
 shardbound/
 ├── Documentation/
 │   ├── mechanics/
-│   │   └── SHARDBOUND_GDD.md       ← Game Design Document
+│   │   └── CARDWEAVE_GDD.md       ← Game Design Document
 │   ├── state/                       ← State files (NEXT_ACTIONS, TICKET_INDEX etc.)
 │   ├── art/                         ← Concept art, style guide
 │   └── design/                      ← Wireframe-uri, mockup-uri

@@ -7,7 +7,7 @@
 ## 2026-07-13
 
 ### Added
-- `docs/pipeline/` — sistem complet de pipeline pentru Shardbound
+- `docs/pipeline/` — sistem complet de pipeline pentru Cardweave
   - PIPELINE.md — tabel viu cu features și stadiul lor
   - GOVERNANCE.md — reguli, departamente, gates, checklists
   - WORKFLOW.md — flow pentru agent

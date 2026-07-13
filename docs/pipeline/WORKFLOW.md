@@ -1,6 +1,6 @@
 # Workflow — Instrucțiuni pentru Agent
 
-> Acest document conține flow-ul exact pe care îl urmez EU (agentul AI) când lucrez la Shardbound.
+> Acest document conține flow-ul exact pe care îl urmez EU (agentul AI) când lucrez la Cardweave.
 
 ---
 

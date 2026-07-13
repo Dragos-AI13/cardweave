@@ -1,4 +1,4 @@
-# Shardbound — Game Design Document
+# Cardweave — Game Design Document
 
 **Status:** Design phase — viziune completă
 **Dată:** 2026-07-12
@@ -12,7 +12,7 @@
 
 > „Nu găsești cărți gata făcute. **Ți le construiești singur, din părți.**"
 
-Shardbound este un **PvP auto-battler** unde jucătorii își construiesc singuri cărțile din părți (shard-uri) în timpul unui duel. Fiecare carte e unică, fiecare meci e diferit. Stratul de **profesii** și **blueprint-uri** între dueluri oferă progresie profundă și personalizare.
+Cardweave este un **PvP auto-battler** unde jucătorii își construiesc singuri cărțile din părți (shard-uri) în timpul unui duel. Fiecare carte e unică, fiecare meci e diferit. Stratul de **profesii** și **blueprint-uri** între dueluri oferă progresie profundă și personalizare.
 
 ---
 
@@ -458,7 +458,7 @@ Pentru marketplace/trading viitor:
 
 ## 13. Relația cu Tower Run
 
-Shardbound este un **joc nou**, nu o continuare directă a Tower Run.
+Cardweave este un **joc nou**, nu o continuare directă a Tower Run.
 
 Ce **păstrăm** din Tower Run:
 - Godot engine + proiectul existent (arhitectura)
@@ -473,4 +473,4 @@ Ce **lăsăm** din Tower Run (deocamdată):
 - NPC-uri, evenimente, story
 - Minion System
 
-> Tower Run rămâne ca **mod single-player** viitor, după ce Shardbound e lansat și stabil. Mecanicile de bază (părți de cărți, profesii, blueprint-uri) sunt compatibile cu ambele moduri.
+> Tower Run rămâne ca **mod single-player** viitor, după ce Cardweave e lansat și stabil. Mecanicile de bază (părți de cărți, profesii, blueprint-uri) sunt compatibile cu ambele moduri.

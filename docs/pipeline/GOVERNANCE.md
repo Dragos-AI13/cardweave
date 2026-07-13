@@ -1,4 +1,4 @@
-# Shardbound Pipeline Governance
+# Cardweave Pipeline Governance
 
 ## Departamentele
 
