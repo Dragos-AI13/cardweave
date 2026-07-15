@@ -456,21 +456,34 @@ Pentru marketplace/trading viitor:
 
 ---
 
-## 13. Relația cu Tower Run
+## 13. Moștenire din Tower Run
 
-Cardweave este un **joc nou**, nu o continuare directă a Tower Run.
+Cardweave preia **8 sisteme** din Tower Run (adaptate) și lasă **3** în urmă.
 
-Ce **păstrăm** din Tower Run:
-- Godot engine + proiectul existent (arhitectura)
-- Combat logic (poate fi adaptată pentru auto-battle)
-- Resursele de card (card.gd — va fi extins)
-- Estetica dark fantasy (poate ajustată)
+### Ce trece în Cardweave
 
-Ce **lăsăm** din Tower Run (deocamdată):
-- HUB screens (Portal, Museum, Forge, Shop, Guild, Home)
-- Character Collection System (100+ caractere)
-- Map procedural + noduri
-- NPC-uri, evenimente, story
-- Minion System
+| Sistem Tower Run | Devine în Cardweave |
+|---|---|
+| 🔥 6 elemente | 6 rase (Pyros, Aqua, Sylph, Terra, Arcanum, Human) |
+| ⭐ Rarități (Common→Mythic) | Identic |
+| 🃏 Card Skills (11 tipuri) | Skill Rectangle în structura cărții |
+| 👥 NPC-uri (Blacksmith, Guild etc.) | Maeștri de profesii |
+| 📜 Quest-uri cu penalizări | Provocări săptămânale |
+| 📖 Element Knowledge (5 level-uri) | Racial Lore în profesii |
+| 🟡 Gold | Moneda principală |
+| ⛏️ Materiale | Materiale pentru blueprint-uri |
 
-> Tower Run rămâne ca **mod single-player** viitor, după ce Cardweave e lansat și stabil. Mecanicile de bază (părți de cărți, profesii, blueprint-uri) sunt compatibile cu ambele moduri.
+### Ce rămâne în Tower Run
+
+| Sistem | Motiv |
+|---|---|
+| Hub (6 clădiri) | Redesign complet pentru Cardweave — nu copiem |
+| Character Collection (187) | Prea mult — Cardweave are ~5-10 caractere per rasă |
+| Procedural Map + Noduri | PvP nu are hartă de explorat |
+| NPC alive flavor / Living Cortex | Prea devreme — poate după launch |
+| Momentum / Synergy | Mecanici specifice Tower Run |
+| Aegis, Alacrity, Overcharge | Prea legate de Tower Run |
+| Minioni | Nu există în Cardweave |
+| Duel turn-based | Înlocuit cu auto-battle |
+
+> Tower Run rămâne un proiect separat — nu îl abandonăm, dar focusul acum e pe Cardweave. Când Cardweave e lansat și stabil, poate reveni ca mod single-player.
