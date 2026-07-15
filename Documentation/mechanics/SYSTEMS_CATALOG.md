@@ -1414,5 +1414,225 @@ res://features/results/
 | SYS-019 | UI Framework | — | ui |
 | SYS-020 | Audio System | SYS-019 | audio |
 | SYS-021 | Results + Rewards | SYS-008, SYS-014 | progression |
+| SYS-022 | Infinite Leveling | SYS-015 | progression |
+| SYS-023 | Rankings | SYS-015, SYS-016 | progression |
+| SYS-024 | Tournament System | SYS-016, SYS-021 | feature |
 
-**Total: 21 de sisteme**
+---
+
+## SYS-022 — Infinite Leveling
+
+### 1. Identitate
+- **Nume:** Infinite Leveling System
+- **Scop:** Fiecare caracter poate face level-up infinit, cu randament descrescător
+- **Categorii:** progression, character
+- **Dependențe:** SYS-015 (Player Profile)
+
+### 2. Data
+```
+CharacterLevel:
+├── character_id: String
+├── level: int (începe de la 1, fără limită maximă)
+├── current_xp: int
+├── xp_to_next: int (crește cu nivelul)
+├── total_stats_bonus: Dictionary 
+│   ├── attack_bonus: float (per level)
+│   ├── defense_bonus: float (per level)
+│   └── skill_bonus: float (per level)
+└── prestige_level: int (opțional, după X nivele)
+```
+
+### 3. Logică
+- XP se câștigă din dueluri (câștigate sau pierdute)
+- XP necesar per level crește exponențial
+- Bonusurile per level scad după un punct (diminishing returns)
+- Nivelul caracterului influențează puterea acestuia în duel
+
+**Scaling:**
+| Nivel | Bonus per level | XP needed | Notă |
+|---|---|---|---|
+| 1-10 | 100% (ex: +5 atk) | 100 × level | Creștere rapidă, satisfăcătoare |
+| 11-50 | 50% | 500 × level | Creștere moderată |
+| 51-100 | 25% | 2000 × level | Greu, doar pentru dedicați |
+| 101+ | 10% | 10000 × level | Extrem de lent, simbol de statut |
+
+### 4. UI
+- Bara de XP sub caracter
+- Level afișat cu efect vizual (glow, culoare, iconiță)
+- Animație la level-up (satisfacție imediată)
+- Tooltip: "Level 847 — bonus total: +3,420%"
+
+### 5. Network
+- Serverul calculează XP-ul (authoritative)
+- Clientul afișează progresul
+
+### 6. Config
+- XP per win / loss
+- XP multiplier per nivel
+- Bonus per level per stat
+- Cap la bonus (dacă există)
+
+### 7. Godot
+```
+res://features/leveling/
+├── LevelingManager.gd
+├── XPBar.gd
+├── LevelUpEffect.gd
+└── CharacterLevelDisplay.gd
+```
+
+### 8. Testare
+- [ ] Câștigi XP după duel
+- [ ] La XP suficient, level-up
+- [ ] Bonusurile se aplică corect
+- [ ] Diminishing returns funcționează (bonus scade după nivel 10)
+- [ ] Nivelul poate trece de 1000 fără bug-uri
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-023 — Rankings
+
+### 1. Identitate
+- **Nume:** Rankings / Leaderboard System
+- **Scop:** Clasamente competitive — rating, win streak, level
+- **Categorii:** progression, competitive
+- **Dependențe:** SYS-015 (Player Profile), SYS-016 (Matchmaking)
+
+### 2. Data
+```
+Rankings:
+├── leaderboards: Dictionary
+│   ├── by_rating: Array[RankedPlayer]
+│   ├── by_win_streak: Array[RankedPlayer]
+│   ├── by_highest_level: Array[RankedPlayer]
+│   └── by_collection: Array[RankedPlayer]
+├── player_rank: int (poziția curentă)
+├── player_rating: int (ELO / Glicko)
+├── season: int
+└── season_end: DateTime
+```
+
+### 3. Logică
+- Clasament pe mai multe criterii (rating, streak, level)
+- Rating se actualizează după fiecare duel (sistem ELO-like)
+- Sezoane competitive (reset periodic)
+- Jucătorul își vede poziția și câți pași are până la următorul rang
+
+### 4. UI
+- Leaderboard screen
+- Poziția curentă în header
+- Animație când urci/cobori în rank
+
+### 5. Network
+- Serverul menține clasamentul
+- Clientul face request-uri periodice
+- Actualizare în timp real (WebSocket + polling)
+
+### 6. Config
+- K-factor (ELO sensitivity)
+- Season duration
+- Number of leaderboard entries displayed
+
+### 7. Godot
+```
+res://features/rankings/
+├── RankingManager.gd
+├── LeaderboardUI.gd
+├── RankingEntry.gd
+└── SeasonTimer.gd
+```
+
+### 8. Testare
+- [ ] După un duel, ratingul se actualizează
+- [ ] Leaderboard-ul arată jucători în ordinea corectă
+- [ ] La reset de sezon, rankingurile se resetează
+- [ ] Poziția playerului e corectă în clasament
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-024 — Tournament System
+
+### 1. Identitate
+- **Nume:** Tournament System
+- **Scop:** Turnee automate — zilnice, săptămânale, lunare — cu rewards automate
+- **Categorii:** feature, competitive
+- **Dependențe:** SYS-016 (Matchmaking), SYS-021 (Results + Rewards)
+
+### 2. Data
+```
+Tournament:
+├── id: String
+├── type: enum { DAILY, WEEKLY, MONTHLY }
+├── start_time: DateTime
+├── end_time: DateTime
+├── status: enum { UPCOMING, ACTIVE, ENDED, REWARDS_SENT }
+├── participants: Array[PlayerProfile]
+├── points: Dictionary { player_id: int }
+├── rewards: Dictionary { rank_range: Array[Reward] }
+└── player_rank: int (poziția în turneu)
+```
+
+### 3. Logică
+- Turneele sunt **automate** — nu necesită administrare manuală
+- Jucătorul se înscrie cu un click
+- În perioada turneului, fiecare win acordă **puncte de turneu**
+- La final, rewards se distribuie automat pe baza rankului
+- Punctaj: win = 10 puncte, lose = 2 puncte (participare)
+
+| Turneu | Durată | Rewards | Matchmaking |
+|---|---|---|---|
+| **Daily** | 24h | Mici (gold, dust) | Pe același rank |
+| **Weekly** | 7 zile | Medii (blueprint, părți Rare) | Pe rank ± 2 |
+| **Monthly** | 28 zile | Mari (părți Legendare, exclusive, gems) | Global |
+
+### 4. UI
+- Tournament hub — lista turneelor active / viitoare
+- Contor: cât timp mai e până la final
+- Poziția curentă + câte puncte ai
+- Preview rewards per poziție
+- History: turneele anterioare și rankul obținut
+
+### 5. Network
+- Serverul gestionează tot (program, punctaj, rewards)
+- Clientul face subscribe la tournament events
+- La final, serverul calculează și trimite rewards automat
+
+### 6. Config
+- Daily: start hour, reward tiers
+- Weekly: start day, reward tiers
+- Monthly: start date, reward tiers
+- Points per win/loss
+
+### 7. Godot
+```
+res://features/tournaments/
+├── TournamentManager.gd
+├── TournamentHubUI.gd
+├── TournamentEntry.gd
+├── TournamentTimer.gd
+├── RewardsPreview.gd
+└── TournamentHistory.gd
+```
+
+### 8. Testare
+- [ ] Turneul începe automat la ora stabilită
+- [ ] Jucătorul se poate înscrie
+- [ ] Punctele se adună corect după fiecare meci
+- [ ] La final, rewards se distribuie automat
+- [ ] Jucătorul primește notificare cu rankul final + rewards
+- [ ] Daily se resetează, weekly se resetează, monthly se resetează
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |

@@ -234,16 +234,20 @@ Attack Jewel (Common) + Attack Jewel (Common)
 - Când jucătorul alege o rasă înainte de duel, shop-ul arată **doar părți din acea rasă**
 - Profesiile pot debloca **2 sau 3 rase simultan**
 
-### 6.2 Elemente și Rase (Preliminar)
+### 6.2 Rasele (v2 — Redesign)
 
-| Element | Rasă | Stil de joc |
-|---|---|---|
-| 🔥 **Foc** | Pyros | Aggro, damage brut |
-| 💧 **Apă** | Aqua | Control, healing |
-| 🌪️ **Aer** | Sylph | Viteză, draw |
-| 🪨 **Pământ** | Terra | Tank, defensiv |
-| 🔮 **Magie** | Arcanum | Random, versatil |
-| 👤 **Neutru** | Human | Balanced, flexibil |
+| # | Rasă | Identitate | Stil de joc |
+|---|---|---|---|
+| 1 | 🐉 **Dragonkin** | Creaturi dragonice, mândre, puternice | Aggro, damage brut, atacuri în zonă |
+| 2 | 🧛 **Vampire** | Vampiri nobili, sângeroși, manipulatori | Life steal, control, resurse din dușmani |
+| 3 | 🤖 **Construct** | Automate antice, precise, rezistente | Tank, defensiv, sinergii de echipă |
+| 4 | 🌿 **Fae** | Spirite ale naturii, jucăușe, imprevizibile | Heal, buff, control al terenului |
+| 5 | 👁️ **Eldritch** | Ființe cosmice, de neînțeles, putere brută | Random, debuff, haos controlat |
+| 6 | ⚔️ **Knight** | Oameni căliți în luptă, onoare și disciplină | Balanced, versatil, sinergii de arme |
+| 7 | 🌑 **Void** | Umbre, neant, putere interzisă | Assassin, burst, stealth |
+| 8 | 🐺 **Lycan** | Bestii sălbatice, primale, de neoprit | Rush, fury, scaling pe măsură ce primesc damage |
+| 9 | ☀️ **Celestial** | Ființe ale luminii, pure, divine | Support, aura, heal în zonă |
+| 10 | 💀 **Necro** | Morți vii, copleșitori, nesfârșiți | Summon, debuff, outnumber |
 
 ### 6.3 Progresia Raselor
 
