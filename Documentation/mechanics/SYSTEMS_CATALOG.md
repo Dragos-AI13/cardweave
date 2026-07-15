@@ -1771,3 +1771,558 @@ res://features/items/
 | Dată | Schimbare |
 |---|---|
 | 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-026 — Tutorial / Onboarding
+
+### 1. Identitate
+- **Nume:** Tutorial / Onboarding
+- **Scop:** Ghidează jucătorul nou
+- **Categorii:** feature
+- **Dependențe:** SYS-019
+
+### 2. Data
+```
+Tutorial:
+├── stages: Array[TutorialStage] (7 stagii)
+├── current_stage: int
+├── completed: bool
+└── skip_available: bool
+```
+
+### 3. Logică
+- Primul login → tutorial obligatoriu
+- Fiecare stage explică + jucătorul face acțiunea
+- Poate fi skinppat
+- Rejucabil din Settings
+
+### 4. UI
+- Overlay cu săgeți + text
+- Highlight pe element
+- Buton Skip + progress bar
+
+### 5. Network
+- Client-side
+
+### 6. Config
+- Force on first login
+
+### 7. Godot
+```
+res://features/tutorial/
+├── TutorialManager.gd
+├── TutorialStage.gd
+├── TutorialOverlay.tscn
+└── stages/
+```
+
+### 8. Testare
+- [ ] Primul login → tutorial pornește
+- [ ] Skip → se închide
+- [ ] Rejucabil din Settings
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-027 — Settings / Options
+
+### 1. Identitate
+- **Nume:** Settings / Options
+- **Scop:** Configurarea jocului
+- **Categorii:** feature
+- **Dependențe:** SYS-019
+
+### 2. Data
+```
+Settings:
+├── audio: { music_volume, sfx_volume }
+├── graphics: { quality, resolution, fullscreen, vsync }
+├── gameplay: { language, region }
+├── account: { player_name, delete_account }
+└── controls: { touch_settings }
+```
+
+### 3. Logică
+- Se salvează local + server
+- Se aplică instant
+- Reset to Default
+
+### 4. UI
+- Tab-uri: Audio, Graphics, Gameplay, Account
+
+### 5. Network
+- Account settings pe server
+- Restul local
+
+### 6. Config
+- Default values
+
+### 7. Godot
+```
+res://features/settings/
+├── SettingsManager.gd (Autoload)
+└── SettingsUI.tscn
+```
+
+### 8. Testare
+- [ ] Volumul se schimbă în timp real
+- [ ] Fullscreen toggle
+- [ ] Persistă între sesiuni
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-028 — Disconnect / Reconnect
+
+### 1. Identitate
+- **Nume:** Disconnect / Reconnect
+- **Scop:** Gestionează pierderea conexiunii
+- **Categorii:** network
+- **Dependențe:** SYS-017
+
+### 2. Data
+```
+Reconnect:
+├── max_disconnect_time: int
+├── game_paused: bool
+├── reconnection_attempts: int
+└── last_sync_state: Dictionary
+```
+
+### 3. Logică
+- Serverul detectează disconnect
+- Jocul pauzat X secunde
+- La reconnect → ultimul sync state
+- Timeout → lose
+
+### 4. UI
+- Ecran "Reconnecting..."
+- Timer
+- Buton Cancel → forfeit
+
+### 5. Network
+- Serverul menține starea X secunde
+- La reconnect → starea completă
+
+### 6. Config
+- Max disconnect time
+- Max attempts
+
+### 7. Godot
+```
+res://features/network/
+├── ReconnectManager.gd
+├── ReconnectUI.tscn
+└── ConnectionMonitor.gd
+```
+
+### 8. Testare
+- [ ] Disconnect → ecran reconnecting
+- [ ] Reconectare → continuă
+- [ ] Timeout → lose
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-029 — Collection Manager
+
+### 1. Identitate
+- **Nume:** Collection Manager
+- **Scop:** Vizualizarea părților, cărților, item-ilor
+- **Categorii:** ui
+- **Dependențe:** SYS-003, SYS-025
+
+### 2. Data
+```
+Collection:
+├── all_parts: Array[PartDefinition]
+├── all_items: Array[Item]
+├── filters: { race, rarity, type, upgrade }
+├── sort: enum
+└── search: String
+```
+
+### 3. Logică
+- Arată tot ce deții
+- Filtrare + căutare
+- Dezasamblare → dust
+- Echipare/dezechipare
+
+### 4. UI
+- Grid cu carduri
+- Click → detalii
+- Butoane: Echipa, Dezasamblează, Upgrade
+
+### 5. Network
+- Colecția pe server
+- Clientul face request la login
+
+### 6. Config
+- Max inventory size
+
+### 7. Godot
+```
+res://features/collection/
+├── CollectionManager.gd
+├── CollectionUI.tscn
+├── CollectionCard.gd
+├── CollectionFilters.gd
+└── DisassembleUI.gd
+```
+
+### 8. Testare
+- [ ] Toate părțile afișate
+- [ ] Filtrele funcționează
+- [ ] Dezasamblare corectă
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-030 — Friend System
+
+### 1. Identitate
+- **Nume:** Friend System
+- **Scop:** Adăugare prieteni, provocare directă
+- **Categorii:** feature
+- **Dependențe:** SYS-015, SYS-016
+
+### 2. Data
+```
+FriendSystem:
+├── friends: Array[PlayerProfile]
+├── pending_requests: Array[PlayerProfile]
+├── blocked: Array[player_id]
+└── online_status: Dictionary
+```
+
+### 3. Logică
+- Cauți jucători după nume
+- Trimiți cerere
+- Accept/Refuză
+- Provocare directă
+
+### 4. UI
+- Friends list
+- Add Friend
+- Buton Challenge
+
+### 5. Network
+- Pe server
+- WebSocket pentru status
+
+### 6. Config
+- Max friends
+
+### 7. Godot
+```
+res://features/social/
+├── FriendManager.gd
+├── FriendListUI.tscn
+├── AddFriendUI.gd
+└── ChallengeUI.gd
+```
+
+### 8. Testare
+- [ ] Cerere → accept → listă
+- [ ] Provocare funcționează
+- [ ] Blocare funcționează
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-031 — Daily Rewards / Login Streak
+
+### 1. Identitate
+- **Nume:** Daily Rewards / Login Streak
+- **Scop:** Recompense zilnice pentru login consecutiv
+- **Categorii:** feature
+- **Dependențe:** SYS-021
+
+### 2. Data
+```
+DailyRewards:
+├── streak: int
+├── last_login: DateTime
+├── claimed_today: bool
+└── rewards: Array[Reward] (7 zile, ciclu)
+```
+
+### 3. Logică
+- Login → recompensă
+- Consecutiv → streak++
+- Sari o zi → streak = 0
+- Ziua 7 → reward mare + reset
+
+### 4. UI
+- Pop-up la primul login
+- Arată ziua curentă
+- Claim + animație
+
+### 5. Network
+- Serverul salvează streak
+- Validează claim
+
+### 6. Config
+- Rewards per day
+
+### 7. Godot
+```
+res://features/daily/
+├── DailyRewardsManager.gd
+├── DailyRewardsUI.tscn
+└── RewardAnimation.gd
+```
+
+### 8. Testare
+- [ ] Login → recompensă
+- [ ] Streak crește
+- [ ] Sari o zi → streak = 0
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-032 — Report System
+
+### 1. Identitate
+- **Nume:** Report System
+- **Scop:** Raportarea jucătorilor toxici
+- **Categorii:** feature
+- **Dependențe:** SYS-015
+
+### 2. Data
+```
+Report:
+├── reporter_id, reported_id, match_id
+├── reason: enum
+├── description: String
+├── status: enum
+└── timestamp
+```
+
+### 3. Logică
+- După duel, raportezi adversarul
+- Motiv + descriere
+- Serverul stochează
+
+### 4. UI
+- Buton Report în Results
+- Pop-up cu motive
+
+### 5. Network
+- Serverul stochează
+- Auto-flag la X reporturi
+
+### 6. Config
+- Reports per day limit
+
+### 7. Godot
+```
+res://features/moderation/
+├── ReportManager.gd
+└── ReportUI.tscn
+```
+
+### 8. Testare
+- [ ] Poți raporta după duel
+- [ ] Reportul ajunge pe server
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-033 — Achievement System
+
+### 1. Identitate
+- **Nume:** Achievement System
+- **Scop:** Obiective pe termen lung cu recompense
+- **Categorii:** progression
+- **Dependențe:** SYS-015
+
+### 2. Data
+```
+Achievement:
+├── id, name, description
+├── category: enum
+├── requirement: { type, target }
+├── reward: Reward
+├── progress, completed
+└── hidden: bool
+```
+
+### 3. Logică
+- Se verifică automat
+- La target → achievement + reward
+- Unele ascunse
+- Lanțuri (N1→N2→N3)
+
+### 4. UI
+- Achievement screen
+- Animație la deblocare
+- Count: "23/50"
+
+### 5. Network
+- Serverul salvează și dă reward
+
+### 6. Config
+- Lista completă
+
+### 7. Godot
+```
+res://features/achievements/
+├── AchievementManager.gd
+├── AchievementUI.tscn
+├── AchievementCard.gd
+├── AchievementPopup.gd
+└── data/achievements.json
+```
+
+### 8. Testare
+- [ ] Progresul crește corect
+- [ ] La target → reward
+- [ ] Ascunse invizibile
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-034 — Match History
+
+### 1. Identitate
+- **Nume:** Match History
+- **Scop:** Istoric dueluri + statistici
+- **Categorii:** feature
+- **Dependențe:** SYS-007, SYS-015
+
+### 2. Data
+```
+MatchRecord:
+├── match_id, timestamp
+├── opponent_name, opponent_race
+├── result, round_count
+├── damage dealt/taken
+├── race_used, items_used
+├── rating_change
+└── battle_replay_id
+```
+
+### 3. Logică
+- După duel → record
+- Istoric 50-100
+- Win rate calculat
+
+### 4. UI
+- Listă cronologică
+- Click → detalii
+
+### 5. Network
+- Serverul salvează
+- Clientul request paginat
+
+### 6. Config
+- Max history entries
+
+### 7. Godot
+```
+res://features/history/
+├── MatchHistoryManager.gd
+├── MatchHistoryUI.tscn
+├── MatchEntry.gd
+└── MatchDetailUI.gd
+```
+
+### 8. Testare
+- [ ] După duel → în istoric
+- [ ] Win rate corect
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-035 — Notification System
+
+### 1. Identitate
+- **Nume:** Notification System
+- **Scop:** Notificări în joc pentru evenimente
+- **Categorii:** feature
+- **Dependențe:** SYS-015
+
+### 2. Data
+```
+Notification:
+├── id, type: enum { FRIEND, MATCH, TOURNAMENT, DAILY, ACHIEVEMENT, RANK }
+├── title, body
+├── action_data: Dictionary
+├── read, created_at, expires_at
+└── icon: String
+```
+
+### 3. Logică
+- Serverul generează
+- Se afișează în joc (toast)
+- Expiră
+
+### 4. UI
+- Bell icon + badge
+- Dropdown
+- Click → acțiune
+
+### 5. Network
+- Serverul generează
+- Clientul polling/WS
+
+### 6. Config
+- Max notifications
+- Auto-expire
+
+### 7. Godot
+```
+res://features/notifications/
+├── NotificationManager.gd (Autoload)
+├── NotificationUI.tscn
+├── NotificationToast.gd
+└── NotificationList.gd
+```
+
+### 8. Testare
+- [ ] Notificare la friend request
+- [ ] Badge corect
+- [ ] Click → acțiune
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
