@@ -1417,6 +1417,9 @@ res://features/results/
 | SYS-022 | Infinite Leveling | SYS-015 | progression |
 | SYS-023 | Rankings | SYS-015, SYS-016 | progression |
 | SYS-024 | Tournament System | SYS-016, SYS-021 | feature |
+| SYS-025 | Item System | SYS-001, SYS-010, SYS-012 | progression |
+
+**Total: 25 de sisteme**
 
 ---
 
@@ -1560,6 +1563,8 @@ res://features/rankings/
 
 ---
 
+---
+
 ## SYS-024 — Tournament System
 
 ### 1. Identitate
@@ -1631,6 +1636,136 @@ res://features/tournaments/
 - [ ] La final, rewards se distribuie automat
 - [ ] Jucătorul primește notificare cu rankul final + rewards
 - [ ] Daily se resetează, weekly se resetează, monthly se resetează
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-025 — Item System
+
+### 1. Identitate
+- **Nume:** Item System
+- **Scop:** 3 sloturi (Weapon, Armor, Accessory) care modifică comportamentul cardurilor, nu stats
+- **Categorii:** progression, equipment
+- **Dependențe:** SYS-001 (Resource System), SYS-010 (Profession System), SYS-012 (Upgrade System)
+
+### 2. Data
+```
+Item:
+├── id: String
+├── type: enum { WEAPON, ARMOR, ACCESSORY }
+├── name: String
+├── rarity: enum { Common→Mythic }
+├── upgrade_level: int (0-10)
+├── max_upgrade: int (variază după raritate)
+├── recipe: Dictionary { material_id: count }
+├── equipped_character: String
+│
+├── WEAPON properties:
+│   ├── attack_pattern: String
+│   ├── damage_modifier: float
+│   ├── special: String
+│   └── requirements: Dictionary { race: level }
+│
+├── ARMOR properties:
+│   ├── damage_mitigation: Dictionary
+│   │   ├── type: enum { DODGE, REDUCTION, REFLECT, HEAL, RETALIATE }
+│   │   └── value: float
+│   ├── special: String
+│   └── requirements: Dictionary
+│
+└── ACCESSORY properties:
+    ├── effect_type: enum { ECONOMY, INFORMATION, SYNERGY, RULE_CHANGE }
+    ├── effect_description: String
+    ├── cooldown: int
+    └── requirements: Dictionary
+```
+
+### 3. Logică
+
+**Filosofie:** Items nu concurează cu cardurile. Cardurile determină stats. Items determină comportamentul — CUM ataci, CUM iei damage, CE reguli se aplică.
+
+**Weapon** — schimbă CUM ataci.
+
+| Weapon | Efect | Rasă |
+|---|---|---|
+| 🗡️ Dagger | Atacă de 2 ori, damage -30% | Lycan, Void |
+| 🛡️ Sword & Shield | Prima carte +50% damage | Knight |
+| 🔮 Staff | Skill Rectangle ×2 | Eldritch, Fae |
+| 🏹 Bow | Atacă cartea din spate | Void |
+| ⚔️ Greatsword | Damage +100%, 1 atac/2 ture | Dragonkin, Construct |
+
+**Armor** — schimbă CUM iei damage.
+
+| Armor | Efect | Rasă |
+|---|---|---|
+| 🧥 Leather | Dodge 20% | Lycan, Void |
+| ⛓️ Chainmail | Damage -30% | Construct, Knight |
+| 🧙 Robe | +1 energie la start | Eldritch, Celestial |
+| 🩸 Blood Armor | 10% damage → heal | Vampire |
+| 🪦 Bone Armor | Carte distrusă → 5 damage retur | Necro |
+
+**Accessory** — schimbă REGULILE.
+
+| Accessory | Efect |
+|---|---|
+| 💍 Ring of Haste | Buy Phase -10s, +2 coins |
+| 📿 Amulet of Insight | Vezi inventarul adversarului |
+| 🎭 Mask of Deception | 1 rerol gratis/rundă |
+| ⏳ Hourglass | 25% energie între ture |
+| 🔥 Ember Core | Dragonkin -1 energie cost |
+| 🧊 Frost Pearl | Prima carte adversă înghețată |
+| 🌑 Void Stone | 1×/run, înlocuiești o carte din shop |
+| 💀 Necronomicon | 10% Skill Rectangle ×2 |
+
+### 4. UI
+- 3 sloturi în Character Screen
+- Fiecare item: nume, raritate, upgrade level, efect
+- Crafting UI: rețetă + materiale
+- Upgrade UI: același ca la card parts
+- Efectele vizibile în Battle
+
+### 5. Network
+- Serverul salvează items în Player Profile
+- La început de duel, validează items echipate
+- Efectele se aplică server-side
+
+### 6. Config
+- Crafting recipes
+- Upgrade cost per level
+- Rarity scaling
+- Material drop rates
+
+### 7. Godot
+```
+res://features/items/
+├── Item.gd
+├── WeaponItem.gd
+├── ArmorItem.gd
+├── AccessoryItem.gd
+├── ItemManager.gd
+├── InventoryUI.gd
+├── CraftingUI.gd
+├── UpgradeUI.gd
+├── EquipmentSlotsUI.gd
+├── ItemEffectHandler.gd
+└── data/
+    ├── weapons/
+    ├── armors/
+    └── accessories/
+```
+
+### 8. Testare
+- [ ] Echipezi item → efectul se aplică
+- [ ] Dezechipat → efectul dispare
+- [ ] Weapon schimbă atacul
+- [ ] Armor modifică damage-ul
+- [ ] Accessory schimbă reguli
+- [ ] Upgrade → efect îmbunătățit
+- [ ] Items nu se suprapun cu card parts
 
 ### 9. Istoric
 | Dată | Schimbare |
