@@ -1,69 +1,78 @@
+<<<<<<< HEAD
 # Cardweave Pipeline — Sistemul nostru de producție
+=======
+# Cardweave — Design Pipeline
+>>>>>>> afe344e (docs: restructure pipeline - design (VPS) + dev (PC))
 
-> Un pipeline formal de game development pentru solo dev + AI, inspirat din studiourile AAA dar adaptat pentru un singur om și un agent AI.
+> Pipeline-ul de **design** — ce fac eu (agentul pe VPS) împreună cu tine.
+> Instanța de pe PC are propriul pipeline de development.
+
+---
 
 ## Filosofie
 
-```text
-Nu scriem cod până nu știm EXACT ce construim.
-Nu trecem la următorul pas până nu bifăm toate condițiile.
-Totul e în fișiere — nu în discuții pierdute.
 ```
+🎨 DESIGN (VPS) → specificații + tickete
+   ↓ handoff
+⚙️ DEV (PC) → cod Rust
+```
+
+**Noi doi** facem doar design aici. Push pe `documentation`.
+Instanța de pe PC scrie codul. Push pe `game-development`.
+
+---
 
 ## Cum funcționează
 
-Un feature călătorește prin **4 departamente** și trece prin **4 gates**:
-
 ```
-🎯 Vision (tu) 
-    │  "Vreau feature-ul X"
-    ▼
-📐 Game Design (tu + eu) 
-    │  Scriem specificația, mecanica, wireframe-uri
-    │  ■ G1 — Definition of Ready
-    ▼
-📋 Production (eu) 
-    │  Sparg feature-ul în tickete, mapez dependențe
-    │  ■ G2 — Sprint Ready
-    ▼
-⚙️ Development (eu) 
-    │  Implementez ticketele unul câte unul
-    │  ■ G3 — Definition of Done
-    ▼
-🧪 QA (tu + eu) 
-    │  Testăm, playtestăm, raportăm bug-uri
-    │  ■ G4 — Release Gate
-    ▼
-🚀 Shipped! ✅
+🎯 Vision (tu)
+   │  "Vreau feature-ul X"
+   ▼
+📐 Game Design (tu + eu)
+   │  Scriem FEATURE_DESIGN.md + UI_WIREFRAME.md
+   │  ■ G1 — Definition of Ready
+   ▼
+📋 Spec Finalization (eu)
+   │  Scriu DESIGN_PASS.md (mecanica finală, formule, edge cases)
+   │  Creez ticket-urile în docs/pipeline/features/<feature>/tickets/
+   │  ■ G2 — Sprint Ready → HANDFOFF
+   ▼
+📦 HANDFOFF — commit pe documentation
+   │  Feature complet: spec + wireframe + DESIGN_PASS + tickete
+   │  Instanța de pe PC preia de aici
 ```
 
-## Structura fișierelor
+---
+
+## Structură
 
 ```
 docs/pipeline/
-├── README.md                ← Ești aici
-├── PIPELINE.md              ← Tabelul viu — ce feature, în ce stadiu
-├── GOVERNANCE.md            ← Regulile: departamente, gates, responsabilități
-├── WORKFLOW.md              ← Flow-ul pe care îl urmez EU (agentul)
+├── README.md               ← Ești aici
+├── DESIGN_PIPELINE.md      ← Ce features sunt active în design
+├── DEV_PIPELINE.md         ← Handoff — ce vede instanța de pe PC
+├── GOVERNANCE.md           ← Reguli: gate-uri, responsabilități
+├── WORKFLOW.md             ← Flow-ul pe care îl urmez eu (agentul VPS)
 │
-├── templates/               ← Șabloane pentru fiecare departament
-│   ├── FEATURE_DESIGN.md    ← Game Design: specificație feature
-│   ├── DESIGN_PASS.md       ← Game Design: mecanici detaliate
-│   ├── UI_WIREFRAME.md      ← Game Design: wireframe-uri
-│   ├── TICKET_INDEX.md      ← Production: ticket breakdown
-│   └── TICKET.md            ← Production: ticket individual
+├── templates/              ← Șabloane pentru design
 │
-└── state/                   ← Starea curentă a proiectului
-    ├── NEXT_ACTIONS.md       ← Ordinea de execuție
-    ├── PROJECT_STATUS.md     ← Statusul general
-    ├── CURRENT_SESSION.md    ← Focusul sesiunii curente
-    └── CHANGELOG_WORKING.md  ← Ce s-a făcut în sesiune
+├── state/                  ← Starea proiectului
+│
+└── features/               ← Feature-uri în design
+    └── <feature-name>/
+        ├── FEATURE_DESIGN.md
+        ├── DESIGN_PASS.md
+        ├── UI_WIREFRAME.md
+        └── tickets/         ← Ticket-urile pentru PC
 ```
 
-## Reguli de aur
+---
 
-1. **PIPELINE.md e sursa de adevăr** — dacă nu e în pipeline, nu există
-2. **State files se actualizează după ORICE ticket finalizat**
-3. **Niciun feature nu sare peste gates** — nu treci la cod înainte de G1 bifat
-4. **Tu deții gates-urile creative** (G1, G4) — eu le verific pe cele tehnice (G2, G3)
-5. **Un feature odată** — nu lucrăm la 3 features în același timp. Maxim unul în Game Design și unul în Development paralel.
+## Branch-uri
+
+| Branch | Ce conține | Cine scrie |
+|---|---|---|
+| `main` | Stabil, playtested | Merge din game-development |
+| `documentation` | Doar design docs | Eu (VPS) + tu |
+| `game-development` | Cod Rust | Instanța PC |
+| `feat/*` | Feature branch-uri | Instanța PC |

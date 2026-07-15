@@ -1,5 +1,6 @@
-# Current Session
+# CURRENT_SESSION
 
+<<<<<<< HEAD
 > Focusul sesiunii curente. Se actualizează pe parcurs.
 
 ---
@@ -9,17 +10,17 @@
 **Obiectiv:** Configurare pipeline Cardweave
 
 **Focus:** Crearea sistemului de pipeline (docs/pipeline/)
+=======
+**Data:** 2026-07-13
+**Obiectiv:** Restructurare pipeline — design (VPS) + dev (PC)
+>>>>>>> afe344e (docs: restructure pipeline - design (VPS) + dev (PC))
 
 **Progres:**
+- [x] DESIGN_PIPELINE.md creat
+- [x] DEV_PIPELINE.md creat
+- [x] README.md actualizat (dual pipeline)
+- [x] GOVERNANCE.md actualizat
+- [x] WORKFLOW.md rescris (doar design)
+- [x] PIPELINE.md șters
 
-- [x] Repo clonat
-- [x] PIPELINE.md creat
-- [x] GOVERNANCE.md creat
-- [x] WORKFLOW.md creat
-- [x] Template-uri create (FEATURE_DESIGN, DESIGN_PASS, UI_WIREFRAME, TICKET_INDEX, TICKET)
-- [x] State files create (NEXT_ACTIONS, PROJECT_STATUS, CURRENT_SESSION, CHANGELOG_WORKING)
-- [ ] Primul feature ales și pus în pipeline
-
-**Blocări:** *(none)*
-
-**Următorul pas:** Alege primul feature din PIPELINE.md și începe Game Design
+**Următorul pas:** Aștept userul să decidă când începem primul feature (Card Part System)

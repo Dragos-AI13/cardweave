@@ -46,3 +46,14 @@
 **Motiv:** Tot ce construim după (assembly, shop, upgrade) depinde de sistemul de părți ale cărților.
 
 **Sursa:** Discuție — user a fost de acord cu propunerea AI
+
+---
+
+## D005 — Dual Pipeline: Design + Development
+
+**Data:** 2026-07-13
+**Decizie:** Separăm pipeline-ul în două: DESIGN_PIPELINE.md (VPS) și DEV_PIPELINE.md (PC). Designul se face pe VPS, codul pe PC.
+
+**Motiv:** Userul face design cu mine (VPS) și development cu o instanță locală Hermes pe PC. Era nevoie de un handoff clar între cele două.
+
+**Sursa:** Discuție design pipeline
