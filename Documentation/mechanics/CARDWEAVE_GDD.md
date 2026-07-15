@@ -234,20 +234,22 @@ Attack Jewel (Common) + Attack Jewel (Common)
 - Când jucătorul alege o rasă înainte de duel, shop-ul arată **doar părți din acea rasă**
 - Profesiile pot debloca **2 sau 3 rase simultan**
 
-### 6.2 Rasele (v2 — Redesign)
+### 6.2 Rasele (v2 — Redesign) + Clase Asociate
 
-| # | Rasă | Identitate | Stil de joc |
-|---|---|---|---|
-| 1 | 🐉 **Dragonkin** | Creaturi dragonice, mândre, puternice | Aggro, damage brut, atacuri în zonă |
-| 2 | 🧛 **Vampire** | Vampiri nobili, sângeroși, manipulatori | Life steal, control, resurse din dușmani |
-| 3 | 🤖 **Construct** | Automate antice, precise, rezistente | Tank, defensiv, sinergii de echipă |
-| 4 | 🌿 **Fae** | Spirite ale naturii, jucăușe, imprevizibile | Heal, buff, control al terenului |
-| 5 | 👁️ **Eldritch** | Ființe cosmice, de neînțeles, putere brută | Random, debuff, haos controlat |
-| 6 | ⚔️ **Knight** | Oameni căliți în luptă, onoare și disciplină | Balanced, versatil, sinergii de arme |
-| 7 | 🌑 **Void** | Umbre, neant, putere interzisă | Assassin, burst, stealth |
-| 8 | 🐺 **Lycan** | Bestii sălbatice, primale, de neoprit | Rush, fury, scaling pe măsură ce primesc damage |
-| 9 | ☀️ **Celestial** | Ființe ale luminii, pure, divine | Support, aura, heal în zonă |
-| 10 | 💀 **Necro** | Morți vii, copleșitori, nesfârșiți | Summon, debuff, outnumber |
+Rasa determină **pool-ul de părți** din shop și **pasivul rasial**. Clasa determină **ce items poți echipa** și **bonusul activ**.
+
+| # | Rasă | Identitate | Stil de joc | Clase recomandate |
+|---|---|---|---|---|
+| 1 | 🐉 **Dragonkin** | Creaturi dragonice, mândre, puternice | Aggro, damage brut, atacuri în zonă | Berserker, Tank |
+| 2 | 🧛 **Vampire** | Vampiri nobili, sângeroși, manipulatori | Life steal, control, resurse din dușmani | Assassin, Mage, Berserker |
+| 3 | 🤖 **Construct** | Automate antice, precise, rezistente | Tank, defensiv, sinergii de echipă | Tank, Support |
+| 4 | 🌿 **Fae** | Spirite ale naturii, jucăușe, imprevizibile | Heal, buff, control al terenului | Mage, Support, Ranger |
+| 5 | 👁️ **Eldritch** | Ființe cosmice, de neînțeles, putere brută | Random, debuff, haos controlat | Mage, Assassin |
+| 6 | ⚔️ **Knight** | Oameni căliți în luptă, onoare și disciplină | Balanced, versatil, sinergii de arme | Berserker, Tank, Support |
+| 7 | 🌑 **Void** | Umbre, neant, putere interzisă | Assassin, burst, stealth | Assassin, Ranger |
+| 8 | 🐺 **Lycan** | Bestii sălbatice, primale, de neoprit | Rush, fury, scaling pe măsură ce primesc damage | Berserker, Assassin |
+| 9 | ☀️ **Celestial** | Ființe ale luminii, pure, divine | Support, aura, heal în zonă | Support, Mage |
+| 10 | 💀 **Necro** | Morți vii, copleșitori, nesfârșiți | Summon, debuff, outnumber | Mage, Assassin |
 
 ### 6.3 Progresia Raselor
 
@@ -489,5 +491,22 @@ Cardweave preia **8 sisteme** din Tower Run (adaptate) și lasă **3** în urmă
 | Aegis, Alacrity, Overcharge | Prea legate de Tower Run |
 | Minioni | Nu există în Cardweave |
 | Duel turn-based | Înlocuit cu auto-battle |
+
+---
+
+## 14. Clasele Caracterelor
+
+Clasele sunt un sistem separat de rase. Rasa determină pool-ul de părți din shop. Clasa determină ce items poți echipa și bonusul pasiv activ.
+
+| Clasă | Weapon | Armor | Bonus pasiv |
+|---|---|---|---|
+| ⚔️ Berserker | Greatsword | Chainmail | +damage la HP scăzut |
+| 🗡️ Assassin | Dagger, Bow | Leather | Primul atac ×2 |
+| 🔮 Mage | Staff | Robe | Skill Rectangle ×2 |
+| 🛡️ Tank | Sword & Shield | Chainmail | Protejează cărțile alăturate |
+| 💉 Support | Staff | Robe | Heal + buff permanent |
+| 🏹 Ranger | Bow | Leather | Atacă spatele, ignoră tank |
+
+Vezi SYS-036 — Class System în Systems Catalog pentru detalii complete.
 
 > Tower Run rămâne un proiect separat — nu îl abandonăm, dar focusul acum e pe Cardweave. Când Cardweave e lansat și stabil, poate reveni ca mod single-player.

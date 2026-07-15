@@ -1418,8 +1418,19 @@ res://features/results/
 | SYS-023 | Rankings | SYS-015, SYS-016 | progression |
 | SYS-024 | Tournament System | SYS-016, SYS-021 | feature |
 | SYS-025 | Item System | SYS-001, SYS-010, SYS-012 | progression |
+| SYS-026 | Tutorial / Onboarding | SYS-019 | feature |
+| SYS-027 | Settings / Options | SYS-019 | feature |
+| SYS-028 | Disconnect / Reconnect | SYS-017 | network |
+| SYS-029 | Collection Manager | SYS-003, SYS-025 | ui |
+| SYS-030 | Friend System | SYS-015, SYS-016 | feature |
+| SYS-031 | Daily Rewards / Login Streak | SYS-021 | feature |
+| SYS-032 | Report System | SYS-015 | feature |
+| SYS-033 | Achievement System | SYS-015 | progression |
+| SYS-034 | Match History | SYS-007, SYS-015 | feature |
+| SYS-035 | Notification System | SYS-015 | feature |
+| SYS-036 | Class System | SYS-001, SYS-009, SYS-025 | progression |
 
-**Total: 25 de sisteme**
+**Total: 36 de sisteme**
 
 ---
 
@@ -2321,6 +2332,74 @@ res://features/notifications/
 - [ ] Notificare la friend request
 - [ ] Badge corect
 - [ ] Click → acțiune
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-036 — Class System
+
+### 1. Identitate
+- **Nume:** Class System
+- **Scop:** 6 clase care determină items echipabili și bonus pasiv
+- **Categorii:** progression
+- **Dependențe:** SYS-001 (Resource), SYS-009 (Race), SYS-025 (Items)
+
+### 2. Data
+```
+ClassDefinition:
+├── id: enum { BERSERKER, ASSASSIN, MAGE, TANK, SUPPORT, RANGER }
+├── name: String
+├── allowed_weapons: Array
+├── allowed_armors: Array
+├── passive_bonus: Dictionary
+├── unlocked: bool
+├── respec_cost: int
+└── level_requirement: int
+```
+
+### 3. Logică
+- Rasă = pool de părți. Clasă = items + bonus pasiv.
+- Clasa se alege după rasă, înainte de duel.
+- Poate fi schimbată între dueluri (cost gold).
+
+| Clasă | Weapon | Armor | Bonus |
+|---|---|---|---|
+| ⚔️ Berserker | Greatsword | Chainmail | +damage când HP < 50% |
+| 🗡️ Assassin | Dagger, Bow | Leather | Primul atac ×2 |
+| 🔮 Mage | Staff | Robe | Skill Rectangle ×2 |
+| 🛡️ Tank | Sword & Shield | Chainmail | Protejează aliatele |
+| 💉 Support | Staff | Robe | Heal 5%/tură |
+| 🏹 Ranger | Bow | Leather | Atacă spatele |
+
+### 4. UI
+- Class Selection după Race Selection
+- Fiecare clasă arată items + bonus
+- Respec button în Character Screen
+
+### 5. Network
+- Clasa pe server. Validează items echipabile.
+
+### 6. Config
+- Respec cost, level requirements, bonus values
+
+### 7. Godot
+```
+res://features/classes/
+├── ClassDefinition.gd
+├── ClassManager.gd
+├── ClassSelectionUI.tscn
+└── ClassCard.gd
+```
+
+### 8. Testare
+- [ ] După rasă → alegi clasă
+- [ ] Fiecare clasă are items + bonus diferit
+- [ ] Schimbarea clasei costă gold
+- [ ] Bonusul se aplică în battle
 
 ### 9. Istoric
 | Dată | Schimbare |
