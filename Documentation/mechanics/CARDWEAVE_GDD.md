@@ -509,4 +509,21 @@ Clasele sunt un sistem separat de rase. Rasa determină pool-ul de părți din s
 
 Vezi SYS-036 — Class System în Systems Catalog pentru detalii complete.
 
+---
+
+## 15. Character Card Pool + Compatibility
+
+Fiecare caracter are un **set propriu de cărți** (5-15), nu un pool generic per rasă. Cărțile se sparg în părți. Shop-ul din duel trage părți **doar din card pool-ul caracterului ales**.
+
+Părțile din cărți diferite pot fi combinate cu **bonus/penalty de compatibilitate**:
+- Aceeași carte → +20% stats
+- Teme similare → +10%
+- Teme diferite → neutru
+- Amestec haotic → -20%
+- Diferență de raritate → penalizare
+
+Items se echipează înainte de duel, nu se cumpără din shop.
+
+Vezi SYS-037 — Character Card Pool + Compatibility în Systems Catalog.
+
 > Tower Run rămâne un proiect separat — nu îl abandonăm, dar focusul acum e pe Cardweave. Când Cardweave e lansat și stabil, poate reveni ca mod single-player.

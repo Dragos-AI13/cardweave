@@ -289,6 +289,12 @@ Card:
 - Poți schimba o parte oricând (dacă ai alta în inventar)
 - Valorile cărții (damage, HP, cost) se calculează din suma părților
 - Skill Rectangle determină efectul special
+- **Compatibilitate:** Când părțile vin din cărți diferite, se aplică Synergy Score
+  - Aceeași carte → +20% stats
+  - Teme similare → +10% stats
+  - Teme diferite → neutru
+  - Amestec haotic → -20% stats
+  - Diferență de raritate → penalizare suplimentară
 
 ### 4. UI
 - 6 sloturi vizibile pe ecran
@@ -409,7 +415,8 @@ Shop:
 
 ### 3. Logică
 - La începutul fiecărei runde, primești X coins (crește cu runda)
-- Se generează părți random din pool-ul rasei
+- Se generează părți random din **card pool-ul caracterului ales** (nu din pool generic)
+- O parte care e deja în inventar nu mai apare
 - Poți rerola (costă coins, costul crește cu fiecare rerol)
 - Poți cumpăra părți individual
 - Poți combina 2 părți de același tip + raritate → 1 de raritate superioară
@@ -1429,8 +1436,9 @@ res://features/results/
 | SYS-034 | Match History | SYS-007, SYS-015 | feature |
 | SYS-035 | Notification System | SYS-015 | feature |
 | SYS-036 | Class System | SYS-001, SYS-009, SYS-025 | progression |
+| SYS-037 | Character Card Pool + Compatibility | SYS-001, SYS-004, SYS-009 | card |
 
-**Total: 36 de sisteme**
+**Total: 37 de sisteme**
 
 ---
 
@@ -2400,6 +2408,96 @@ res://features/classes/
 - [ ] Fiecare clasă are items + bonus diferit
 - [ ] Schimbarea clasei costă gold
 - [ ] Bonusul se aplică în battle
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-037 — Character Card Pool + Compatibility
+
+### 1. Identitate
+- **Nume:** Character Card Pool + Compatibility
+- **Scop:** Fiecare caracter are un set propriu de cărți → părțile lor apar în shop. Părțile din cărți diferite pot fi combinate cu bonus/penalty de compatibilitate.
+- **Categorii:** card, character
+- **Dependențe:** SYS-001 (Resources), SYS-004 (Card Assembly), SYS-009 (Races)
+
+### 2. Data
+```
+CharacterCardPool:
+├── character_id: String
+├── owned_cards: Array[CardDefinition] (5-15 cărți per caracter)
+│   └── CardDefinition:
+│       ├── card_id: String
+│       ├── name: String
+│       ├── theme: String
+│       ├── rarity: enum
+│       └── parts: CardParts (6 părți)
+│
+├── parts_pool: Array[PartDefinition] (toate părțile)
+
+CompatibilityRules:
+├── pair_bonuses: Dictionary
+│   └── { themeA + themeB: score }
+│       Ex: "vampire_bite"+"shadow_magic" → 0.7
+│       Ex: "vampire_bite"+"dragon_fire" → 0.2
+│       Ex: aceeași carte → 1.0
+├── rarity_match: Dictionary
+│   └── 0 diff → +10%, 1 diff → 0%, 2+ diff → -15%
+└── same_card_bonus: 1.2 (+20%)
+```
+
+### 3. Logică
+
+**Card Pool:** Fiecare caracter are 5-15 cărți proprii. Fiecare carte → 6 părți. Shop-ul trage doar din acest pool. Deblochezi cărți → mai multe părți disponibile.
+
+**Compatibilitate:** Când asamblezi o carte din părți care vin din cărți diferite, sistemul calculează Synergy Score:
+- Same Card Bonus: +20% dacă toate 6 părțile sunt din aceeași carte
+- Theme Match: cât de bine se potrivesc temele
+- Rarity Balance: penalizare la diferență mare de raritate
+- Completeness: bonus pentru câte părți din aceeași carte
+
+| Scenariu | Synergy | Efect |
+|---|---|---|
+| Toate 6 părți din aceeași carte | 100% | ×1.2 |
+| 4 din A, 2 din B (teme similare) | 85% | ×1.1 |
+| 3 din A, 3 din B (teme diferite) | 50% | ×1.0 |
+| Amestec haotic (4+ teme) | 20% | ×0.8 |
+
+### 4. UI
+- Card Collection per caracter
+- În shop, părțile arată numele cărții sursă
+- La asamblare, Synergy Score vizual (verde/galben/roșu)
+
+### 5. Network
+- Serverul salvează cărțile deblocate per caracter
+- Validează compatibilitatea
+
+### 6. Config
+- Cărți inițiale per caracter
+- Synergy multipliers
+- Rarity mismatch penalties
+
+### 7. Godot
+```
+res://features/character_pool/
+├── CharacterCardPool.gd
+├── CardDefinition.gd
+├── CompatibilityCalculator.gd
+├── CardCollectionUI.tscn
+├── SynergyIndicator.gd
+└── data/characters/
+```
+
+### 8. Testare
+- [ ] Fiecare caracter → propriile cărți → părți în shop
+- [ ] Aceeași carte → bonus
+- [ ] Teme similare → bonus mic
+- [ ] Teme total diferite → penalty
+- [ ] Rarități diferite → penalty
+- [ ] Carte nouă deblocată → părți noi
 
 ### 9. Istoric
 | Dată | Schimbare |
