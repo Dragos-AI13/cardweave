@@ -27,6 +27,8 @@ cardweave/
 │   ├── mechanics/
 │   │   ├── CARDWEAVE_GDD.md       ← Game Design Document
 │   │   └── SYSTEMS_CATALOG.md     ← 37 de sisteme detaliate
+│   ├── systems/
+│   │   └── cardinal/              ← Cardinal Engine design
 │   ├── state/                       ← State files (NEXT_ACTIONS, TICKET_INDEX etc.)
 │   ├── art/                         ← Concept art, style guide
 │   └── design/                      ← Wireframe-uri, mockup-uri
