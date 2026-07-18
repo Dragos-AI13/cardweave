@@ -1,10 +1,6 @@
 # WORKFLOW.md — Instrucțiuni pentru Agent (VPS)
 
-<<<<<<< HEAD
-> Acest document conține flow-ul exact pe care îl urmez EU (agentul AI) când lucrez la Cardweave.
-=======
 > Acest document conține flow-ul exact pe care îl urmez EU (agentul AI pe VPS) când fac design pentru Cardweave.
->>>>>>> afe344e (docs: restructure pipeline - design (VPS) + dev (PC))
 
 ---
 
@@ -50,7 +46,7 @@ PASUL 1 — Game Design (G1)
 │   └── Întrebări Deschise
 ├── Discut cu userul, ajustez
 ├── Când e clar → G1 bifat
-└── DESING_PIPELINE.md → 🟡 Game Design
+└── DESIGN_PIPELINE.md → 🟡 Game Design
 
 PASUL 2 — Spec Finalization (G2)
 ├── Scriu DESIGN_PASS.md
@@ -63,7 +59,7 @@ PASUL 2 — Spec Finalization (G2)
 │   ├── Priorități (P1, P2, P3)
 │   └── TICKET_INDEX.md + ticket-uri individuale
 ├── Când e complet → G2 bifat → HANDFOFF
-└── DESING_PIPELINE.md → 🟢 Handoff Gata
+└── DESIGN_PIPELINE.md → 🟢 Handoff Gata
 
 PASUL 3 — Handoff
 ├── Commit + push pe documentation
@@ -76,9 +72,8 @@ PASUL 3 — Handoff
 
 ## 3. Ce NU fac
 
-- ❌ Nu scriu cod Rust
+- ❌ Nu scriu cod
 - ❌ Nu fac commit pe `game-development` sau `main`
-- ❌ Nu modific fișiere din `src/`
 - ❌ Nu încep un feature fără G1 bifat
 
 ---
