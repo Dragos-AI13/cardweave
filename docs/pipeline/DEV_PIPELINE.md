@@ -2,6 +2,8 @@
 
 > Acest document e citit de instanța Hermes de pe PC la începutul fiecărei sesiuni de development.
 > Conține features-urile care au trecut de G2 și sunt gata de implementat.
+> **Stack:** React + TypeScript + PixiJS (client) / Rust + Axum + PostgreSQL (server). Vezi DECISION_LOG.md D006.
+> **Model:** Offline + Ghost Battles. Vezi D007.
 
 ---
 

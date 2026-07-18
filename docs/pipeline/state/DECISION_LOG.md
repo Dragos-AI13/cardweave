@@ -57,3 +57,25 @@
 **Motiv:** Userul face design cu mine (VPS) și development cu o instanță locală Hermes pe PC. Era nevoie de un handoff clar între cele două.
 
 **Sursa:** Discuție design pipeline
+
+---
+
+## D006 — Tech Stack Final
+
+**Data:** 2026-07-18
+**Decizie:** Adoptăm stack-ul web-first: **React + TypeScript + PixiJS** (client), **Tauri 2** (desktop), **Rust + Axum** (server), **PostgreSQL + Redis** (date). Se renunță la Godot 4 și Rust+wgpu+egui.
+
+**Motiv:** Cardweave e 90% UI — HTML/CSS e cel mai bun sistem UI din lume. PixiJS face grid + battle animations. Rust server pentru PvP ghost battles. Aceeași bază de cod pentru Steam, Web și Mobile. Ciclu de dezvoltare mult mai rapid decât orice game engine.
+
+**Sursa:** Analiză completă tech stack (2026-07-18) — user + AI
+
+---
+
+## D007 — Game Model: Ghost Battles + Offline
+
+**Data:** 2026-07-18
+**Decizie:** Jocul funcționează în 2 moduri: **Offline** (AI adversar, progres local) și **Online Ghost Battles** (snapshot PvP asincron, server-authoritative). Live PvP (Arena) rămâne ca opțiune viitoare.
+
+**Motiv:** Ghost battles (Backpack Battles model) oferă anti-cheat natural (serverul validează snapshot-ul atomic înainte de battle). Offline-ul permite joc fără internet. Server-authoritative înseamnă zero cheat posibil — serverul decide tot.
+
+**Sursa:** Discuție securitate + arhitectură (2026-07-18) — user + AI

@@ -4,20 +4,21 @@
 
 ---
 
-## Sesiune: 2026-07-18 — Sync Documentație
+## Sesiune: 2026-07-18 — Decizii Tech Stack + Game Model
 
-**Obiectiv:** Sync între branch-ul `documentation` (design docs) și `main` + feature design Grid Arena
-
-**Context:** Două instanțe Hermes au lucrat separat:
-- **Instanța VPS** (documentație): A scris Systems Catalog (37 sisteme), restructurat pipeline-ul în Design + Dev, adăugat clase, caractere, iteme
-- **Instanța PC** (development): A făcut brainstorm Grid Arena + Cell System + Recipes, a scris FEATURE_DESIGN.md
+**Obiectiv:** Documentare decizii finale: tech stack, game model, ghost battles
 
 **Progres:**
 
-- [x] Git merge: `origin/documentation` → `documentation` local (fast-forward)
-- [x] Conflicte rezolvate: PIPELINE.md șters (înlocuit de DESIGN_PIPELINE.md + DEV_PIPELINE.md)
-- [x] FEATURE_DESIGN.md pentru Grid Arena păstrat
-- [x] State files unificate
+- [x] D006 — Tech Stack Final: React + PixiJS + Tauri / Rust + Axum + PostgreSQL
+- [x] D007 — Game Model: Offline (AI) + Online Ghost Battles (snapshot PvP)
+- [x] Branch `development` șters (local + remote)
+- [x] DECISION_LOG.md actualizat cu D006 + D007
+- [x] README.md actualizat cu tech stack-ul final
+- [x] GDD actualizat (motor → React/PixiJS + Rust)
+- [x] PROJECT_STATUS.md actualizat
+- [x] NEXT_ACTIONS.md curățat de întrebări rezolvate
+- [x] WORKFLOW.md conflicte reparate
 - [ ] G1 — Aprobare Grid Arena design de la Dragoș
 
-**Următorul pas:** Prezint sumarul documentației noi și aștept feedback.
+**Următorul pas:** Aștept instrucțiuni de la Dragoș.

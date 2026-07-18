@@ -29,10 +29,10 @@
 
 | Task | Status | Descriere |
 |------|--------|-----------|
-| TASK-001 | 📋 | Grid scene in Godot (pătrățele) |
+| TASK-001 | 📋 | Grid 12×8 în PixiJS (framework, resize, camera) |
 | TASK-002 | 📋 | O carte cu Attack Jewel + Defense Jewel pe grid |
-| TASK-003 | 📋 | Auto-battle de bază (simultan) |
-| TASK-004 | 📋 | HP jucător + damage la cărți |
+| TASK-003 | 📋 | Auto-battle local în TypeScript |
+| TASK-004 | 📋 | HP jucător + damage + adversar AI |
 
 ---
 

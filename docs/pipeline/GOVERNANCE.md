@@ -10,7 +10,7 @@
 | Departament | Responsabil | Locație | Branch | Output |
 |---|---|---|---|---|
 | 🎨 Design | Eu (agent VPS) + tu | VPS | `documentation` | Specs, wireframe, tickete |
-| ⚙️ Development | Instanța PC + tu | PC | `game-development` | Cod (Rust sau Godot — TBD) |
+| ⚙️ Development | Instanța PC + tu | PC | `game-development` | Cod (React + PixiJS + Rust) |
 
 ---
 

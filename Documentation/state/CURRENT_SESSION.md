@@ -1,19 +1,21 @@
 # Current Session — Cardweave
 
 **Proiect:** Cardweave
-**Dată:** 2026-07-12
-**Fază:** Game Design Document complet — repo nou creat
+**Dată:** 2026-07-18
+**Fază:** Game Design — Grid Arena active, tech stack decis
 
 ## Obiectiv curent
-Repo nou pentru Cardweave — PvP auto-battler cu card crafting din părți.
-Design document complet. Urmează să răspundem la întrebările deschise și să începem implementarea (P1 — Grid + auto-battle).
+Cardweave — PvP auto-battler cu card crafting din părți.
+Tech stack: React + PixiJS + Tauri (client) / Rust + Axum (server).
+Model: Offline (AI) + Online Ghost Battles (snapshot PvP).
 
 ## Status
-- [x] Repo inițializat (F:\The Tower\Dragos-AI13\shardbound)
+- [x] Repo inițializat
 - [x] CARDWEAVE_GDD.md — document complet de design
-- [x] README.md
+- [x] README.md actualizat cu tech stack final
 - [x] State files (TICKET_INDEX, NEXT_ACTIONS)
-- [ ] Remote repo pe GitHub (de creat — Dragos-AI13/shardbound)
-
-## Următorul pas
-Răspunde la întrebările deschise din GDD, apoi începe implementarea P1.
+- [x] Tech stack decis: React/PixiJS/Tauri + Rust/Axum/PostgreSQL
+- [x] Game model decis: Offline + Ghost Battles
+- [x] Branch `development` șters (local + remote)
+- [ ] G1 — Grid Arena design aprobat
+- [ ] P1 — Prototype offline în React + PixiJS

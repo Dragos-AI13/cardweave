@@ -4,6 +4,28 @@
 
 ---
 
+## 2026-07-18 — Decizii Tech Stack + Game Model + Cleanup
+
+### Added
+- **D006** — Tech Stack Final: React + PixiJS + Tauri / Rust + Axum + PostgreSQL
+- **D007** — Game Model: Offline (AI) + Online Ghost Battles (snapshot PvP)
+- DECISION_LOG.md — D006 + D007 adăugate
+
+### Changed
+- README.md — motor actualizat (Godot → React/PixiJS + Rust)
+- CARDWEAVE_GDD.md — motor + platforme actualizate
+- PROJECT_STATUS.md — tech stack + game model reflectate
+- NEXT_ACTIONS.md — întrebări deschise rezolvate
+- CURRENT_SESSION.md — actualizat cu progresul
+- DESIGN_PIPELINE.md + DEV_PIPELINE.md — header cu stack decizional
+- GOVERNANCE.md — Development output actualizat (React + PixiJS + Rust)
+- Documentation/state/* — sync cu noile decizii
+
+### Removed
+- Branch `development` (local + remote) — era identic cu `main`
+
+---
+
 ## 2026-07-18 — Sync Documentație (Merge)
 
 ### Added

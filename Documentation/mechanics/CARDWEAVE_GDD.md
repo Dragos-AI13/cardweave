@@ -3,8 +3,9 @@
 **Status:** Design phase — viziune completă
 **Dată:** 2026-07-12
 **Gen:** PvP auto-battler cu card crafting din părți
-**Platformă:** PC (Steam) + Web (itch.io demo) + Mobile (post-lansare)
-**Motor:** Godot 4
+**Platformă:** Steam (Tauri) + Web (itch.io) + Mobile (Capacitor, post-lansare)
+**Motor:** React + TypeScript + PixiJS (client) / Rust + Axum + PostgreSQL (server)
+**Model:** Offline (AI) + Online Ghost Battles (snapshot PvP)
 
 ---
 

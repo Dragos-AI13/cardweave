@@ -31,5 +31,3 @@
 - [ ] Scrie DESIGN_PASS.md pentru Grid Arena
 - [ ] UI_WIREFRAME.md — mockup ecran Buy Phase + Grid + Crafting Station
 - [ ] Configurează branch `feat/grid-arena-recipes` din `main`
-- [ ] Decide tech stack final (Godot vs Rust+WebGPU)
-- [ ] Decide dacă începem Card Part System (GDD) sau Grid Arena (design nou)

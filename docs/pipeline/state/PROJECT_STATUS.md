@@ -10,8 +10,9 @@
 |-------------|---------|
 | **Nume** | Cardweave |
 | **Gen** | PvP Auto-battler cu card crafting din părți |
-| **Motor** | Godot 4 (proposal: Rust + WebGPU — nedecis) |
-| **Platforme** | PC (Steam) + Web (itch.io) + Mobile (post) |
+| **Motor** | React + PixiJS + Tauri (client) / Rust + Axum (server) |
+| **Platforme** | Steam (Tauri) + Web (itch.io) + Mobile (Capacitor) |
+| **Model joc** | Offline (AI) + Online Ghost Battles (snapshot PvP) |
 | **Pipeline** | ✅ Dual: Design (VPS) + Development (PC) |
 
 ---
@@ -74,7 +75,9 @@ Cealaltă instanță Hermes a scris pe branch-ul `documentation`:
 
 ## Notes
 
-- **Tech stack TBD**: GDD zice Godot 4, dar TECH_STACK_PROPOSAL propune Rust+WebGPU+egui+PostgreSQL. De discutat.
+- **Tech Stack:** React + PixiJS + Tauri (client) / Rust + Axum (server) ✅ Decis
+- **Game Model:** Ghost Battles (snapshot PvP) + Offline (AI) ✅ Decis
 - **Grid Arena** e feature-ul activ P1 (are prioritate față de Card Part System ca design)
 - **Card Part System** e în DOCUMENTATION branch cu Systems Catalog — GDD detaliu la nivel de sistem
 - **Branch strategy**: `documentation` (design) | `game-development` (cod) | `main` (stabil)
+- Branch `development` șters (2026-07-18) — era identic cu `main`

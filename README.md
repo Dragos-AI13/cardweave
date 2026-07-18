@@ -4,9 +4,10 @@
 
 Cardweave este un **PvP auto-battler** unde jucătorii își construiesc singuri cărțile din părți (shard-uri) în timpul unui duel. Fiecare carte e unică, fiecare meci e diferit.
 
-**Motor:** Godot 4  
-**Platforme:** PC (Steam) + Web (itch.io demo) + Mobile (post-lansare)  
-**Status:** Design phase
+**Motor:** React + PixiJS + Tauri (client) / Rust + Axum + PostgreSQL (server)  
+**Model:** Offline (AI) + Online Ghost Battles (snapshot PvP)  
+**Platforme:** Steam (Tauri) + Web (itch.io) + Mobile (Capacitor, post-lansare)  
+**Status:** Game Design phase
 
 ---
 
@@ -22,11 +23,15 @@ Cardweave este un **PvP auto-battler** unde jucătorii își construiesc singuri
 shardbound/
 ├── Documentation/
 │   ├── mechanics/
-│   │   └── CARDWEAVE_GDD.md       ← Game Design Document
+│   │   ├── CARDWEAVE_GDD.md       ← Game Design Document
+│   │   └── SYSTEMS_CATALOG.md     ← 37 de sisteme detaliate
 │   ├── state/                       ← State files (NEXT_ACTIONS, TICKET_INDEX etc.)
 │   ├── art/                         ← Concept art, style guide
 │   └── design/                      ← Wireframe-uri, mockup-uri
-├── game/                            ← Godot project (când începem implementarea)
+├── docs/pipeline/                   ← Pipeline design docs
+├── cardweave/                       ← (schelet Godot — de înlocuit)
+├── app/                             ← Cod sursă (React + PixiJS + Tauri)
+├── server/                          ← Server Rust (Axum + PostgreSQL)
 └── README.md
 ```
 

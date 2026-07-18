@@ -10,7 +10,7 @@
 ```
 🎨 DESIGN (VPS) → specificații + tickete
    ↓ handoff
-⚙️ DEV (PC) → cod (Rust sau Godot — TBD)
+⚙️ DEV (PC) → cod (React + PixiJS + Rust)
 ```
 
 **Noi doi** facem doar design aici. Push pe `documentation`.

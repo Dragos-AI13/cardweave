@@ -1,7 +1,8 @@
 # DESIGN_PIPELINE.md
 
 > Tabelul viu al feature-urilor în **design**. Se actualizează când un feature avansează.
-> Vezi DEV_PIPELINE.md pentru ce e predat spre development.
+> Tech stack: React + PixiJS + Tauri (client) / Rust + Axum + PostgreSQL (server). Vezi D006.
+> Game model: Offline (AI) + Online Ghost Battles (snapshot PvP). Vezi D007.
 
 ---
 
