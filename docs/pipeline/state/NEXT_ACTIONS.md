@@ -1,10 +1,35 @@
 # NEXT_ACTIONS
 
-Prioritizate: security > blockers > impact > quick win
+> Ordinea de execuție. Un singur item activ la un moment dat.
 
-| # | Acțiune | Departament | Status |
-|---|---|---|---|
-| 1 | Decide când începem Card Part System | Design | ⏳ Așteaptă user |
-| 2 | Game Design — Card Part System | Design | ⏳ |
-| 3 | Spec Finalization + tickete | Design | ⏳ |
-| 4 | Handoff către PC | — | ⏳ |
+---
+
+## 🎯 Active Feature
+
+**Feature:** Grid Arena + Cell System + Recipes
+**Phase:** Game Design (pre-G1)
+**Branch:** `feat/grid-arena-recipes`
+
+---
+
+## 📋 Current Sprint
+
+> Acțiunile curente, ordonate. Primul e următorul de făcut.
+
+| # | Acțiune | Status |
+|---|---------|--------|
+| 1 | ✅ **Brainstorm complet** — Grid 12×8, 5 tipuri celule, card sizes, recipes | ✅ |
+| 2 | ✅ **FEATURE_DESIGN.md scris** | ✅ |
+| 3 | **Aprobă designul (G1)** de către Dragoș | ⬜ |
+| 4 | După G1: sparge în tickete → TICKET_INDEX.md | ⬜ |
+| 5 | Implementează P1 — Grid 12×8 fundamental | ⬜ |
+
+---
+
+## 📌 Backlog
+
+- [ ] Scrie DESIGN_PASS.md pentru Grid Arena
+- [ ] UI_WIREFRAME.md — mockup ecran Buy Phase + Grid + Crafting Station
+- [ ] Configurează branch `feat/grid-arena-recipes` din `main`
+- [ ] Decide tech stack final (Godot vs Rust+WebGPU)
+- [ ] Decide dacă începem Card Part System (GDD) sau Grid Arena (design nou)

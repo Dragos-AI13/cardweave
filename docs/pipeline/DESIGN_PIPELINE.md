@@ -21,15 +21,15 @@
 
 | # | Feature | Stare | G1 | G2 | Next Action |
 |---|---|---|---|---|---|
-| 1 | Card Part System | 💡 Backlog | ❌ | ❌ | Așteaptă start |
-| 2 | — | — | — | — | — |
+| 1 | Grid Arena + Cell System + Recipes | 🟡 Game Design | ❌ | ❌ | Așteaptă G1 — aprobă designul |
+| 2 | Card Part System | 💡 Backlog | ❌ | ❌ | Așteaptă decizie tech stack + Grid Arena |
 
 ---
 
 ## Graf
 
 ```text
-Features în design activ: 0
+Features în design activ: 1
 Features în backlog: 1
 Features predate (handoff): 0
 ```

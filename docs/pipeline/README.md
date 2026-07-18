@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# Cardweave Pipeline — Sistemul nostru de producție
-=======
 # Cardweave — Design Pipeline
->>>>>>> afe344e (docs: restructure pipeline - design (VPS) + dev (PC))
 
 > Pipeline-ul de **design** — ce fac eu (agentul pe VPS) împreună cu tine.
 > Instanța de pe PC are propriul pipeline de development.
@@ -14,7 +10,7 @@
 ```
 🎨 DESIGN (VPS) → specificații + tickete
    ↓ handoff
-⚙️ DEV (PC) → cod Rust
+⚙️ DEV (PC) → cod (Rust sau Godot — TBD)
 ```
 
 **Noi doi** facem doar design aici. Push pe `documentation`.
@@ -74,5 +70,5 @@ docs/pipeline/
 |---|---|---|
 | `main` | Stabil, playtested | Merge din game-development |
 | `documentation` | Doar design docs | Eu (VPS) + tu |
-| `game-development` | Cod Rust | Instanța PC |
+| `game-development` | Cod | Instanța PC |
 | `feat/*` | Feature branch-uri | Instanța PC |

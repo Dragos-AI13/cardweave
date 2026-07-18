@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# Cardweave Pipeline Governance
-=======
 # GOVERNANCE.md — Regulile Jocului
->>>>>>> afe344e (docs: restructure pipeline - design (VPS) + dev (PC))
 
 > Acest document definește cum operăm în proiectul Cardweave.
 > Două departamente: **Design** (VPS) și **Development** (PC).
@@ -14,7 +10,7 @@
 | Departament | Responsabil | Locație | Branch | Output |
 |---|---|---|---|---|
 | 🎨 Design | Eu (agent VPS) + tu | VPS | `documentation` | Specs, wireframe, tickete |
-| ⚙️ Development | Instanța PC + tu | PC | `game-development` | Cod Rust |
+| ⚙️ Development | Instanța PC + tu | PC | `game-development` | Cod (Rust sau Godot — TBD) |
 
 ---
 
