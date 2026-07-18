@@ -1,11 +1,11 @@
 # Cardweave — Game Design Document
 
-**Status:** Design phase — viziune completă
-**Dată:** 2026-07-12
-**Gen:** PvP auto-battler cu card crafting din părți
-**Platformă:** Steam (Tauri) + Web (itch.io) + Mobile (Capacitor, post-lansare)
-**Motor:** React + TypeScript + PixiJS (client) / Rust + Axum + PostgreSQL (server)
-**Model:** Offline (AI) + Online Ghost Battles (snapshot PvP)
+**Status:** Design phase — viziune completă, offline-first
+**Dată:** 2026-07-18
+**Gen:** Auto-battler single-player cu card crafting din părți
+**Platformă:** Steam (Tauri) + Web (itch.io) — aceeași bază de cod
+**Motor:** React + TypeScript + PixiJS
+**Model:** Offline-first — 100% local, AI opponent adaptiv
 
 ---
 

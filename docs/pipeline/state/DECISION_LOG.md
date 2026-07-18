@@ -79,3 +79,21 @@
 **Motiv:** Ghost battles (Backpack Battles model) oferă anti-cheat natural (serverul validează snapshot-ul atomic înainte de battle). Offline-ul permite joc fără internet. Server-authoritative înseamnă zero cheat posibil — serverul decide tot.
 
 **Sursa:** Discuție securitate + arhitectură (2026-07-18) — user + AI
+
+---
+
+## D008 — Offline-First
+
+**Data:** 2026-07-18
+**Decizie:** Cardweave devine un joc **offline-first complet**. Zero server, zero PostgreSQL, zero ghost battles. Jocul e 100% local, cu AI opponent adaptiv și sisteme procedurale (quests, rewards, narrative) generate dinamic pe client.
+
+**Motiv:** Analiza a arătat că un auto-battler single-player nu are nevoie de online ca să fie extraordinar. Fără server: zero costuri, zero cheat, zero downtime, zero DevOps. AI-ul poate oferi aceeași varietate și provocare ca un opponent uman, fără complexitatea și riscurile unui sistem PvP.
+
+**Implicații:**
+- Se elimină: Rust server, PostgreSQL, Redis, ghost battles, matchmaking, trading
+- Se păstrează: React + PixiJS + Tauri (desktop, Steam, web)
+- Sistemele anti-cheat server-side devin irelevante — jocul e single-player
+- Focusul se mută pe: AI opponent adaptiv + quest factory + reward system
+- Arhitectura e mai simplă, mai rapid de dezvoltat, zero infrastructură
+
+**Sursa:** Discuție arhitectură (2026-07-18) — user + AI

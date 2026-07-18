@@ -1,89 +1,70 @@
-# WORKFLOW.md — Instrucțiuni pentru Agent (VPS)
+# WORKFLOW.md — Instrucțiuni pentru Agent
 
-> Acest document conține flow-ul exact pe care îl urmez EU (agentul AI pe VPS) când fac design pentru Cardweave.
+> Flow-ul de development pentru Cardweave. Offline-first.
 
 ---
 
-## 1. Startup — Început de sesiune
+## 1. Startup
 
 **De fiecare dată când încep o sesiune nouă:**
 
-### Pasul 1 — Stare
-Citește ACESTE fișiere (în paralel):
-1. `docs/pipeline/DESIGN_PIPELINE.md` — ce features sunt active în design
-2. `docs/pipeline/state/NEXT_ACTIONS.md` — următorul lucru de făcut
-3. `docs/pipeline/state/CURRENT_SESSION.md` — ce s-a lucrat ultima dată
-4. `docs/pipeline/state/DECISION_LOG.md` — deciziile de design luate
+1. Citește:
+   - `docs/pipeline/DESIGN_PIPELINE.md` — ce e activ
+   - `docs/pipeline/state/NEXT_ACTIONS.md` — următorul pas
+   - `docs/pipeline/state/CURRENT_SESSION.md` — progres curent
 
-### Pasul 2 — Verificare reală
-- `git log --oneline -3` — ultimele commit-uri
-- E DESIGN_PIPELINE.md actualizat?
+2. Verifică:
+   - `git log --oneline -3` — ultimele commit-uri
+   - Am branch-ul corect? (main sau feat/*)
 
-### Pasul 3 — Raportează
-Prezintă un sumar: ce e activ, unde am rămas, următorul pas.
+3. Raportează sumar scurt.
 
 ---
 
-## 2. Execuție — Cum lucrez la un feature
-
-Când userul spune „hai să facem feature-ul X":
+## 2. Execuție
 
 ### Flow per feature
 
 ```
-PASUL 0 — Backlog → Roadmap
-├── Adaug feature-ul în DESIGN_PIPELINE.md ca 🔵 Roadmap
-├── Mut folderul features/<feature>/ din draft în activ
-└── Aștept „dă-i drumul" de la user
-
 PASUL 1 — Game Design (G1)
 ├── Scriu FEATURE_DESIGN.md
-│   ├── Context, High-Level, In Scope, Out of Scope
-│   ├── Core Mechanics
-│   ├── User Flow
-│   ├── Balance / Valori Inițiale
-│   ├── Acceptance Criteria
-│   └── Întrebări Deschise
-├── Discut cu userul, ajustez
+├── Discut cu tine, ajustez
 ├── Când e clar → G1 bifat
-└── DESIGN_PIPELINE.md → 🟡 Game Design
 
 PASUL 2 — Spec Finalization (G2)
 ├── Scriu DESIGN_PASS.md
-│   ├── Formule exacte, scaling, edge cases
-│   ├── Diagramă de flow (dacă e cazul)
-│   └── Răspuns la toate întrebările deschise
-├── Creez UI_WIREFRAME.md (dacă e cazul)
-├── Sparg feature-ul în tickete
-│   ├── Fiecare ticket = o unitate implementabilă independent
-│   ├── Priorități (P1, P2, P3)
-│   └── TICKET_INDEX.md + ticket-uri individuale
-├── Când e complet → G2 bifat → HANDFOFF
-└── DESIGN_PIPELINE.md → 🟢 Handoff Gata
+├── Sparg în tickete
+├── Când e complet → G2 bifat
 
-PASUL 3 — Handoff
-├── Commit + push pe documentation
-├── Actualizez DEV_PIPELINE.md (ce e gata de implementat)
-├── Actualizez NEXT_ACTIONS.md
-└── Notific: „Feature-ul X e gata de development"
+PASUL 3 — Development
+├── Un ticket odată
+├── Testez
+├── Self-review
+├── Commit + push
+├── Actualizez state files
+
+PASUL 4 — Done
+├── Prezint
+├── Aștept G3 (aprobarea ta)
 ```
 
 ---
 
-## 3. Ce NU fac
+## 3. State Files Update (obligatoriu după fiecare ticket)
 
-- ❌ Nu scriu cod
-- ❌ Nu fac commit pe `game-development` sau `main`
-- ❌ Nu încep un feature fără G1 bifat
+1. **NEXT_ACTIONS.md** — bifează ticket-ul, promovează următorul
+2. **PROJECT_STATUS.md** — actualizează
+3. **CURRENT_SESSION.md** — actualizează progresul
+4. **CHANGELOG_WORKING.md** — adaugă entry
 
 ---
 
-## 4. Template-uri pe care le folosesc
+## 4. Template-uri
 
 | Document | Când |
-|---|---|
+|----------|------|
 | FEATURE_DESIGN.md | Game Design phase |
 | DESIGN_PASS.md | Spec Finalization phase |
 | UI_WIREFRAME.md | Când feature-ul are UI |
 | TICKET.md | Când creez un ticket |
-| TICKET_INDEX.md | Când listezi ticket-urile unui feature |
+| TICKET_INDEX.md | Când listezi ticket-urile |

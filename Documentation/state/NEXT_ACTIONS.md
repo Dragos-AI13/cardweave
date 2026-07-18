@@ -7,4 +7,4 @@ Păstrează doar următoarele 3-7 acțiuni în ordine strictă de execuție.
    - Grid 12×8 în PixiJS
    - O carte cu Attack Jewel + Defense Jewel
    - Auto-battle local (TypeScript)
-   - Adversar AI
+   - AI opponent de bază

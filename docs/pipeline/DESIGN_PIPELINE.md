@@ -1,20 +1,19 @@
 # DESIGN_PIPELINE.md
 
-> Tabelul viu al feature-urilor în **design**. Se actualizează când un feature avansează.
-> Tech stack: React + PixiJS + Tauri (client) / Rust + Axum + PostgreSQL (server). Vezi D006.
-> Game model: Offline (AI) + Online Ghost Battles (snapshot PvP). Vezi D007.
+> Tabelul viu al feature-urilor în design.
+> **Offline-first** — totul e client-side (D008).
 
 ---
 
 ## Legendă
 
 | Stare | Înseamnă |
-|---|---|
-| 💡 Backlog | Idee, neintrată încă în pipeline |
-| 🔵 Roadmap | În pipeline, urmează Game Design |
-| 🟡 Game Design | Scriem FEATURE_DESIGN + wireframe |
+|-------|----------|
+| 💡 Backlog | Idee, neînceput |
+| 🟡 Game Design | Scriem FEATURE_DESIGN |
 | 🟠 Spec Finalization | Scriem DESIGN_PASS + tickete |
-| 🟢 Handoff Gata | Predat spre development (PC) |
+| 🟢 Development | Implementăm |
+| ⚪ Released | Shipped |
 
 ---
 
@@ -22,15 +21,5 @@
 
 | # | Feature | Stare | G1 | G2 | Next Action |
 |---|---|---|---|---|---|
-| 1 | Grid Arena + Cell System + Recipes | 🟡 Game Design | ❌ | ❌ | Așteaptă G1 — aprobă designul |
-| 2 | Card Part System | 💡 Backlog | ❌ | ❌ | Așteaptă decizie tech stack + Grid Arena |
-
----
-
-## Graf
-
-```text
-Features în design activ: 1
-Features în backlog: 1
-Features predate (handoff): 0
-```
+| 1 | Grid Arena + Cell System + Recipes | 🟡 Game Design | ❌ | ❌ | Așteaptă G1 |
+| 2 | Card Part System | 💡 Backlog | ❌ | ❌ | Așteaptă Grid Arena |

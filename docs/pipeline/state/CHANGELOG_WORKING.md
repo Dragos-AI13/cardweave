@@ -4,65 +4,78 @@
 
 ---
 
+## 2026-07-18 — Offline-First + Cleanup Documentație
+
+### Added
+- **D008** — Offline-First: zero server, zero online, 100% local
+- DEVELOPMENT_CONSTITUTION.md rescris offline-first (10 secțiuni)
+- AI Tests + Save/Load Tests + Performance Tests în secțiunea de testing
+
+### Changed
+- README.md — direcție offline-first, fără server/PvP
+- CARDWEAVE_GDD.md — single-player, offline-first
+- PROJECT_STATUS.md — identitate + model actualizate
+- DECISION_LOG.md — D008 adăugat
+- GOVERNANCE.md — redus la o singură echipă (fără dual pipeline)
+- DESIGN_PIPELINE.md — curățat
+- WORKFLOW.md — rescris offline-first
+- CURRENT_SESSION.md + NEXT_ACTIONS.md — actualizate
+
+### Removed
+- DEV_PIPELINE.md — nu mai e necesar (offline-first, o singură mașină)
+- Toate referințele la server (Rust, PostgreSQL, Redis, ghost battles, HMAC, audit log)
+- Secțiunile de anti-cheat server-side din DEVELOPMENT_CONSTITUTION.md
+
+---
+
+## 2026-07-18 — Securitate: Race Conditions, Bot Protection, Supply Chain
+
+### Added
+- 3.5 Idempotency & Race Condition Prevention
+- 3.6 Replay Attack Protection (nonce + timestamp)
+- 3.7 Bot / Automation Protection (turn timer, click timing)
+- 3.8 Snapshot Pool Poisoning
+- 3.9 Rating / Win Trading Protection
+- 10.1 Tipuri Numerice (BIGINT, no float)
+- 11 Supply Chain Security
+- 12 Tauri IPC Security
+- 13 Offline ↔ Online Sync
+- 14 Integritatea Numerelor
+- 15 noi security tests
+
+### Changed
+- DEVELOPMENT_CONSTITUTION.md extins (446 linii noi)
+
+---
+
 ## 2026-07-18 — Decizii Tech Stack + Game Model + Cleanup
 
 ### Added
-- **D006** — Tech Stack Final: React + PixiJS + Tauri / Rust + Axum + PostgreSQL
-- **D007** — Game Model: Offline (AI) + Online Ghost Battles (snapshot PvP)
-- DECISION_LOG.md — D006 + D007 adăugate
+- D006 — Tech Stack Final
+- D007 — Game Model (Ghost Battles + Offline)
+- DECISION_LOG.md — D006 + D007
 
 ### Changed
-- README.md — motor actualizat (Godot → React/PixiJS + Rust)
-- CARDWEAVE_GDD.md — motor + platforme actualizate
-- PROJECT_STATUS.md — tech stack + game model reflectate
-- NEXT_ACTIONS.md — întrebări deschise rezolvate
-- CURRENT_SESSION.md — actualizat cu progresul
-- DESIGN_PIPELINE.md + DEV_PIPELINE.md — header cu stack decizional
-- GOVERNANCE.md — Development output actualizat (React + PixiJS + Rust)
-- Documentation/state/* — sync cu noile decizii
+- README.md, GDD, state files — tech stack reflectat
 
 ### Removed
-- Branch `development` (local + remote) — era identic cu `main`
+- Branch `development`
 
 ---
 
 ## 2026-07-18 — Sync Documentație (Merge)
 
 ### Added
-- **SYNC:** Branch `documentation` actualizat de la `origin/documentation` (fast-forward)
-  - Systems Catalog (37 sisteme, SYS-001 → SYS-037) cu anatomie completă per sistem
-  - Pipeline restructurat: DESIGN_PIPELINE.md + DEV_PIPELINE.md
-  - GDD actualizat: Moștenire Tower Run (8 sisteme), clase, Character Card Pool
-  - Sisteme noi: Item, Class, Character Pool + Compatibility, Infinite Leveling, Rankings, Tournaments, Onboarding, Settings, Disconnect/Reconnect, Collection, Friends, Daily Rewards, Reports, Achievements, Match History, Notifications
-  - 10 rase redesign cu identități proprii
+- Systems Catalog (37 sisteme)
+- Pipeline restructurat
+- GDD actualizat
 
 ### Changed
-- DOCUMENTATION/CURRENT_SESSION.md — focus pe restructurare pipeline
-- DOCUMENTATION/NEXT_ACTIONS.md — așteaptă decizie tech stack
-- DOCS/PIPELINE/PIPELINE.md — șters (înlocuit de DESIGN_PIPELINE.md + DEV_PIPELINE.md)
-- DOCS/PIPELINE/state files — unificate între ambele instanțe
-- DOCS/PIPELINE/GOVERNANCE.md — dual department (Design VPS + Dev PC)
-- DOCS/PIPELINE/WORKFLOW.md — rescris pentru design-only VPS workflow
-
-### Fixed
-- Conflicte git între stash (Grid Arena) și upstream (restructurare pipeline) — rezolvate
+- State files unificate între ambele instanțe
 
 ---
 
 ## 2026-07-14
 
 ### Added
-- `docs/pipeline/features/grid-arena-recipes/FEATURE_DESIGN.md` — design complet
-  - Grid 12×8 cu celule extensibile și 5 tipuri (Ofensive, Defensive, Energie, Sinergie, Neutru)
-  - Card sizes variabile (1×1, 2×2, 3×3, 4×4)
-  - Itemi de grid 1×1 (Piatră de Putere, Scut, Capcane etc.)
-  - Upgrade celule (+0→+10) cu Dust
-  - Recipes — combinarea cărților complete între dueluri
-  - Economie integrată cu sistemele existente (Gold, Dust, Essence, Coins)
-  - Plan de implementare pe 4 faze (P1-P4)
-
-### Changed
-- NEXT_ACTIONS.md — feature activ mutat pe Grid Arena
-- CURRENT_SESSION.md — focus pe designul curent
-- PROJECT_STATUS.md — P1 actualizat
-- PIPELINE.md — Grid Arena adăugat în pipeline
+- Grid Arena FEATURE_DESIGN.md (Grid 12×8, 5 tipuri celule, recipes)

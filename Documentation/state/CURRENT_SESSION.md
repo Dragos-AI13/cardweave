@@ -2,20 +2,19 @@
 
 **Proiect:** Cardweave
 **Dată:** 2026-07-18
-**Fază:** Game Design — Grid Arena active, tech stack decis
+**Fază:** Game Design — Grid Arena active, offline-first decis
 
 ## Obiectiv curent
-Cardweave — PvP auto-battler cu card crafting din părți.
-Tech stack: React + PixiJS + Tauri (client) / Rust + Axum (server).
-Model: Offline (AI) + Online Ghost Battles (snapshot PvP).
+Cardweave — auto-battler single-player cu card crafting din părți.
+**Offline-first** — 100% local, zero server, AI opponent adaptiv.
+Tech stack: React + TypeScript + PixiJS + Tauri.
 
 ## Status
 - [x] Repo inițializat
 - [x] CARDWEAVE_GDD.md — document complet de design
-- [x] README.md actualizat cu tech stack final
-- [x] State files (TICKET_INDEX, NEXT_ACTIONS)
-- [x] Tech stack decis: React/PixiJS/Tauri + Rust/Axum/PostgreSQL
-- [x] Game model decis: Offline + Ghost Battles
-- [x] Branch `development` șters (local + remote)
+- [x] README.md actualizat (offline-first)
+- [x] State files actualizate
+- [x] Tech stack decis: React/PixiJS/Tauri (D006)
+- [x] Direcție offline-first decisă (D008)
 - [ ] G1 — Grid Arena design aprobat
-- [ ] P1 — Prototype offline în React + PixiJS
+- [ ] P1 — Prototype offline (grid + carte + AI)
