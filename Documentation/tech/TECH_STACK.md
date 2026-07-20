@@ -120,6 +120,62 @@ cardweave/
 
 ---
 
+## Tool-uri și Dependințe
+
+### System Requirements
+
+| Tool | Versiune | De ce |
+|---|---|---|
+| **Node.js** | v20+ | Runtime pentru TypeScript + PixiJS |
+| **Rust** | latest | Backend Tauri (instalat cu `rustup`) |
+| **VS Code** | latest | Editor recomandat |
+
+### NPM Dependencies
+
+| Pachet | Rol |
+|---|---|
+| `pixi.js` | Motor grafic WebGL — canvas, sprite-uri, animații |
+| `@pixi/ui` | Componente UI (butoane, containere, input) |
+| `@pixi/particle-emitter` | Efecte vizuale, particule |
+| `howler` | Sunet și muzică |
+| `vite` | Bundler + hot-reload |
+| `typescript` | Tipare + compilare |
+| `@tauri-apps/cli` | CLI pentru Tauri 2 |
+
+### Rust Crate (Tauri)
+
+| Crate | Rol |
+|---|---|
+| `tauri` | Backend-ul desktop (ferestre, fișiere, update) |
+
+### Ce NU folosim
+
+| Tool | Motiv |
+|---|---|
+| React / Vue / Svelte | PixiJS pur — zero framework UI |
+| Webpack | Vite e mai rapid și mai simplu |
+| Electron | Tauri e de 10× mai ușor (~5MB vs ~150MB) |
+| Godot / Unity / Phaser | Stack-ul ales e TypeScript + PixiJS |
+
+---
+
+## Setup Command
+
+```bash
+# 1. Creezi proiectul Tauri gol
+npm create tauri-app@latest cardweave -- --template vanilla-ts
+
+# 2. Intri și instalezi PixiJS + plugins
+cd cardweave
+npm install pixi.js @pixi/ui @pixi/particle-emitter howler
+
+# 3. Gata — începi să scrii cod
+npm run tauri dev   # Desktop (Steam)
+npm run dev         # Web (browser)
+```
+
+---
+
 ## Referințe
 
 - [D006 — Tech Stack Final](../docs/pipeline/state/DECISION_LOG.md)
