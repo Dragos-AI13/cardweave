@@ -1415,30 +1415,33 @@ res://features/results/
 | SYS-013 | Treire (Durability) | SYS-003, SYS-012 | progression |
 | SYS-014 | Economy | SYS-001 | economy |
 | SYS-015 | Player Profile | SYS-014 | data |
-| SYS-016 | Matchmaking + Lobby | SYS-015 | network |
-| SYS-017 | Game State Sync | SYS-016 | network |
-| SYS-018 | Anti-Cheat | SYS-017 | network |
+| SYS-016 | Matchmaking + Lobby | SYS-015 | ❌ removed (offline-first) |
+| SYS-017 | Game State Sync | SYS-016 | ❌ removed (offline-first) |
+| SYS-018 | Anti-Cheat | SYS-017 | ❌ removed (offline-first) |
 | SYS-019 | UI Framework | — | ui |
 | SYS-020 | Audio System | SYS-019 | audio |
 | SYS-021 | Results + Rewards | SYS-008, SYS-014 | progression |
 | SYS-022 | Infinite Leveling | SYS-015 | progression |
-| SYS-023 | Rankings | SYS-015, SYS-016 | progression |
-| SYS-024 | Tournament System | SYS-016, SYS-021 | feature |
+| SYS-023 | Rankings | SYS-015 | progression |
+| SYS-024 | Tournament System | SYS-021 | feature |
 | SYS-025 | Item System | SYS-001, SYS-010, SYS-012 | progression |
 | SYS-026 | Tutorial / Onboarding | SYS-019 | feature |
 | SYS-027 | Settings / Options | SYS-019 | feature |
-| SYS-028 | Disconnect / Reconnect | SYS-017 | network |
+| SYS-028 | Disconnect / Reconnect | SYS-017 | ❌ removed (offline-first) |
 | SYS-029 | Collection Manager | SYS-003, SYS-025 | ui |
-| SYS-030 | Friend System | SYS-015, SYS-016 | feature |
+| SYS-030 | Friend System | — | ❌ removed (offline-first) |
 | SYS-031 | Daily Rewards / Login Streak | SYS-021 | feature |
-| SYS-032 | Report System | SYS-015 | feature |
+| SYS-032 | Report System | — | ❌ removed (offline-first) |
 | SYS-033 | Achievement System | SYS-015 | progression |
-| SYS-034 | Match History | SYS-007, SYS-015 | feature |
+| SYS-034 | Match History | — | ❌ removed (offline-first) |
 | SYS-035 | Notification System | SYS-015 | feature |
 | SYS-036 | Class System | SYS-001, SYS-009, SYS-025 | progression |
 | SYS-037 | Character Card Pool + Compatibility | SYS-001, SYS-004, SYS-009 | card |
+| SYS-038 | AI Opponent | SYS-007, SYS-009 | core |
+| SYS-039 | Offline Save / Load | SYS-015 | data |
+| SYS-040 | Quest Factory | SYS-021, SYS-038 | feature |
 
-**Total: 37 de sisteme**
+**Total: 40 sisteme** (6 removed, 34 active)
 
 ---
 
@@ -2503,3 +2506,210 @@ res://features/character_pool/
 | Dată | Schimbare |
 |---|---|
 | 2026-07-13 | Versiune inițială |
+
+---
+
+## SYS-038 — AI Opponent
+
+### 1. Identitate
+- **Nume:** AI Opponent
+- **Scop:** Adversar controlat de AI care joacă împotriva jucătorului
+- **Categorii:** core
+- **Dependențe:** SYS-007 (Battle), SYS-009 (Races)
+
+### 2. Data
+```
+AIOpponent:
+├── difficulty: enum { EASY, NORMAL, HARD, EXPERT }
+├── race: RaceDefinition
+├── strategy: { aggressivity, defense, economy }
+├── deck_building_rules: ruleset
+└── behavior_tree: decisions
+```
+
+### 3. Logică
+- AI-ul joacă aceleași faze ca jucătorul: shop → assembly → battle
+- AI-ul are strategii diferite per dificultate
+- AI-ul nu trișează — respectă aceleași reguli
+- Dificultatea se adaptează la performanța jucătorului
+
+### 4. UI
+- Numele adversarului + rasa
+- Animații care arată că adversarul "se pregătește"
+
+### 5. Network
+- — (local)
+
+### 6. Config
+- Strategii per dificultate
+- Adaptive difficulty curve
+
+### 7. PixiJS
+```
+src/cardinal/ai/
+├── AIOpponent.ts
+├── AIStrategy.ts
+└── AIDifficulty.ts
+```
+
+### 8. Testare
+- [ ] AI-ul cumpără părți și asamblează cărți
+- [ ] AI-ul plasează cărți pe grid
+- [ ] AI-ul face battle
+- [ ] Dificultatea se simte diferită per nivel
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-18 | Versiune inițială |
+
+---
+
+## SYS-039 — Offline Save / Load
+
+### 1. Identitate
+- **Nume:** Offline Save / Load
+- **Scop:** Salvează și încarcă progresul local
+- **Categorii:** data
+- **Dependențe:** SYS-015 (Player Profile)
+
+### 2. Data
+```
+SaveData:
+├── player_profile: PlayerProfile
+├── owned_cards: Array[CardDefinition]
+├── progression: { level, xp, professions }
+└── settings: Settings
+```
+
+### 3. Logică
+- Salvare automată după fiecare acțiune importantă
+- Backup la fiecare login
+- Stocare în IndexedDB (web) / fișier local (Tauri)
+
+### 4. Testare
+- [ ] Progresul se salvează
+- [ ] La reload, progresul e restaurat
+- [ ] Backup funcționează
+
+### 5. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-18 | Versiune inițială |
+
+---
+
+## SYS-040 — Quest Factory (Cardinal)
+
+### 1. Identitate
+- **Nume:** Quest Factory
+- **Scop:** Generare procedurală de quest-uri cu recompense și penalizări
+- **Categorii:** feature
+- **Dependențe:** SYS-021 (Rewards), SYS-038 (AI Opponent)
+
+### 2. Data
+```
+Quest:
+├── id, title, description
+├── objective: { type, target, current }
+├── reward: Reward
+├── penalty: { type, value }
+├── time_limit: int
+└── difficulty: enum
+```
+
+### 3. Logică
+- Quest-uri generate procedural pe baza progresului
+- Dacă nu sunt completate la timp → penalizare
+- Zilnice, săptămânale, run-bound
+- Cardinal alege tipul pe baza comportamentului jucătorului
+
+### 4. Testare
+- [ ] Quest generat → completat → reward
+- [ ] Quest necompletat → penalizare
+- [ ] Cardinal evită repetiția
+
+### 5. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-18 | Versiune inițială |
+
+---
+
+## Implementation Roadmap
+
+### Faza 0 — Fundația
+
+| Ordine | Sistem | Motiv |
+|---|---|---|
+| 0.1 | SYS-001 Resource System | Toate datele jocului |
+| 0.2 | SYS-019 UI Framework (PixiJS) | Ecrane, butoane, text |
+| 0.3 | SYS-002 Game State Machine | Flow-ul jocului |
+| 0.4 | SYS-020 Audio System | Muzică + efecte |
+
+### Faza 1 — Nucleul Gameplay
+
+| Ordine | Sistem | Motiv |
+|---|---|---|
+| 1.1 | SYS-005 Arena + Grid | Prima scenă vizuală |
+| 1.2 | SYS-003 Part Inventory | Ai părți, le vezi |
+| 1.3 | SYS-009 Race Selection | Alegi rasa |
+| 1.4 | SYS-004 Card Assembly | Asamblezi o carte |
+| 1.5 | SYS-036 Class System | Alegi clasa |
+
+### Faza 2 — Loop-ul de Bază
+
+| Ordine | Sistem | Motiv |
+|---|---|---|
+| 2.1 | SYS-006 Shop + Buy Phase | Cumperi părți |
+| 2.2 | SYS-007 Battle System | Cărțile se bat |
+| 2.3 | SYS-008 Match Manager | Runde, win/lose |
+| 2.4 | SYS-038 AI Opponent | Adversar care joacă |
+| 2.5 | SYS-021 Results + Rewards | Recompense |
+
+### Faza 3 — Conținut + Varietate
+
+| Ordine | Sistem | Motiv |
+|---|---|---|
+| 3.1 | SYS-025 Item System | Weapon, Armor, Accessory |
+| 3.2 | SYS-037 Character Card Pool | Cărți per caracter |
+| 3.3 | SYS-010 Profession System | Progresie |
+| 3.4 | SYS-011 Blueprint System | Crafting |
+| 3.5 | SYS-040 Quest Factory | Quest-uri generate |
+
+### Faza 4 — Progresie
+
+| Ordine | Sistem | Motiv |
+|---|---|---|
+| 4.1 | SYS-022 Infinite Leveling | Level infinit |
+| 4.2 | SYS-012 Upgrade (+0 → +10) | Îmbunătățire părți |
+| 4.3 | SYS-013 Treire (Durability) | Durabilitate |
+| 4.4 | SYS-014 Economy | Gold, materiale |
+| 4.5 | SYS-015 Player Profile | Salvare progres |
+| 4.6 | SYS-039 Offline Save / Load | Persistență |
+
+### Faza 5 — Retenție + Polish
+
+| Ordine | Sistem | Motiv |
+|---|---|---|
+| 5.1 | SYS-026 Tutorial | Ghidare jucător nou |
+| 5.2 | SYS-027 Settings | Configurare |
+| 5.3 | SYS-029 Collection Manager | Vezi colecția |
+| 5.4 | SYS-031 Daily Rewards | Login zilnic |
+| 5.5 | SYS-033 Achievement System | Realizări |
+| 5.6 | SYS-035 Notification System | Notificări |
+| 5.7 | SYS-023 Rankings (local) | Leaderboard local |
+| 5.8 | SYS-024 Tournament System | Provocări periodice |
+
+### Graful Dependențelor
+
+```
+SYS-001
+  → SYS-003 → SYS-004
+  → SYS-005 → SYS-006 → SYS-007 → SYS-008 → SYS-038
+  → SYS-009 → SYS-036
+  → SYS-010 → SYS-011
+  → SYS-014 → SYS-015 → SYS-039
+```
+
+**Primul milestone (loop jucabil):** SYS-001 → SYS-005 → SYS-003 → SYS-004 → SYS-006 → SYS-007 → SYS-008 → SYS-038 = poți juca o rundă completă.
