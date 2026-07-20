@@ -1,27 +1,41 @@
 # Feature: Character Card Population
 
 **ID:** FEATURE-CARDS-001
-**Status:** 💡 Backlog (nu începe până nu e Faza 2 completă)
-**Gate:** G1 după ce loop-ul jucabil (Faza 2) e aprobat
+**Status:** 💡 Backlog
+**Gate:** Se activează după ce skills, buffs/debuffs și caracterele sunt definite
 
 ---
 
 ## 1. Context
 
-După ce sistemele de bază funcționează (grid, assembly, shop, battle, AI opponent), e timpul să populăm jocul cu conținut real. Fiecare caracter are nevoie de cărțile sale unice.
+După ce sistemele de bază funcționează (grid, assembly, shop, battle, AI opponent) și după ce avem definițiile complete ale skills, buffs/debuffs și caracterelor, începem să populăm fiecare caracter cu cărțile sale unice.
 
 ---
 
 ## 2. Când se activează acest feature
 
-- [x] SYS-001 → SYS-008 implementate și funcționale
-- [x] Loop-ul de bază (shop → assembly → battle → rewards) e jucabil
-- [x] Mecanica de bază e aprobată (e fun)
-- [ ] **Abia atunci începe popularea caracterelor**
+- [ ] Skill Rectangle Catalog — complet (toate efectele posibile, cum scalează)
+- [ ] Buff/Debuff Catalog — complet
+- [ ] Caracterele — definite (nume, identitate, teme preferate)
+- [ ] SYS-001 → SYS-008 implementate și funcționale
+- [ ] Loop-ul de bază (shop → assembly → battle → rewards) jucabil și aprobat
+
+**Abia atunci începe popularea cărților.**
 
 ---
 
-## 3. Ce trebuie făcut
+## 3. Dependențe complete
+
+```
+Skills + Buffs/Debuffs Catalog (acum)
+  → Caractere definite (nume, identitate, tematică)
+    → Caractere populate cu cărți (acest feature)
+      → Balansare și testare
+```
+
+---
+
+## 4. Ce trebuie făcut
 
 Pentru fiecare caracter:
 
@@ -30,18 +44,20 @@ Pentru fiecare caracter:
 | 1 | Stabilești identitatea caracterului (nume, personalitate, rol) |
 | 2 | Alegi 5-15 cărți care definesc stilul lui |
 | 3 | Pentru fiecare carte: definești toate 6 părțile (valori, rarități, skill) |
-| 4 | Calculezi sinergiile interne (cărțile din același caracter) |
-| 5 | Creezi temele (theme_tags) pentru compatibilitate |
+| 4 | Skill-urile sunt din Catalog (nu inventezi altele noi aici) |
+| 5 | Calculezi sinergiile interne |
 | 6 | Populezi datele în sistem (JSON / TypeScript) |
+
+**Notă:** La pasul 3, nu inventezi skill-uri noi — folosești doar ce e în Skill Rectangle Catalog. Dacă ai nevoie de un skill nou, adaugi mai întâi în catalog, apoi îl folosești la cărți.
 
 ---
 
-## 4. Template — definire carte
+## 5. Template — definire carte
 
 ```
 Caracter: [Nume]
-Rasă: [Dragonkin / Vampire / ...]
-Clasă: [Berserker / Assassin / ...]
+Rasă: [rasă]
+Clasă: [clasă]
 
 Cartea 1: „[Nume Carte]"
 ├── Frame: [raritate]
@@ -49,27 +65,20 @@ Cartea 1: „[Nume Carte]"
 ├── Icon: [character_id]
 ├── Attack Jewel: +[valoare] damage, cost [n] energie
 ├── Defense Jewel: +[valoare] HP, cost [n] energie
-├── Skill: [tip efect] — [descriere]
+├── Skill: [SKILL_ID din catalog] — [parametri]
 ├── Theme: [theme_tag]
 └── Rarity: [Common → Mythic]
 ```
 
 ---
 
-## 5. Estimare
+## 6. Estimare
 
 | Task | Efort |
 |---|---|
-| 1 caracter complet (~10 cărți) | ~2-4 ore de design |
+| 1 caracter complet (~10 cărți) | ~2-4 ore |
 | 10 caractere complete | ~20-40 ore |
-| Balansare inițială | ~5-10 ore |
-
----
-
-## 6. Dependențe
-
-- Toate sistemele din Faza 0-2
-- SYS-037 Character Card Pool (ca să știm unde se duc datele)
+| Balansare | ~5-10 ore |
 
 ---
 
@@ -78,3 +87,4 @@ Cartea 1: „[Nume Carte]"
 | Dată | Schimbare |
 |---|---|
 | 2026-07-18 | Creat |
+| 2026-07-18 | Adăugate dependențe de Skills Catalog + Caractere |

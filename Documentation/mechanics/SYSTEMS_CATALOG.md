@@ -2649,7 +2649,7 @@ Quest:
 
 ### Faza 1 — Nucleul Gameplay
 
-| Ordine | Sistem | Motiv |
+| Ordine | Sistem / Feature | Motiv |
 |---|---|---|
 | 1.1 | SYS-005 Arena + Grid | Prima scenă vizuală |
 | 1.2 | SYS-003 Part Inventory | Ai părți, le vezi |
@@ -2657,9 +2657,11 @@ Quest:
 | 1.4 | SYS-004 Card Assembly | Asamblezi o carte |
 | 1.5 | SYS-036 Class System | Alegi clasa |
 
+**Notă:** La Faza 1, folosești **date hardcodate de test** (o rasă, o clasă, câteva părți). Nu definești conținut real încă.
+
 ### Faza 2 — Loop-ul de Bază
 
-| Ordine | Sistem | Motiv |
+| Ordine | Sistem / Feature | Motiv |
 |---|---|---|
 | 2.1 | SYS-006 Shop + Buy Phase | Cumperi părți |
 | 2.2 | SYS-007 Battle System | Cărțile se bat |
@@ -2667,15 +2669,29 @@ Quest:
 | 2.4 | SYS-038 AI Opponent | Adversar care joacă |
 | 2.5 | SYS-021 Results + Rewards | Recompense |
 
+**Milestone — Loop jucabil:** după Faza 2, ai un joc care se joacă de la început până la sfârșit (cu date de test). E momentul să aprobi mecanica înainte să investești în conținut.
+
+### Pasul Interim — Content Foundation
+
+*Acest pas se face ÎNAINTE de a popula caractere, dar numai dacă loop-ul e aprobat.*
+
+| Ordine | Feature | Motiv |
+|---|---|---|
+| I.1 | **Skill Rectangle Catalog** — toate efectele posibile, scale cu raritatea | Fără skills, nu poți scrie cărți |
+| I.2 | **Buff / Debuff Catalog** — toate modificatorii (vulnerability, shield, poison etc.) | Fără buffs, skills sunt goale |
+| I.3 | **Character Definitions** — nume, identitate, tematică, ce skills preferă | Fără caractere definite, nu știi cui aparțin cărțile |
+| I.4 | Theme Tags — lista completă de teme pentru sinergii | Fără teme, compatibilitatea nu funcționează |
+
 ### Faza 3 — Conținut + Varietate
 
-| Ordine | Sistem | Motiv |
+| Ordine | Sistem / Feature | Motiv |
 |---|---|---|
-| 3.1 | SYS-025 Item System | Weapon, Armor, Accessory |
-| 3.2 | SYS-037 Character Card Pool | Cărți per caracter |
-| 3.3 | SYS-010 Profession System | Progresie |
-| 3.4 | SYS-011 Blueprint System | Crafting |
-| 3.5 | SYS-040 Quest Factory | Quest-uri generate |
+| 3.1 | **Character Card Population** — 10 caractere × 5-15 cărți fiecare | Conținutul real al jocului |
+| 3.2 | SYS-025 Item System | Weapon, Armor, Accessory |
+| 3.3 | SYS-037 Character Card Pool | Cărți per caracter |
+| 3.4 | SYS-010 Profession System | Progresie |
+| 3.5 | SYS-011 Blueprint System | Crafting |
+| 3.6 | SYS-040 Quest Factory | Quest-uri generate |
 
 ### Faza 4 — Progresie
 
@@ -2710,6 +2726,27 @@ SYS-001
   → SYS-009 → SYS-036
   → SYS-010 → SYS-011
   → SYS-014 → SYS-015 → SYS-039
+
+CONTENT FOUNDATION (după Faza 2):
+  Skill Catalog → Buff/Debuff Catalog → Character Definitions → Theme Tags
+  → Character Card Population
+
+ÎNAINTE de Faza 3:
+  Character Card Population → SYS-037 → SYS-025 → SYS-010 → SYS-011 → SYS-040
 ```
 
-**Primul milestone (loop jucabil):** SYS-001 → SYS-005 → SYS-003 → SYS-004 → SYS-006 → SYS-007 → SYS-008 → SYS-038 = poți juca o rundă completă.
+### Progresia completă (șir logic)
+
+```
+Faza 0 — Fundația
+  → Faza 1 — Nucleul vizual (date de test)
+    → Faza 2 — Loop jucabil (date de test)
+      → Aprobare: mecanica e fun? 
+        → DA → Content Foundation (skills, buffs, caractere, teme)
+          → Faza 3 — Conținut real + varietate
+            → Faza 4 — Progresie
+              → Faza 5 — Retenție + Polish
+        → NU → Revizuiești mecanica, nu conținutul
+```
+
+**Primul milestone:** Faza 2 completă = loop jucabil cu date de test.
