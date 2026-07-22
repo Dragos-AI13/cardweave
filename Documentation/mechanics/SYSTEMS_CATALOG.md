@@ -259,138 +259,232 @@ res://features/inventory/
 
 ---
 
-## SYS-004 — Card Assembly
+## SYS-004 — Card Assembly (prin Snap în Arena Slot)
 
 ### 1. Identitate
 - **Nume:** Card Assembly
-- **Scop:** Asamblarea cărților din părți individuale
+- **Scop:** Asamblarea cărților direct în Arena Slot — nu mai există fază separată de assembly
 - **Categorii:** card, core mechanic
-- **Dependențe:** SYS-001, SYS-003
+- **Dependențe:** SYS-001, SYS-005 (Arena Slots)
 
 ### 2. Data
 ```
-Card:
-├── frame: FramePart
-├── name: NamePart
-├── icon: IconPart
-├── attack_jewel: AttackJewel
-├── defense_jewel: DefenseJewel
-├── skill: SkillRectangle
-├── position: Vector2i (grid)
-├── orientation: enum { VERTICAL, HORIZONTAL }
-├── energy_cost: int (calculat din părți)
-├── damage: int (calculat din attack_jewel)
-├── hp: int (calculat din defense_jewel)
-└── effect: SkillEffect (din skill_rectangle)
+CardInSlot:
+├── slot_index: int (poziția în Arena)
+├── parts:
+│   ├── frame: FramePart (⬜ gol / 🟢 ocupat)
+│   ├── name: NamePart
+│   ├── icon: IconPart
+│   ├── attack_jewel: AttackJewel
+│   ├── defense_jewel: DefenseJewel
+│   └── skill: SkillRectangle
+├── part_count: int (câte sloturi sunt ocupate, 0-6)
+├── complete: bool (part_count == 6)
+├── rarity: enum { Common→Mythic } (se urcă prin rune)
+├── energy_cost: int (calculat din suma părților + raritate)
+├── cooldown: float (calculat din suma părților)
+├── damage: int (din attack_jewel dacă e prezent)
+├── shield_value: int (din defense_jewel dacă e prezent)
+└── effect: SkillEffect (din skill_rectangle dacă e prezent)
 ```
 
 ### 3. Logică
-- O carte e completă când toate cele 6 sloturi sunt umplute
-- Poți schimba o parte oricând (dacă ai alta în inventar)
-- Valorile cărții (damage, HP, cost) se calculează din suma părților
-- Skill Rectangle determină efectul special
-- **Compatibilitate:** Când părțile vin din cărți diferite, se aplică Synergy Score
-  - Aceeași carte → +20% stats
-  - Teme similare → +10% stats
-  - Teme diferite → neutru
-  - Amestec haotic → -20% stats
-  - Diferență de raritate → penalizare suplimentară
+
+**Filosofie:** Nu exiști „inventar de părți" și „ecran de assembly". Partea pe care o cumperi din shop **snap direct** într-un subslot liber al unui Arena Slot.
+
+#### 3.1 Snap
+1. Jucătorul cumpără o parte din shop
+2. Dacă există un subslot liber de același tip (ex: cumpăr Attack Jewel → caută slot cu Attack Jewel liber):
+   - **Snap automat** (sau jucătorul alege slotul)
+   - Partea apare instant în subslot
+3. Dacă nu există slot cu acel subslot liber:
+   - Jucătorul trebuie să deblocheze un slot nou sau să mute o parte existentă
+
+#### 3.2 Card Progresiv
+- O carte cu 1/6 părți e **deja activă** în battle
+- O carte cu 6/6 părți e **completă** → primește boost multiplier (ex: ×1.3)
+- Poți **înlocui** o parte oricând (partea veche dispare, partea nouă o înlocuiește)
+- Poți **muta** o parte dintr-un slot în altul (costă? — NEDECIS)
+
+#### 3.3 Synergy Score
+Când o carte are părți din teme diferite:
+- Toate 6 din aceeași carte originală → ×1.2
+- Teme similare → ×1.1
+- Teme diferite → ×1.0
+- Amestec haotic → ×0.8
+
+Synergy Score se aplică ca multiplier la toate efectele cărții.
 
 ### 4. UI
-- 6 sloturi vizibile pe ecran
-- Drag & drop din inventar în slot
-- Preview în timp real: cum arată cartea + stats
-- Buton "Place on Grid" când e completă
+```
+┌──────────────────────────────────────┐
+│  SLOT 1: Scorch Claw (3/6)          │
+│                                      │
+│  ┌──────────┐                        │
+│  │          │  Frame  🟢 Common      │
+│  │   CARTE  │  Name   🟢 "Scorch"    │
+│  │          │  Icon   ⬜ gol          │
+│  │   PREVIEW│  Attack 🟢 dmg 8-12    │
+│  │          │  Def    ⬜ gol          │
+│  │          │  Skill  🟢 Burn        │
+│  └──────────┘                        │
+│                                      │
+│  Click pe subslot gol → deschide     │
+│  shop filtrat pe acel tip de parte   │
+└──────────────────────────────────────┘
+```
+
+- Fiecare Arena Slot arată câte părți are (3/6)
+- Subsloturile sunt vizibile la click pe slot
+- Subslot gol = poți snap o parte
+- Preview carte se actualizează în timp real
 
 ### 5. Network
-- Trimit serverului: "am asamblat cardul X cu părțile Y"
-- Serverul validează că ai părțile respective
+- Serverul știe ce părți sunt în fiecare slot
+- La snap, serverul validează că ai cumpărat partea
+- La început de battle, serverul trimite starea sloturilor
 
 ### 6. Config
-- Time limit per assembly
-- Poți dezasambla o carte? (da/nu + cost)
+- Max sloturi în Arena (implicit 5, deblocabil)
+- Cost mutare parte între sloturi (dacă există)
+- Boost multiplier la carte completă (ex: 1.3)
 
 ### 7. Godot
 ```
 res://features/card_assembly/
-├── Card.gd
-├── AssemblySlot.gd
-├── AssemblyUI.gd
-└── CardPreview.gd
+├── ArenaSlot.gd           ← Un slot cu 6 subsloturi
+├── SubSlot.gd             ← Un subslot (Frame, Name, etc.)
+├── SnapHandler.gd         ← Logica de snap când cumperi o parte
+├── ArenaUI.gd             ← Toată Arena
+├── SlotPreview.gd         ← Preview card + stats curente
+└── PartMoveHandler.gd     ← Mutat părți între sloturi
 ```
 
 ### 8. Testare
-- [ ] Poți asambla o carte cu toate 6 sloturile
-- [ ] Stats se calculează corect (damage = attack_jewel.value * rarity_multiplier)
-- [ ] Poți înlocui o parte existentă
-- [ ] O carte incompletă nu poate fi plasată pe grid
+- [ ] Cumpăr Attack Jewel → snap în slot gol → apare în subslot
+- [ ] Carte 1/6 → activă în battle (face damage)
+- [ ] Carte 6/6 → boost activat
+- [ ] Înlocuiesc o parte → partea nouă o înlocuiește pe cea veche
+- [ ] Mut o parte din Slot 1 în Slot 2 → efectul se mută
+- [ ] Synergy Score calculat corect
 
 ### 9. Istoric
 | Dată | Schimbare |
 |---|---|
-| — | Versiune inițială |
+| 2026-07-20 | Rescriere — assembly prin snap direct în Arena Slot. Fără inventar separat. Fiecare parte activă individual. |
 
 ---
 
-## SYS-005 — Arena + Grid System
+## SYS-005 — Arena Slots System
 
 ### 1. Identitate
-- **Nume:** Arena & Grid
-- **Scop:** Gridul pe care se plasează și luptă cărțile
+- **Nume:** Arena Slots
+- **Scop:** Arena cu sloturi pentru cărți. Fiecare slot = o carte cu 6 subsloturi (Frame, Name, Icon, Attack, Defense, Skill)
 - **Categorii:** battle, arena
 - **Dependențe:** SYS-001, SYS-004
 
 ### 2. Data
 ```
 Arena:
-├── grid_size: Vector2i (ex: 6x6)
-├── cells: Array[GridCell]
-│   └── GridCell = { occupied: bool, card: Card, position: Vector2i }
-├── expansion_level: int (cât spațiu a cumpărat)
-├── max_expansions: int
-└── expansion_cost: int (crește cu fiecare expansiune)
+├── slots: Array[CardSlot] (implicit 5, deblocabil)
+│   └── CardSlot:
+│       ├── index: int
+│       ├── card: CardInSlot (vezi SYS-004)
+│       ├── locked: bool
+│       │   └── unlock_cost: int
+│       └── active_in_battle: bool (true dacă part_count ≥ 1)
+├── max_slots: int (configurabil)
+└── character: Character (Ignis, Noctis, etc.)
 ```
 
 ### 3. Logică
-- O carte ocupă un număr de celule (1x1? 1x2? 2x2? — NEDECIS)
-- Poziție verticală = atac, orizontală = defensiv
-- Poți cumpăra spațiu nou (costă coins)
-- Expansiunea adaugă rânduri/coloane
+
+#### 3.1 Sloturi și Subsloturi
+- Arena are **5 sloturi** implicite (deblocabile până la 8)
+- Fiecare slot conține **6 subsloturi** pentru părți
+- Un slot poate fi:
+  - **Gol** (0/6) — nu face nimic în battle
+  - **Parțial** (1–5/6) — activ în battle, părțile prezente își fac efectul
+  - **Complet** (6/6) — activ + boost multiplier
+
+#### 3.2 Snap Mechanic
+- Cumperi o parte din shop → **snap** direct într-un subslot
+- Snap = instant, fără drag & drop (click partea dorită în shop, apoi click subslotul)
+- Poți **muta** o parte dintr-un slot în altul (cost: NEDECIS)
+
+#### 3.3 Slot Expansion
+- Sloturile 1-5 sunt disponibile din start
+- Sloturile 6+ se **deblochează** în Buy Phase contra cost
+- Cost crește cu câte sloturi ai deja
 
 ### 4. UI
-- Grid vizibil, fiecare celulă are chenar
-- Cardurile sunt reprezentate ca sprite-uri pe grid
-- Zona de expansiune e marcată (blocată până cumperi)
+```
+┌───────────────────────────────────────────────────────────────┐
+│                          ARENA                                │
+│                                                               │
+│  Slot 1        Slot 2        Slot 3        Slot 4    Slot 5  │
+│ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌────────┐ ┌──────┐ │
+│ │Scorch    │ │ Ember    │ │ Dragon   │ │        │ │      │ │
+│ │Claw      │ │ Shield   │ │ Breath   │ │ Gol    │ │ Gol  │ │
+│ │🔥🛡️🧪   │ │🛡️🧪     │ │🔥🛡️🧪   │ │        │ │      │ │
+│ │3/6 părți│ │2/6 părți│ │6/6 ✅   │ │        │ │      │ │
+│ │⏱1.2s   │ │⏱0.8s   │ │⏱2.5s   │ │        │ │      │ │
+│ │⚡3e    │ │⚡2e    │ │⚡5e    │ │        │ │      │ │
+│ │⬜⬜⬜   │ │⬜⬜⬜⬜ │ │🌟🌟    │ │        │ │      │ │
+│ └──────────┘ └──────────┘ └──────────┘ └────────┘ └──────┘ │
+│                                                               │
+│  Click pe slot → deschide subsloturile                        │
+│  Click pe subslot gol → shop filtrat pe acel tip              │
+│  Sloturi 6+ = gri (blocate, arată preț deblocare)            │
+└───────────────────────────────────────────────────────────────┘
+```
+
+Elemente UI:
+- Fiecare slot arată preview-ul cărții (3/6, ⏱cooldown, ⚡energy)
+- Slot complet (6/6) are efect vizual (glow/stars)
+- Sloturile blocate au overlay gri cu preț
+- Click pe slot → vede 6 subsloturi
+- Subslot gol = puls, invită la snap
+- Battle overlay: sloturile arată în battle exact la fel
 
 ### 5. Network
-- Gridul e syncronizat între jucători
-- Serverul validează plasarea
+- Arena e syncronizată — ambii jucători își văd sloturile
+- Serverul validează snap-urile
+- La început de battle, serverul confirmă starea sloturilor
 
 ### 6. Config
-- Grid size initial
-- Max expansions
-- Cost per expansion
+- Sloturi implicite: 5
+- Max sloturi: 8
+- Cost deblocare slot nou: (slot_index * 10) gold
+- Cost mutare parte: 0 sau 5 gold
 
 ### 7. Godot
 ```
 res://features/arena/
-├── Arena.gd
-├── GridCell.gd
-├── GridUI.gd
-└── ExpansionUI.gd
+├── Arena.gd                ← Gestionează toate sloturile
+├── CardSlot.gd             ← Un slot cu 6 subsloturi
+├── SubSlot.gd              ← Un subslot (Frame, Name, etc.)
+├── ArenaUI.gd              ← UI principală
+├── SlotPreview.gd          ← Preview card
+├── SlotExpansionUI.gd      ← Deblocare sloturi noi
+└── SnapAnimation.gd        ← Animație la snap
 ```
 
 ### 8. Testare
-- [ ] O carte poate fi plasată pe o celulă liberă
-- [ ] O carte nu poate fi plasată peste alta
-- [ ] Expansiunea adaugă celule noi
-- [ ] Poziția verticală vs orizontală se vede diferit
-- [ ] Gridul se încadrează pe orice ecran
+- [ ] 5 sloturi vizibile, toate goale la start
+- [ ] Cumpăr parte → snap în subslot → apare vizual
+- [ ] Slot gol = inactiv, slot 1/6 = activ, slot 6/6 = boost
+- [ ] Poți debloca sloturi 6+
+- [ ] Poți muta o parte între sloturi
+- [ ] Preview card se actualizează imediat după snap
+- [ ] Sync între jucători (ambii își văd sloturile)
 
 ### 9. Istoric
 | Dată | Schimbare |
 |---|---|
-| — | Versiune inițială |
+| 2026-07-20 | v3 — Arena Slots cu 6 subsloturi per carte. Snap direct din shop. Fără separat assembly. |
+| 2026-07-20 | v2 — Skill Bar |
+| 2026-07-20 | v1 — Grid 6×6 |
 
 ---
 
@@ -462,74 +556,199 @@ res://features/shop/
 
 ---
 
-## SYS-007 — Battle System
+## SYS-007 — Duel System (Arena Slots + Energy + Auto-Battle)
 
 ### 1. Identitate
-- **Nume:** Battle System
-- **Scop:** Auto-battle între cărțile ambilor jucători
+- **Nume:** Duel System
+- **Scop:** Auto-battle real-time — cărțile din Arena Slots se activează automat pe cooldown
 - **Categorii:** battle, core
-- **Dependențe:** SYS-004, SYS-005, SYS-006
+- **Dependențe:** SYS-004 (Card Assembly via Snap), SYS-005 (Arena Slots), SYS-006 (Shop)
 
 ### 2. Data
 ```
-Battle:
-├── energy_per_turn: int
-├── current_energy: int
-├── player1_cards: Array[Card] (pe grid)
-├── player2_cards: Array[Card] (syncronizat)
-├── turn: int
+BattleState:
+├── character:
+│   ├── base_hp: int (din caracter)
+│   ├── current_hp: int
+│   ├── shield: int (temporar, generat de Defense Jewel)
+│   └── energy:
+│       ├── cap: int (base + modificatori)
+│       ├── current: float
+│       └── regen_rate: float (base + modificatori) — energy/sec
+├── arena_slots: Array[CardSlot]
+│   └── CardSlot:
+│       ├── slot_index: int
+│       ├── parts: CardParts (6 subsloturi, unele goale)
+│       ├── part_count: int (0-6)
+│       ├── complete: bool
+│       ├── cooldown_timer: float
+│       ├── cooldown: float
+│       ├── energy_cost: int
+│       ├── damage: int (0 dacă Attack Jewel lipsește)
+│       ├── shield_value: int (0 dacă Defense Jewel lipsește)
+│       ├── effect: SkillEffect (null dacă Skill Rectangle lipsește)
+│       ├── boost_multiplier: float (1.3 dacă complete, 1.0 altfel)
+│       └── disabled: bool (stun/silence)
+├── battle_timer: float
 ├── battle_log: Array[BattleEvent]
-└── winner: enum { PLAYER1, PLAYER2, NONE }
+└── winner: enum { PLAYER1, PLAYER2, DRAW, NONE }
 ```
 
 ### 3. Logică
-- Toate cărțile atacă simultan
-- Fiecare carte consumă energie pentru a ataca
-- Atacul: damage = attack_jewel.value - defense_jewel.value (minim 1)
-- Cărțile lovite își pierd HP; când HP=0, sunt distruse
-- Când toate cărțile unui jucător sunt distruse, supraviețuitoarele atacă HP-ul jucătorului
-- Când HP-ul jucătorului = 0 → rundă pierdută
+
+#### 3.1 Character HP
+```
+CharacterHP = BaseHP (din caracter)
+```
+- **HP** e determinat de caracter — nu mai există bonus HP din cărți
+- **Shield** = generat de Defense Jewel la activarea cărții
+- Când `current_hp ≤ 0` → jucătorul pierde runda
+
+#### 3.2 Energy System
+```
+Energia se regenerează continuu. Fiecare activare de carte consumă energie.
+```
+- **Energy cap** = valoare de bază (ex: 50) + modificatori
+- **Regen rate** = valoare de bază (ex: 3/s)
+- **Energy cost per card** = calculat din suma părților + raritate
+- Energia se resetează la cap la începutul fiecărei bătălii
+
+#### 3.3 Card Activation Loop (Auto-Battle)
+```
+Fiecare carte din Arena Slots se activează pe propriul cooldown.
+Toate efectele lovesc caracterul oponent.
+```
+
+1. Fiecare carte cu `part_count ≥ 1` are un **cooldown_timer**
+2. Când `cooldown_timer ≤ 0`:
+   a. Verifică energia: `current_energy ≥ energy_cost`?
+   b. **DA** → consumă energia, **activează cartea**, resetează `cooldown_timer = cooldown`
+   c. **NU** → activarea se amână
+3. La activare, **fiecare parte prezentă** își face efectul:
+   - **Attack Jewel** → `damage = value × rarity_mult × boost_mult` la opponent
+   - **Defense Jewel** → `shield += value × rarity_mult × boost_mult`
+   - **Skill Rectangle** → aplică efectul (Burn, Bleed, Stun, etc.)
+   - **Frame** → bonus pasiv (damage% sau shield%)
+   - **Name** → bonus sinergie (dacă match)
+   - **Icon** → bonus rasial
+4. Dacă **complete = true** (6/6): toate efectele au `boost_mult = 1.3`
+5. Dacă **complete = false**: `boost_mult = 1.0`
+
+#### 3.4 Exemplu — Aceeași Carte în Diferite Stadii
+
+```
+Slot: Scorch Claw (cooldown 1.2s, energy cost 3)
+
+La activare, dacă:
+  Attack Jewel doar (1/6):
+    → 10 damage la opponent. Gata.
+
+  Attack Jewel + Skill Rectangle (2/6):
+    → 10 damage + Burn 3/s, 4s
+
+  Attack Jewel + Skill Rect + Frame (3/6):
+    → 10 damage + Burn + 5% damage bonus
+
+  TOATE 6 părțile (6/6):
+    → 10 × 1.3 = 13 damage + Burn × 1.3 + Shield 8 × 1.3 + Frame + Name + Icon
+    → Boost activ!
+```
+
+#### 3.5 Cooldown
+- Fiecare carte are un **cooldown** calculat din părți
+- Cooldown-ul e influențat de buffs (Haste) și debuffs (Slow, Stun)
+- Range tipic: 0.5s–3.0s
+- **Cooldown minim**: 0.3s
+
+#### 3.6 Shield
+- Generat la activarea cărții dacă Defense Jewel e prezent
+- Se consumă primul la orice damage
+- Expiră la final de rundă
+
+#### 3.7 Sfârșitul Bătăliei
+- HP ≤ 0 → pierzi
+- HP simultan 0 → DRAW
+- Time cap (ex: 60s) → câștigă cel cu mai mult HP %
 
 ### 4. UI
-- Animații de atac (cărți care se înclină, proiectile)
-- Bare de HP vizibile
-- Battle log (text, rapid)
-- Replay (opțional)
+```
+┌──────────────────────────────────────────────┐
+│  Ignis                     Titanus           │
+│  HP ████████ 88/100        HP ██████ 70/130 │
+│  Shield ██░ 12             Shield ██░ 8     │
+│  Energy 35/55 +3/s         Energy 28/50     │
+│                                              │
+│  ARENA SLOTS:                                │
+│  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──┐ │
+│  │Scorch│ │Ember │ │Dragon│ │      │ │  │ │
+│  │Claw  │ │Shield│ │Brth  │ │ Gol  │ │G │ │
+│  │⚔️🔥  │ │🛡️   │ │🔥🛡️ │ │      │ │O │ │
+│  │3/6   │ │2/6   │ │6/6✅│ │      │ │L│ │
+│  │⏱0.6s │ │⏱1.2s│ │⏱1.8s│ │      │ │ │ │
+│  │⚡3e  │ │⚡2e  │ │⚡5e  │ │      │ │ │ │
+│  └──────┘ └──────┘ └──────┘ └──────┘ └──┘ │
+│                                              │
+│  [1×] [2×] [3×]       Battle Log scrollabil │
+└──────────────────────────────────────────────┘
+```
+
+Elemente UI:
+- HP bar + Shield bar
+- Energy bar (curent/cap + regen/s)
+- Arena Slots: fiecare slot arată starea (3/6), cooldown, energy cost, efecte active (⚔️🔥🛡️)
+- Slot complet (6/6) are efect vizual distinct (glow)
+- Battle log: ce s-a activat, ce damage, ce efect
+- Viteză: 1×, 2×, 3×
 
 ### 5. Network
-- **Server-authoritative**: serverul calculează tot
-- Clientul primește rezultatul și rulează animațiile
-- Ambii jucători văd aceeași bătălie
+- Server-authoritative — serverul simulează tot duelul
+- Clientul primește BattleEvent[] și rulează animațiile
+- Offline-first: AI-ul local simulează opponentul
 
 ### 6. Config
-- Energy per turn (base)
-- Energy cost per card (formulă)
-- Damage formula
-- Battle speed (1×, 2×, etc.)
+| Parametru | Default | Range | Descriere |
+|---|---|---|---|
+| Energy base cap | 50 | 20–200 | Câtă energie poți stoca |
+| Energy base regen | 3.0/s | 1.0–10.0 | Viteză regenerare |
+| Cooldown minim | 0.3s | 0.1–0.5 | Limită inferioară |
+| Cooldown maxim | 5.0s | 3.0–8.0 | Limită superioară |
+| Battle time cap | 60s | 30–120 | Max duration |
+| Boost complet | 1.3× | 1.1–2.0 | Multiplier carte 6/6 |
 
 ### 7. Godot
 ```
 res://features/battle/
-├── BattleManager.gd
-├── BattleSimulator.gd (pe server)
-├── CardAnimator.gd
-├── HealthBar.gd
-├── BattleEvent.gd
-└── BattleReplay.gd
+├── BattleManager.gd          ← Orchestrator
+├── BattleSimulator.gd        ← Calculează rezultatul
+├── CardActivator.gd          ← Activează cărțile pe cooldown
+├── PartEffectHandler.gd      ← Execută efectele fiecărei părți
+├── EnergyBar.gd              ← UI energy
+├── HealthBar.gd              ← UI HP + Shield
+├── ArenaSlotUI.gd            ← Slot vizual în battle
+├── CooldownViz.gd            ← Countdown vizual per slot
+├── BattleEvent.gd            ← Log entry
+└── BattleSpeedControl.gd     ← 1×/2×/3× toggle
 ```
 
 ### 8. Testare
-- [ ] Cărțile atacă simultan
-- [ ] Damage calculat corect
-- [ ] Cărțile cu HP=0 dispar
-- [ ] Când toate cărțile sunt distruse, restul atacă HP-ul
-- [ ] HP jucător = 0 → rundă pierdută
-- [ ] Bătălia se termină în timp finit (nu infinite loop)
+- [ ] Carte 1/6 → atacă (doar Attack Jewel face damage)
+- [ ] Carte 3/6 → damage + shield + efect
+- [ ] Carte 6/6 → toate efectele + boost
+- [ ] Cooldown amânat dacă energia e insuficientă
+- [ ] Shield se consumă primul
+- [ ] HP = 0 → pierzi
+- [ ] DRAW la HP simultan
+- [ ] Time cap → tie-break
+- [ ] Viteza 2× accelerează totul
+- [ ] Stun → carte nu se activează
+- [ ] Haste → cooldown redus
 
 ### 9. Istoric
 | Dată | Schimbare |
 |---|---|
-| — | Versiune inițială |
+| 2026-07-20 | v3 — Arena Slots. Fiecare parte activă independent. Boost la carte completă 6/6. |
+| 2026-07-20 | v2 — Skill Bar (abilități directe). |
+| 2026-07-20 | v1 — Card HP stacking + attack speed per card. |
 
 ---
 
@@ -1353,7 +1572,7 @@ Results:
 │   ├── part_drops: Array[PartDefinition]
 │   └── blueprint_drop: BlueprintDefinition (rar)
 ├── rank_change: int
-└── stats: Dictionary (damage dealt, cards destroyed, etc.)
+└── stats: Dictionary (damage dealt, shield absorbed, energy spent, etc.)
 ```
 
 ### 3. Logică
@@ -1403,10 +1622,10 @@ res://features/results/
 | SYS-001 | Resource System | — | data |
 | SYS-002 | Game State Machine | SYS-001 | core |
 | SYS-003 | Part Inventory | SYS-001 | card |
-| SYS-004 | Card Assembly | SYS-001, SYS-003 | card |
-| SYS-005 | Arena + Grid | SYS-001, SYS-004 | battle |
+| SYS-004 | Card Assembly (Snap) | SYS-001, SYS-005 | card |
+| SYS-005 | Arena Slots | SYS-001, SYS-004 | battle |
 | SYS-006 | Shop + Buy Phase | SYS-001, SYS-003, SYS-005 | economy |
-| SYS-007 | Battle System | SYS-004, SYS-005, SYS-006 | battle |
+| SYS-007 | Duel System | SYS-004, SYS-005, SYS-006 | battle |
 | SYS-008 | Match Manager | SYS-007 | progression |
 | SYS-009 | Race Selection | SYS-001 | progression |
 | SYS-010 | Profession System | SYS-001, SYS-009 | progression |
@@ -1728,7 +1947,7 @@ Item:
 | ⛓️ Chainmail | Damage -30% | Construct, Knight |
 | 🧙 Robe | +1 energie la start | Eldritch, Celestial |
 | 🩸 Blood Armor | 10% damage → heal | Vampire |
-| 🪦 Bone Armor | Carte distrusă → 5 damage retur | Necro |
+| 🪦 Bone Armor | La fiecare atac primit → 3 damage retur | Necro |
 
 **Accessory** — schimbă REGULILE.
 
@@ -2454,7 +2673,7 @@ CompatibilityRules:
 
 ### 3. Logică
 
-**Card Pool:** Fiecare caracter are 5-15 cărți proprii. Fiecare carte → 6 părți. Shop-ul trage doar din acest pool. Deblochezi cărți → mai multe părți disponibile.
+**Card Pool:** Fiecare caracter are 5-15 cărți proprii (vezi [`CHARACTERS_v1.md`](./CHARACTERS_v1.md) pentru cele 10 caractere inițiale). Fiecare carte → 6 părți. Shop-ul trage doar din acest pool. Deblochezi cărți → mai multe părți disponibile.
 
 **Compatibilitate:** Când asamblezi o carte din părți care vin din cărți diferite, sistemul calculează Synergy Score:
 - Same Card Bonus: +20% dacă toate 6 părțile sunt din aceeași carte
@@ -2636,6 +2855,103 @@ Quest:
 
 ---
 
+## SYS-041 — Buff/Debuff System
+
+> Documentație completă: [`BUFF_DEBUFF_SYSTEM.md`](./BUFF_DEBUFF_SYSTEM.md)
+
+### 1. Identitate
+- **Nume:** Buff / Debuff System
+- **Scop:** Sistem unitar pentru toate efectele temporare din timpul duelului
+- **Categorii:** battle, content
+- **Dependențe:** SYS-007 (Duel System), SYS-025 (Item System)
+- **Blueprint:** Toate buff-urile/debuff-urile folosesc același schelet (vezi documentația dedicată)
+
+### 2. Data
+```
+StatusEffect:
+├── id: String
+├── display_name: String
+├── type: enum { BUFF, DEBUFF, NEUTRAL }
+├── category: enum { ENERGY, ATTACK, DEFENSE, HP, CONTROL, SYNERGY }
+├── tags: Array[String] (fire, ice, dark, holy, poison, bleed, ...)
+├── target: enum { SELF_CHAR, OPPONENT_CHAR, SELF_CARD, ALLY_CARDS, ALL_CARDS }
+├── trigger:
+│   ├── type: enum { ON_START, ON_ATTACK, ON_HIT, ON_TIMER, ON_STACK_THRESHOLD, PERMANENT }
+│   ├── chance: float (0.0–1.0)
+│   └── condition: String (opțional)
+├── effect:
+│   ├── effect_type: enum (DAMAGE_OVER_TIME, HEAL_OVER_TIME, STAT_MOD, SHIELD, STUN, etc.)
+│   ├── base_value: float
+│   ├── duration: float (secunde)
+│   ├── interval: float (secunde între tick-uri)
+│   └── rarity_scaling: Array[float]
+├── stacking:
+│   ├── mode: enum { UNIQUE, ADDITIVE, MULTIPLICATIVE, THRESHOLD }
+│   ├── max_stacks: int
+│   └── on_max_stacks: { action: String, value: float }
+├── affinities:
+│   ├── races: Dictionary { race_id: multiplier }
+│   ├── classes: Dictionary { class_id: { stat: modifier } }
+│   └── items: Dictionary { item_tag: modifier }
+└── visual:
+    ├── icon: String
+    ├── color: String
+    └── particle: String
+```
+
+### 3. Logică
+- Fiecare carte în duel poate aplica **un efect principal** (din Skill Rectangle)
+- Items (Weapon/Armor/Accessory) pot adăuga **efecte secundare**
+- Efectele sunt **structuri de date**, nu cod separat per efect
+- Stacking rules: Unique (nu se cumulează), Additive (se adună), Multiplicativ (se înmulțesc), Threshold (declanșare la X stack-uri)
+- Buff și debuff de același tip pe aceeași țintă → prevalează cel mai puternic
+- Toate efectele se scalează cu raritatea și Synergy Score
+
+### 4. Catalog Efecte (7 categorii)
+
+| Categorie | Efecte principale |
+|---|---|
+| **Energy** | Energy Boost, Energy Leech, Energy Slow, Energy Surge, Overcharge, Drain |
+| **Attack** | Haste, Slow, Freeze, Berserk, Lethargy |
+| **Damage** | Power, Fragile, Burn, Poison, Bleed, Corrosion, Amplify |
+| **Defense** | Barrier, Fortify, Thorns, Vulnerable, Shield Break, Weaken |
+| **HP** | Regeneration, Lifesteal, Wound, Siphon, Revitalize, Decay |
+| **Control** | Stun, Silence, Taunt, Disarm, Sleep |
+| **Synergy** | Empower, Echo, Chain, Curse, Blessing |
+
+### 5. UI
+- Icon pe card pentru efectele aplicate
+- Barră de status effects lângă HP bar
+- Stack counter vizibil (pentru efecte stivuibile)
+- Animații particle la aplicare/expirare
+
+### 6. Network
+- Serverul calculează și syncronizează toate status effects
+- Clientul doar rulează animațiile vizuale
+
+### 7. Config
+- Valori implicite per efect în blueprint
+- Scaling per raritate
+- Stack limits
+- Durate implicite
+
+### 8. Testare
+- [ ] Burn: 3 damage/sec pentru 6s → scade corect HP
+- [ ] Haste: -20% attack interval → atacă mai des
+- [ ] Stun: 2s → cardul nu atacă
+- [ ] Silence: Skill Rectangle dezactivat
+- [ ] Stacking: 3× Poison → 3× damage
+- [ ] Threshold: 5× Burn → explode
+- [ ] Affinități: Dragonkin face ×3 fire damage
+- [ ] Buff vs Debuff: Haste + Slow → câștigă cel mai puternic
+
+### 9. Istoric
+| Dată | Schimbare |
+|---|---|
+| 2026-07-20 | Versiune inițială — blueprint + catalog complet |
+
+---
+
 ## Implementation Roadmap
 
 ### Faza 0 — Fundația
@@ -2651,7 +2967,7 @@ Quest:
 
 | Ordine | Sistem / Feature | Motiv |
 |---|---|---|
-| 1.1 | SYS-005 Arena + Grid | Prima scenă vizuală |
+│ 1.1 | SYS-005 Arena Slots | Sloturi + subsloturi + snap |
 | 1.2 | SYS-003 Part Inventory | Ai părți, le vezi |
 | 1.3 | SYS-009 Race Selection | Alegi rasa |
 | 1.4 | SYS-004 Card Assembly | Asamblezi o carte |
@@ -2664,7 +2980,7 @@ Quest:
 | Ordine | Sistem / Feature | Motiv |
 |---|---|---|
 | 2.1 | SYS-006 Shop + Buy Phase | Cumperi părți |
-| 2.2 | SYS-007 Battle System | Cărțile se bat |
+│ 2.2 | SYS-007 Duel System | Skill-uri + energy + cooldown |
 | 2.3 | SYS-008 Match Manager | Runde, win/lose |
 | 2.4 | SYS-038 AI Opponent | Adversar care joacă |
 | 2.5 | SYS-021 Results + Rewards | Recompense |

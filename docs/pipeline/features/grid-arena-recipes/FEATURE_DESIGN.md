@@ -148,7 +148,7 @@ Pe lângă tipurile de celule, poți plasa **itemi 1×1** direct pe celule (sepa
 | 💎 **Piatră de Putere** | +10% ATK cărții de deasupra (se adună cu tipul celulei) | Uncommon |
 | 🛡️ **Scut de Pământ** | +10% DEF cărții de deasupra | Uncommon |
 | ⚡ **Cristal de Mana** | Restaurează 1 energie per tură | Rare |
-| 🔥 **Capcană de Foc** | Când cartea e distrusă, face 5 damage inamicului | Rare |
+| 🔥 **Capcană de Foc** | La fiecare atac al cărții, +2 damage bonus | Rare |
 | 💫 **Amplificator** | Dublează efectul celulei de sub el | Epic |
 
 Itemii de grid se cumpără **în Buy Phase** (ca și celulele sau părțile de cărți) și se plasează **sub** o carte, nu în locul ei.

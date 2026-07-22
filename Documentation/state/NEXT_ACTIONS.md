@@ -1,10 +1,9 @@
 # Next Actions — Cardweave
 
-Păstrează doar următoarele 3-7 acțiuni în ordine strictă de execuție.
-
-1. [ ] **Aprobă G1 pentru Grid Arena + Cell System + Recipes**
-2. [ ] **Începe P1 — Prototype Offline (React + PixiJS)**
-   - Grid 12×8 în PixiJS
-   - O carte cu Attack Jewel + Defense Jewel
-   - Auto-battle local (TypeScript)
-   - AI opponent de bază
+1. [x] **Sistem final confirmat** — Arena Slots cu 6 subsloturi, snap direct, părți active independent, boost la 6/6, raritate prin rune
+2. [x] **SYS-004** rescris (Card Assembly → Snap în Arena Slot)
+3. [x] **SYS-005** rescris (Skill Bar → Arena Slots)
+4. [x] **SYS-007** rescris (Duel System — Arena Slots + Energy + Auto-Battle)
+5. [x] **GDD** actualizat complet (secțiunile 3, 4, 5, flow)
+6. [ ] **Define valori numerice** pentru Ignis (damage per part, cooldown, energy cost)
+7. [ ] **Prototype offline** — Ignis vs AI, Arena Slots + energy + battle loop

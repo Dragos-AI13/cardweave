@@ -59,21 +59,20 @@ Cardweave este un **PvP auto-battler** unde jucătorii își construiesc singuri
 │  │ • Primești X coins (crește cu runda)                │    │
 │  │ • Deschizi shop-ul — vezi părți random din rasa ta  │    │
 │  │ • Poți rerola shop-ul (costă coins)                 │    │
-│  │ • Cumperi părți individuale                          │    │
+│  │ • Cumperi părți individuale → snap direct în Arena     │    │
 │  │ • Poți combina 2 părți Common → 1 Uncommon          │    │
-│  │ • Asamblezi cărți din părțile tale                   │    │
-│  │ • Plasezi cărțile pe grid-ul arenei                  │    │
+│  │ • Completezi cărțile în sloturile Arenei              │    │
 │  │ • Când ești gata → END BUY PHASE                    │    │
 │  └─────────────────────────────────────────────────────┘    │
 │                            │                                 │
 │  ┌─────────────────────────────────────────────────────┐    │
 │  │ DUEL PHASE (auto-battle)                             │    │
-│  │ • Cărțile atacă simultan (consumă energie)          │    │
-│  │ • Se luptă până când toate cărțile unui jucător     │    │
-│  │   sunt distruse                                      │    │
-│  │ • Cărțile rămase în viață atacă HP-ul jucătorului   │    │
-│  │ • Când HP-ul unui jucător ajunge la 0 → rundă       │    │
-│  │   pierdută                                           │    │
+│  │ • Cărțile din Arena Slots se activează pe cooldown  │    │
+│  │ • Fiecare parte prezentă își face efectul           │    │
+│  │ • Energia globală se regenerează, se consumă la carte│    │
+│  │ • Carte completă (6/6) → boost ×1.3                 │    │
+│  │ • Shield temporar absoarbe damage                    │    │
+│  │ • Se luptă până când HP-ul unui jucător = 0          │    │
 │  │ • Câștigătorul primește recompense                   │    │
 │  └─────────────────────────────────────────────────────┘    │
 │                                                             │
@@ -142,10 +141,10 @@ Cărțile sunt formate prin **asamblarea** acestor părți. Poți face aceeași 
 ### 3.1 Reguli de bază
 
 - În fiecare Buy Phase, jucătorul primește **X coins** (crește cu numărul rundei)
-- Shop-ul arată **părți random** din **pool-ul rasei selectate**
-- Jucătorul poate **rerola** shop-ul (costă coins, costul crește cu fiecare rerol)
-- Poate cumpăra **părți individuale** (nu pachete)
-- La finalul Buy Phase, poate **combina** părți
+- Shop-ul arată **părți random** din **pool-ul caracterului selectat**
+- Jucătorul poate **rerola** shop-ul (costă coins, costul crește)
+- **Snap:** când cumperi o parte, aceasta merge **direct** într-un subslot liber din Arena
+- La finalul Buy Phase, poți **combina** părți
 
 ### 3.2 Combinarea Părților în Duel
 
@@ -171,58 +170,103 @@ Attack Jewel (Common) + Attack Jewel (Common)
 
 ---
 
-## 4. Arena — Grid-ul
+## 4. Arena — Sloturi pentru Cărți
 
 ### 4.1 Structură
 
-- Arena e formată din **pătrățele** (grid)
-- O carte ocupă **9 pătrățele** (3×3 sau altă configurație — **NEDECIS**)
-- Dimensiunea totală a grid-ului — **NEDECIS**
+- Arena are **5 sloturi** pentru cărți (deblocabile până la 8)
+- Fiecare slot conține **6 subsloturi**: Frame, Name, Icon, Attack Jewel, Defense Jewel, Skill Rectangle
+- Cărțile nu se așază pe un grid — stau în sloturi
 
-### 4.2 Așezarea Cărților
+### 4.2 Snap Mechanic
 
-| Poziție | Efect |
+- Cumperi o parte din shop → **snap direct** într-un subslot liber
+- Nu există inventar de părți — totul e direct în sloturi
+- Poți muta părți între sloturi
+
+### 4.3 Starea Cărții
+
+| Stare | Ce face în battle |
 |---|---|
-| **VERTICAL** | Carte în mod atac — atacă inamicul |
-| **ORIZONTAL** | Carte în mod defensiv — protejează, poate avea efecte defensive |
+| **Gol (0/6)** | Inactiv |
+| **Parțial (1–5/6)** | Fiecare parte prezentă își face efectul |
+| **Complet (6/6)** | Toate efectele + boost (×1.3) |
 
-### 4.3 Spațiul Extensibil
+### 4.4 Spațiul Extensibil
 
-- Jucătorul poate **cumpăra spațiu suplimentar** în arenă (ca în Backpack Battles)
-- Costul crește cu cât arena e mai mare
-- Alegere strategică: „Cumpăr spațiu sau cumpăr părți?"
+- Primele 5 sloturi sunt disponibile din start
+- Sloturile 6+ se cumpără în Buy Phase
+- Costul crește cu câte ai deja
 
 ---
 
 ## 5. Duelul — Battle Phase
 
-### 5.1 Energia
+### 5.1 Character HP
 
-- Fiecare carte **consumă energie** pentru a ataca
-- Cărțile puternice consumă mai multă energie
-- Energia poate fi **dezvoltată** prin profesii
-- **NEDECIS:** Se regenerează complet per rundă sau e pool fix?
+```
+Character HP = BaseHP (din caracter)
+```
 
-### 5.2 Atacul Simultaneu
+- **HP** e determinat de caracter — nu mai există bonus HP din cărți
+- Tot damage-ul merge direct la caracter
+- **Shield** = temporar, generat de Defense Jewel la activarea cărții
+- La HP = 0 → rundă pierdută
+- HP-ul se resetează la începutul fiecărei bătălii
 
-- Toate cărțile atacă **simultan**
-- Damage-ul se aplică în același moment
-- Cărțile se luptă până când toate cărțile unei părți sunt distruse
-- Cărțile rămase în viață atacă **HP-ul jucătorului**
-- Când HP-ul unui jucător ajunge la 0 → rundă pierdută
-- **NEDECIS:** Sistem Speed/Initiative sau atac simultan pur?
+### 5.2 Energy System (Global)
 
-### 5.3 Țintirea — Cum Atacă o Carte
+- Energia e o resursă **globală**
+- Se **regenerează continuu** în timp real (ex: +3/s)
+- Are un **cap** (ex: 50)
+- Fiecare activare de carte **consumă energie**
+- Dacă nu e suficientă, activarea se **amână**
 
-**NEDECIS** — de gândit împreună. Posibilități:
+### 5.3 Card Activation Loop
 
-| Sistem | Descriere |
-|---|---|
-| **Front Attack** | Atacă cea mai apropiată carte din față |
-| **Row Attack** | Atacă toată linia/rândul |
-| **Skill Target** | Skill Rectangle-ul decide ținta |
-| **Random** | Atacă o carte random adversă |
-| **Direct** | Atacă direct HP-ul jucătorului (cărți speciale) |
+- Fiecare carte din Arena Slots se activează automat pe **cooldown propriu**
+- **Cooldown** = secunde între activări (ex: 0.5s–3.0s)
+- La activare, **fiecare parte prezentă** își face efectul:
+  - Attack Jewel → damage
+  - Defense Jewel → shield
+  - Skill Rectangle → efect special (Burn, etc.)
+- **Carte completă (6/6)** → toate efectele primesc boost (×1.3)
+- **Carte incompletă (1–5/6)** → doar părțile prezente funcționează
+
+### 5.4 Shield
+
+- Generat de Defense Jewel la activarea cărții
+- Se consumă primul la orice damage
+- Expiră la final de rundă
+
+### 5.5 Sfârșitul Bătăliei
+
+- HP ≤ 0 → pierzi
+- HP simultan 0 → DRAW
+- Time cap → tie-break după % HP
+
+### 5.6 UI Duel
+
+```
+┌──────────────────────────────────────────────┐
+│  Ignis                     Titanus           │
+│  HP ████████ 88/100        HP ██████ 70/130 │
+│  Shield ██░ 12             Shield ██░ 8     │
+│  Energy 35/55 +3/s         Energy 28/50     │
+│                                              │
+│  ARENA SLOTS:                                │
+│  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐       │
+│  │Scorch│ │Ember │ │Dragon│ │ Gol  │       │
+│  │Claw  │ │Shield│ │Brth  │ │      │       │
+│  │3/6   │ │2/6   │ │6/6✅│ │      │       │
+│  │⏱0.6s │ │⏱1.2s│ │⏱1.8s│ │      │       │
+│  │⚡3e  │ │⚡2e  │ │⚡5e  │ │      │       │
+│  └──────┘ └──────┘ └──────┘ └──────┘       │
+│                                              │
+│  › Scorch Claw → 13 dmg + Burn              │
+│  › Ember Shield → +8 Shield                 │
+└──────────────────────────────────────────────┘
+```
 
 ---
 
