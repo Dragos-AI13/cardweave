@@ -4,21 +4,21 @@
 
 ---
 
-## Sesiune: 2026-07-18 — Decizie Offline-First + Cleanup Documentație
+## Sesiune: 2026-07-22 — Cleanup Documentație + Arena Slots Final
 
-**Obiectiv:** Schimbare direcție: jocul devine offline-first complet. Cleanup documentație.
+**Obiectiv:** Alinierea întregii documentații cu designul final Arena Slots. Curățare referințe Grid 12×8, Godot, React.
 
 **Progres:**
 
-- [x] D008 — Offline-First: zero server, zero online, 100% local
-- [x] README.md actualizat — fără server, fără PvP online
-- [x] CARDWEAVE_GDD.md actualizat — single-player, offline-first
-- [x] PROJECT_STATUS.md actualizat cu noua direcție
-- [x] DECISION_LOG.md — D008 adăugat
-- [x] DEVELOPMENT_CONSTITUTION.md rescris — offline-first
-- [x] GOVERNANCE.md — curățat de dual pipeline
-- [x] DESIGN_PIPELINE.md + DEV_PIPELINE.md — actualizate
-- [x] Documentation/state/* — sync
-- [ ] G1 — Aprobare Grid Arena design de la Dragoș
+- [x] Merge documentation → main (documentație nouă integrată)
+- [x] SYSTEMS_CATALOG.md — Godot șters, toate referințele → TypeScript/PixiJS
+- [x] CARDINAL_ENGINE.md — roadmap pe faze (P1: opponent simplu, P4+: complet)
+- [x] Drop rates ajustate pentru single-player offline (fără gacha)
+- [x] Economie tăiată pentru P1 (doar coins)
+- [x] D009 — Stack clarificat: PixiJS pur, fără React
+- [x] State files actualizate (NEXT_ACTIONS, PROJECT_STATUS, CHANGELOG)
+- [x] DESIGN_PIPELINE.md — Grid Arena → Arena Slots
+- [x] grid-arena-recipes arhivat, Arena Slots feature design creat
+- [ ] G1 — Aprobare Arena Slots design de la Dragoș
 
-**Următorul pas:** Aștept instrucțiuni de la Dragoș.
+**Următorul pas:** Aștept G1, apoi inițializare proiect Tauri + PixiJS.

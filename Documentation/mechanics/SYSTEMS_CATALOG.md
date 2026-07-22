@@ -139,7 +139,7 @@ Stări:
 ├── RACE_SELECT
 │   └── Alege rasa
 ├── BUY_PHASE
-│   └── Shop, Assembly, Grid
+│   └── Shop, Assembly, Arena
 ├── BATTLE_PHASE
 │   └── Auto-battle, Animation
 ├── RESULTS
@@ -2774,7 +2774,7 @@ src/cardinal/ai/
 
 ### 8. Testare
 - [ ] AI-ul cumpără părți și asamblează cărți
-- [ ] AI-ul plasează cărți pe grid
+- [ ] AI-ul cumpără părți și le plasează în Arena Slots
 - [ ] AI-ul face battle
 - [ ] Dificultatea se simte diferită per nivel
 

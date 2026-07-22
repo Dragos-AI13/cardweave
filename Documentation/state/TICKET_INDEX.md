@@ -23,16 +23,17 @@
 
 ---
 
-## FEAT-002: Grid + Auto-battle Prototype
+## FEAT-002: Arena Slots + Auto-battle Prototype
 **Status:** 📋 NEXT
-**Descriere:** Grid-ul de bază, o carte funcțională cu Attack Jewel + Defense Jewel, auto-battle.
+**Descriere:** Arena Slots (5 sloturi, 6 subsloturi), snap mechanic, Attack Jewel + Defense Jewel, auto-battle, AI opponent simplu (Cardinal P1).
 
 | Task | Status | Descriere |
 |------|--------|-----------|
-| TASK-001 | 📋 | Grid 12×8 în PixiJS (framework, resize, camera) |
-| TASK-002 | 📋 | O carte cu Attack Jewel + Defense Jewel pe grid |
-| TASK-003 | 📋 | Auto-battle local în TypeScript |
-| TASK-004 | 📋 | HP jucător + damage + adversar AI |
+| TASK-001 | 📋 | Arena cu 5 sloturi în PixiJS (layout, click, preview card) |
+| TASK-002 | 📋 | Shop cu Attack Jewel + Defense Jewel, snap direct în slot |
+| TASK-003 | 📋 | Auto-battle: cooldown per card, energy globală, damage |
+| TASK-004 | 📋 | Character HP + Shield + adversar AI (Cardinal P1) |
+| TASK-005 | 📋 | Boost vizual la carte completă (6/6) |
 
 ---
 

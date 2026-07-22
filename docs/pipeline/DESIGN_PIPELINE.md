@@ -21,5 +21,6 @@
 
 | # | Feature | Stare | G1 | G2 | Next Action |
 |---|---|---|---|---|---|
-| 1 | Grid Arena + Cell System + Recipes | 🟡 Game Design | ❌ | ❌ | Așteaptă G1 |
-| 2 | Card Part System | 💡 Backlog | ❌ | ❌ | Așteaptă Grid Arena |
+| 1 | **Arena Slots** (Snap + Auto-Battle) | 🟡 Game Design | ❌ | ❌ | Așteaptă G1 |
+| 2 | Card Part System | 💡 Backlog | ❌ | ❌ | Așteaptă Arena Slots |
+| 3 | Character Card Population | 💡 Backlog | ❌ | ❌ | După skills/buffs definite |

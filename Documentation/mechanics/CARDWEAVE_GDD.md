@@ -424,7 +424,7 @@ DUEL → câștigi Gold + Essence + (poate) Blueprint
 ÎN DUEL:
   • Cumperi părți (din pool-ul rasei)
   • Combini părți (2×Common → 1×Uncommon)
-  • Asamblezi cărți pe grid
+  • Asamblezi cărți în Arena Slots
   ↓
 BATTLE → câștigi recompense
 ```
@@ -448,10 +448,9 @@ Pentru marketplace/trading viitor:
 
 ## 11. Întrebări Deschise (de Discutat)
 
-### 11.1 Grid-ul
-- [ ] Dimensiunea totală a grid-ului? (6×6? 7×7? 9×6? Altceva?)
-- [ ] O carte ocupă fix 9 pătrățele (3×3) sau poate varia?
-- [ ] Se poate roti cartea între Vertical și Orizontal în timpul Buy Phase?
+### 11.1 Arena Slots
+
+*(Întrebările despre grid 6×6 nu mai sunt relevante — designul final e Arena Slots.)*
 
 ### 11.2 Atacul
 - [ ] Cum atacă o carte în poziție verticală? (Front? Row? Random?)

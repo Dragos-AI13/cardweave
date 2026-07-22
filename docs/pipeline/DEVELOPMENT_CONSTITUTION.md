@@ -286,8 +286,8 @@ Test[save_version_migration] = save vechi → migrare la versiune nouă
 ### 8.4 Performance Tests
 
 ```
-Test[grid_96_cells] = grid 12×8 plin → <16ms render
-Test[battle_10_cards_vs_10] = 10 cărți vs 10 → <100ms calcul
+Test[arena_5_slots] = 5 sloturi + 6 subsloturi fiecare → <16ms render
+Test[battle_5_cards_vs_5] = 5 cărți vs 5 → <100ms calcul
 Test[ai_decision_50ms] = AI ia decizie în <50ms
 Test[save_100kb] = save 100KB → <500ms load
 ```

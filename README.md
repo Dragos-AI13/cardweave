@@ -34,7 +34,7 @@ cardweave/
 │   └── design/                      ← Wireframe-uri, mockup-uri
 ├── docs/pipeline/                   ← Pipeline design docs
 ├── cardweave/                       ← (schelet Godot — de înlocuit)
-├── app/                             ← Cod sursă (React + PixiJS + Tauri)
+├── app/                             ← Cod sursă (PixiJS + TypeScript + Tauri)
 └── README.md
 ```
 

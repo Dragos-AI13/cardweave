@@ -1,3 +1,10 @@
+# ~~ Grid Arena + Cell System + Recipes ~~
+> **ARHIVAT** — 2026-07-22
+> Acest design (Grid 12×8, 5 tipuri celule, card recipes) a fost **înlocuit** de **Arena Slots**.
+> Vezi `docs/pipeline/features/arena-slots/FEATURE_DESIGN.md` pentru designul curent.
+> Păstrat pentru referință istorică.
+
+---
 # Grid Arena + Cell System + Recipes
 
 **Feature:** Grid Arena & Cell System & Card Recipes

@@ -4,7 +4,29 @@
 
 ---
 
-## 2026-07-18 — Offline-First + Cleanup Documentație
+## 2026-07-22 — Cleanup Final + Arena Slots
+
+### Added
+- **D009** — Stack clarificat: PixiJS pur, fără React
+- CARDINAL_ENGINE.md — roadmap pe 4 faze (P1: opponent simplu, P4+: complet)
+- Arena Slots FEATURE_DESIGN.md (înlocuiește Grid 12×8)
+
+### Changed
+- Merge `documentation` → `main`: 17 fișiere, 2911 linii noi integrate
+- SYSTEMS_CATALOG.md: 37 secțiuni Godot → TypeScript/PixiJS, .gd → .ts, *.tres → *.json
+- Drop rates: gacha (0.1% Mythic) → offline-friendly (1% Mythic + pity timer)
+- Economie: doar coins în P1 (Essence/Dust/Gems → P5+)
+- GDD, README, CURRENT_SESSION: React șters → PixiJS pur
+- DESIGN_PIPELINE.md: Grid Arena → Arena Slots
+- State files (NEXT_ACTIONS, PROJECT_STATUS): actualizate cu noul design
+- grid-arena-recipes arhivat (înlocuit cu Arena Slots feature design)
+
+### Removed
+- Toate referințele Godot din SYSTEMS_CATALOG.md
+- Grid 12×8 din toate state/planning files
+- Referințe React din toată documentația
+
+---
 
 ### Added
 - **D008** — Offline-First: zero server, zero online, 100% local

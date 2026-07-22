@@ -10,7 +10,7 @@
 | Rol | Responsabil | Output |
 |-----|-------------|--------|
 | 🎨 Design | Eu (Hermes) + tu | Specs, wireframe, tickete |
-| ⚙️ Development | Eu (Hermes) + tu | Cod React + PixiJS + Tauri |
+| ⚙️ Development | Eu (Hermes) + tu | Cod PixiJS + TypeScript + Tauri |
 
 Nu mai există dual pipeline (VPS + PC). Totul se face pe aceeași mașină.
 

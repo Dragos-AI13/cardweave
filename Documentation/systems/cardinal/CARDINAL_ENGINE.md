@@ -217,7 +217,7 @@ Oponentul **nu are strategii hardcodate**. Are ADN. Engine-ul derivează comport
 // Nu există 20 de clase de strategii predefinite
 // Există doar: ADN → Scoring → Acțiune
 
-function scoreAction(part: Part, grid: Grid, dna: DNA): number {
+function scoreAction(part: Part, arena: Arena, dna: DNA): number {
   let score = 0;
 
   // Attack Jewel e mai valoros pentru un opponent agresiv
@@ -450,7 +450,7 @@ class Tutor {
     }
 
     // 2. A plasat o carte prost?
-    if (action.type === 'place' && state.grid.getCellType(action.pos) === 'neutral') {
+    if (action.type === 'place' && state.arena.getSlotStatus(action.pos) === 'empty') {
       return {
         type: 'bad_position',
         severity: 5,

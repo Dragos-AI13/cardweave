@@ -90,7 +90,7 @@ cardweave/
 │   ├── ui/                  ← Componente UI în PixiJS
 │   │   ├── Button.ts
 │   │   ├── Card.ts
-│   │   ├── Grid.ts
+│   │   ├── Arena.ts
 │   │   └── ...
 │   ├── cardinal/            ← Cardinal engine
 │   │   ├── SeedEngine.ts
