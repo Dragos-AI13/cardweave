@@ -21,14 +21,13 @@
 
 ## Current Phase
 
-**Game Design — Arena Slots + Snap Mechanic**
-Documentația finală e completă. Aștept G1 pentru a începe coding-ul.
+**Planning P1 — Arena Slots Prototype**
+Feature spec + arhitectură + wireframe + 5 ticket-uri gata. Așteaptă T001.
 
 | Feature | Status |
 |---------|--------|
-| **Arena Slots** (Snap + Auto-Battle) | 🟡 Game Design (post-GDD, pre-G1) |
+| **FEAT-P1: Arena Slots Prototype** | 🟠 **Planning** (tickets gata, pre-implementare) |
 | Card Part System | 💡 Backlog (P2) |
-| Cardinal AI (P1) | 📐 Inclus în Arena Slots sprint |
 
 ---
 
@@ -44,10 +43,10 @@ Documentația finală e completă. Aștept G1 pentru a începe coding-ul.
 
 ## Lifecycle
 
-| Faza GDD | Status | Progres |
-|----------|--------|---------|
+| Faza | Status | Progres |
+|------|--------|---------|
 | P0 — Core Design | ✅ GDD complet + Systems Catalog | 100% |
-| **P1 — Arena Slots + AI Opponent** | 🟡 **Game Design** | 90% (gata de G1) |
+| **P1 — Arena Slots Prototype** | 🟠 **Planning** | 95% (planning complet) |
 | P2 — Card Assembly | ⬜ | 0% |
 | P3 — Rase + AI | ⬜ | 0% |
 | P4 — Run Loop | ⬜ | 0% |
@@ -62,27 +61,17 @@ Documentația finală e completă. Aștept G1 pentru a începe coding-ul.
 
 ## Last Session Summary
 
-*2026-07-22 — Cleanup complet + Arena Slots final*
-- Merge documentation → main: toată documentația nouă integrată
-- Godot șters din SYSTEMS_CATALOG (37 secțiuni → TypeScript/PixiJS)
-- Cardinal segmentat pe faze (P1: doar 4 parametri ADN)
-- Drop rates offline-friendly (Common 40% → Mythic 1%)
-- Economie P1: doar coins
-- D009: PixiJS pur confirmat (fără React)
-- Grid Arena → Arena Slots: toate doc-urile actualizate
-
----
-
-## Known Issues
-
-*(none)*
+*2026-07-22 — Planning P1 complet + Wireframe Main Menu*
+- Wireframe Main Menu aprobat → `design/wireframes/`
+- Planning package P1 creat: FEATURE.md, DESIGN_PASS.md, UI_SPEC.md
+- 5 ticket-uri P1 definite (T001-T005) cu dependințe
+- Main Menu wireframe oficial în `design/wireframes/`
+- Următorul pas: T001 — Main Menu Scene (inițializare proiect + cod)
 
 ---
 
 ## Notes
 
-- **Tech Stack:** PixiJS pur + TypeScript + Tauri ✅ (D009)
-- **Game Model:** Offline-first, AI opponent adaptiv ✅ (D008)
-- **Arena Slots** e feature-ul activ P1 (înlocuiește Grid 12×8)
-- **Branch strategy**: `main` (stabil), `feat/*` (features)
-- **Documentație tehnică:** `Documentation/` | **Pipeline:** `docs/pipeline/`
+- **Planning P1:** `docs/pipeline/planning/FEAT-P1-Arena-Slots/`
+- **Wireframe oficial:** `design/wireframes/main-menu.excalidraw`
+- **Branch strategy:** `main` (stabil), `feat/p1-arena-slots` (implementare)

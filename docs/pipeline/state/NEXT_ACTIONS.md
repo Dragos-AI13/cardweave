@@ -6,8 +6,8 @@
 
 ## 🎯 Active Feature
 
-**Feature:** Arena Slots — Snap Mechanic + Auto-Battle
-**Phase:** Game Design (post-GDD)
+**Feature:** FEAT-P1 — Arena Slots Prototype
+**Phase:** Planning — gata de implementare
 **Model:** Offline-first
 
 ---
@@ -18,15 +18,16 @@
 |---|---------|--------|
 | 1 | ✅ **Design final confirmat** — Arena Slots (5 sloturi, 6 subsloturi, snap direct) | ✅ |
 | 2 | ✅ **Documentație core cleanup** — Godot șters, drop rates offline, economie P1, D009 | ✅ |
-| 3 | **Aprobă designul (G1)** de către Dragoș | ⬜ |
-| 4 | După G1: scrie FEATURE_DESIGN pentru P1 (Arena Slots + Snap + Battle) | ⬜ |
-| 5 | Inițializează proiectul Tauri + PixiJS + TypeScript | ⬜ |
-| 6 | Implementează P1 — 5 Arena Sloturi, shop, snap, auto-battle, AI opponent basic | ⬜ |
+| 3 | ✅ **Wireframe Main Menu aprobat** → `design/wireframes/` | ✅ |
+| 4 | ✅ **Planning P1 complet** — FEATURE.md, DESIGN_PASS.md, UI_SPEC.md, 5 ticket-uri | ✅ |
+| 5 | **T001 — Main Menu Scene** ← NEXT | ⬜ |
+| 6 | T002 — Arena Layout + 5 Sloturi | ⬜ |
+| 7 | T003 — Shop + Snap Mechanic | ⬜ |
+| 8 | T004 — Auto-Battle Loop | ⬜ |
+| 9 | T005 — AI Opponent (Cardinal P1) | ⬜ |
 
 ---
 
-## 📌 Backlog
+## 📌 Detalii
 
-- [ ] Scrie DESIGN_PASS.md pentru Arena Slots
-- [ ] UI_WIREFRAME.md — mockup ecran Buy Phase + Arena + Battle
-- [ ] Define valori numerice pentru Ignis (damage per part, cooldown, energy cost)
+Vezi `docs/pipeline/planning/FEAT-P1-Arena-Slots/` pentru spec-ul complet.

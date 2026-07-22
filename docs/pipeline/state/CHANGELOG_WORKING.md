@@ -4,7 +4,21 @@
 
 ---
 
-## 2026-07-22 — Cleanup Final + Arena Slots
+## 2026-07-22 — Planning P1 + Wireframe Main Menu Aprobat
+
+### Added
+- Planning package P1 complet: `docs/pipeline/planning/FEAT-P1-Arena-Slots/`
+- FEATURE.md — feature spec cu scope, acceptanță, dependințe
+- DESIGN_PASS.md — arhitectură PixiJS, state machine, componente
+- UI_SPEC.md — wireframe → componente, layout, interacțiuni
+- TICKET_INDEX.md + 5 ticket-uri (T001-T005)
+- Wireframe Main Menu aprobat în `design/wireframes/`
+
+### Changed
+- NEXT_ACTIONS.md — T001 promovat ca next
+- PROJECT_STATUS.md — fază actualizată la Planning
+
+---
 
 ### Added
 - **D009** — Stack clarificat: PixiJS pur, fără React
