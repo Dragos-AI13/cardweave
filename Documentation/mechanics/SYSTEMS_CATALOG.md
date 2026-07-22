@@ -30,8 +30,8 @@
 │ 6. CONFIG (ce se poate ajusta)                              │
 │    Parametri balansabili, valori inițiale                   │
 │                                                             │
-│ 7. GODOT (cum se implementează)                             │
-│    Scene, scripts, signals, autoloads                       │
+│ 7. IMPLEMENTARE (TypeScript + PixiJS)                       │
+│    Module, clase, fișiere în src/                           │
 │                                                             │
 │ 8. TESTARE (cum verifici că funcționează)                   │
 │    Criterii de acceptanță, edge cases                       │
@@ -51,31 +51,31 @@
 
 ### 1. Identitate
 - **Nume:** Resource System
-- **Scop:** Fundația datelor — toate entitățile jocului sunt resurse Godot
+- **Scop:** Fundația datelor — toate entitățile jocului sunt date definite în TypeScript
 - **Categorii:** data, foundation
 - **Dependențe:** nimic (e primul)
 
 ### 2. Data
 ```
-Godot Resources (.tres / .gd):
-├── PartDefinition.gd (base class)
-│   ├── FramePart.gd
-│   ├── NamePart.gd
-│   ├── IconPart.gd
-│   ├── AttackJewel.gd
-│   ├── DefenseJewel.gd
-│   └── SkillRectangle.gd
-├── RarityDefinition.gd (Common→Mythic)
-├── RaceDefinition.gd (Pyros, Aqua, etc.)
-├── BlueprintDefinition.gd (rețete)
-└── ProfessionDefinition.gd (arbore profesii)
+Type Definitions (.ts / .json):
+├── PartDefinition.ts (base class)
+│   ├── FramePart.ts
+│   ├── NamePart.ts
+│   ├── IconPart.ts
+│   ├── AttackJewel.ts
+│   ├── DefenseJewel.ts
+│   └── SkillRectangle.ts
+├── RarityDefinition.ts (Common→Mythic)
+├── RaceDefinition.ts (Pyros, Aqua, etc.)
+├── BlueprintDefinition.ts (rețete)
+└── ProfessionDefinition.ts (arbore profesii)
 ```
 
 ### 3. Logică
-- Fiecare parte de carte e o resursă Godot (inherits Resource)
-- Părțile sunt stocate în fișiere `.tres` sau `.gd`
-- Se pot edita din editor (dacă scriptul e `@tool`)
-- Se pot instanția dinamic la runtime
+- Fiecare parte de carte e o entitate TypeScript
+- Părțile sunt stocate în fișiere `.json` sau `.ts`
+- Se definesc direct în TypeScript
+- Se încarcă dinamic la runtime din JSON
 
 ### 4. UI
 - — (e invizibil, doar date)
@@ -84,34 +84,34 @@ Godot Resources (.tres / .gd):
 - Resursele sunt doar pe client. Serverul are propriul model de date.
 
 ### 6. Config
-- Toate valorile sunt în resurse, nu în cod. Poți balansa fără să rescrii.
+- Valorile se configurează în fișiere JSON, nu în cod. Poți balansa fără să rescrii.
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://data/
+src/data/
 ├── parts/
-│   ├── PartDefinition.gd       ← Base class
+│   ├── PartDefinition.ts       ← Base class
 │   ├── frames/
-│   │   ├── FramePart.gd
-│   │   └── *.tres              ← Instanțe
+│   │   ├── FramePart.ts
+│   │   └── *.json              ← Instanțe
 │   ├── jewels/
-│   │   ├── AttackJewel.gd
-│   │   ├── DefenseJewel.gd
-│   │   └── *.tres
+│   │   ├── AttackJewel.ts
+│   │   ├── DefenseJewel.ts
+│   │   └── *.json
 │   └── skills/
-│       ├── SkillRectangle.gd
-│       └── *.tres
+│       ├── SkillRectangle.ts
+│       └── *.json
 ├── rarities/
-│   └── *.tres
+│   └── *.json
 ├── races/
-│   └── *.tres
+│   └── *.json
 └── blueprints/
-    └── *.tres
+    └── *.json
 ```
 
 ### 8. Testare
 - [ ] O parte poate fi încărcată din resursă
-- [ ] Valorile se pot edita din inspector
+- [ ] Valorile se configurează în fișiere JSON
 - [ ] O parte goală e diferită de o parte completă
 
 ### 9. Istoric
@@ -149,7 +149,7 @@ Stări:
 ```
 
 ### 3. Logică
-- State Machine pattern (vezi Godot State Machine)
+- State Machine pattern (vezi `src/core/state/`)
 - Tranzițiile sunt controlate de evenimente (timer, player action, sync)
 - Nu se poate sări peste stări
 - Fiecare stare are: enter(), update(delta), exit()
@@ -167,19 +167,19 @@ Stări:
 - Durata Battle Phase
 - Tranziții disponibile (lista albă)
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://core/game_state_machine/
-├── GameStateMachine.gd        ← Autoload
+src/core/game_state_machine/
+├── GameStateMachine.ts        ← singleton
 ├── states/
-│   ├── MenuState.gd
-│   ├── MatchmakingState.gd
-│   ├── RaceSelectState.gd
-│   ├── BuyPhaseState.gd
-│   ├── BattlePhaseState.gd
-│   ├── ResultsState.gd
-│   └── BetweenRoundsState.gd
-└── transitions.gd             ← Tabelul tranzițiilor
+│   ├── MenuState.ts
+│   ├── MatchmakingState.ts
+│   ├── RaceSelectState.ts
+│   ├── BuyPhaseState.ts
+│   ├── BattlePhaseState.ts
+│   ├── ResultsState.ts
+│   └── BetweenRoundsState.ts
+└── transitions.ts             ← Tabelul tranzițiilor
 ```
 
 ### 8. Testare
@@ -238,12 +238,12 @@ PlayerInventory:
 - Inventar maxim (câte părți poți avea simultan)
 - Cost combinare
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/inventory/
-├── PartInventory.gd
-├── InventoryUI.gd
-└── CardAssemblyUI.gd
+src/features/inventory/
+├── PartInventory.ts
+├── InventoryUI.ts
+└── CardAssemblyUI.ts
 ```
 
 ### 8. Testare
@@ -349,15 +349,15 @@ Synergy Score se aplică ca multiplier la toate efectele cărții.
 - Cost mutare parte între sloturi (dacă există)
 - Boost multiplier la carte completă (ex: 1.3)
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/card_assembly/
-├── ArenaSlot.gd           ← Un slot cu 6 subsloturi
-├── SubSlot.gd             ← Un subslot (Frame, Name, etc.)
-├── SnapHandler.gd         ← Logica de snap când cumperi o parte
-├── ArenaUI.gd             ← Toată Arena
-├── SlotPreview.gd         ← Preview card + stats curente
-└── PartMoveHandler.gd     ← Mutat părți între sloturi
+src/features/card_assembly/
+├── ArenaSlot.ts           ← Un slot cu 6 subsloturi
+├── SubSlot.ts             ← Un subslot (Frame, Name, etc.)
+├── SnapHandler.ts         ← Logica de snap când cumperi o parte
+├── ArenaUI.ts             ← Toată Arena
+├── SlotPreview.ts         ← Preview card + stats curente
+└── PartMoveHandler.ts     ← Mutat părți între sloturi
 ```
 
 ### 8. Testare
@@ -458,16 +458,16 @@ Elemente UI:
 - Cost deblocare slot nou: (slot_index * 10) gold
 - Cost mutare parte: 0 sau 5 gold
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/arena/
-├── Arena.gd                ← Gestionează toate sloturile
-├── CardSlot.gd             ← Un slot cu 6 subsloturi
-├── SubSlot.gd              ← Un subslot (Frame, Name, etc.)
-├── ArenaUI.gd              ← UI principală
-├── SlotPreview.gd          ← Preview card
-├── SlotExpansionUI.gd      ← Deblocare sloturi noi
-└── SnapAnimation.gd        ← Animație la snap
+src/features/arena/
+├── Arena.ts                ← Gestionează toate sloturile
+├── CardSlot.ts             ← Un slot cu 6 subsloturi
+├── SubSlot.ts              ← Un subslot (Frame, Name, etc.)
+├── ArenaUI.ts              ← UI principală
+├── SlotPreview.ts          ← Preview card
+├── SlotExpansionUI.ts      ← Deblocare sloturi noi
+└── SnapAnimation.ts        ← Animație la snap
 ```
 
 ### 8. Testare
@@ -529,16 +529,16 @@ Shop:
 ### 6. Config
 - Coins per round (formulă: base + round * increment)
 - Reroll cost (formulă)
-- Șanse per raritate (Common 60%, Uncommon 25% etc.)
+- Șanse per raritate (Common 40%, Uncommon 30%, Rare 18%, Epic 8%, Legendary 3%, Mythic 1% — offline-friendly, fără gacha)
 - Max parts in shop
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/shop/
-├── ShopManager.gd
-├── ShopUI.gd
-├── RerollButton.gd
-└── CombineUI.gd
+src/features/shop/
+├── ShopManager.ts
+├── ShopUI.ts
+├── RerollButton.ts
+└── CombineUI.ts
 ```
 
 ### 8. Testare
@@ -715,19 +715,19 @@ Elemente UI:
 | Battle time cap | 60s | 30–120 | Max duration |
 | Boost complet | 1.3× | 1.1–2.0 | Multiplier carte 6/6 |
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/battle/
-├── BattleManager.gd          ← Orchestrator
-├── BattleSimulator.gd        ← Calculează rezultatul
-├── CardActivator.gd          ← Activează cărțile pe cooldown
-├── PartEffectHandler.gd      ← Execută efectele fiecărei părți
-├── EnergyBar.gd              ← UI energy
-├── HealthBar.gd              ← UI HP + Shield
-├── ArenaSlotUI.gd            ← Slot vizual în battle
-├── CooldownViz.gd            ← Countdown vizual per slot
-├── BattleEvent.gd            ← Log entry
-└── BattleSpeedControl.gd     ← 1×/2×/3× toggle
+src/features/battle/
+├── BattleManager.ts          ← Orchestrator
+├── BattleSimulator.ts        ← Calculează rezultatul
+├── CardActivator.ts          ← Activează cărțile pe cooldown
+├── PartEffectHandler.ts      ← Execută efectele fiecărei părți
+├── EnergyBar.ts              ← UI energy
+├── HealthBar.ts              ← UI HP + Shield
+├── ArenaSlotUI.ts            ← Slot vizual în battle
+├── CooldownViz.ts            ← Countdown vizual per slot
+├── BattleEvent.ts            ← Log entry
+└── BattleSpeedControl.ts     ← 1×/2×/3× toggle
 ```
 
 ### 8. Testare
@@ -793,12 +793,12 @@ Match:
 - Max losses = 3
 - Reward scaling
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/match/
-├── MatchManager.gd
-├── RewardsScreen.gd
-└── WinLossTracker.gd
+src/features/match/
+├── MatchManager.ts
+├── RewardsScreen.ts
+└── WinLossTracker.ts
 ```
 
 ### 8. Testare
@@ -850,12 +850,12 @@ RaceSelection:
 - Rase disponibile la launch
 - Condiții de deblocare per rasă
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/race/
-├── RaceSelectionUI.gd
-├── RaceCard.gd
-└── RaceDefinition.gd (resursă)
+src/features/race/
+├── RaceSelectionUI.ts
+├── RaceCard.ts
+└── RaceDefinition.ts (resursă)
 ```
 
 ### 8. Testare
@@ -909,13 +909,13 @@ ProfessionTree:
 - Cost per nivel
 - Bonusuri per nivel
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/professions/
-├── ProfessionTree.gd
-├── ProfessionUI.gd
-├── ProfessionNode.gd
-└── ProfessionDefinition.gd
+src/features/professions/
+├── ProfessionTree.ts
+├── ProfessionUI.ts
+├── ProfessionNode.ts
+└── ProfessionDefinition.ts
 ```
 
 ### 8. Testare
@@ -970,13 +970,13 @@ Blueprint:
 - Materiale per blueprint
 - Gold cost
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/blueprints/
-├── BlueprintManager.gd
-├── BlueprintUI.gd
-├── ResearchQueueUI.gd
-└── CraftingUI.gd
+src/features/blueprints/
+├── BlueprintManager.ts
+├── BlueprintUI.ts
+├── ResearchQueueUI.ts
+└── CraftingUI.ts
 ```
 
 ### 8. Testare
@@ -1029,12 +1029,12 @@ Upgrade:
 - Stat increase per level (formulă)
 - Dust obținut din dezasamblare
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/upgrade/
-├── UpgradeManager.gd
-├── UpgradeUI.gd
-└── PartCard.gd (with level display)
+src/features/upgrade/
+├── UpgradeManager.ts
+├── UpgradeUI.ts
+└── PartCard.ts (with level display)
 ```
 
 ### 8. Testare
@@ -1088,12 +1088,12 @@ Durability:
 - Decay per duel
 - Cost reparație
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/durability/
-├── DurabilityManager.gd
-├── DurabilityIndicator.gd
-└── RepairUI.gd
+src/features/durability/
+├── DurabilityManager.ts
+├── DurabilityIndicator.ts
+└── RepairUI.ts
 ```
 
 ### 8. Testare
@@ -1113,30 +1113,26 @@ res://features/durability/
 
 ### 1. Identitate
 - **Nume:** Economy System
-- **Scop:** Gestionarea tuturor resurselor și tranzacțiilor
+- **Scop:** Gestionarea resurselor — **P1: doar coins.** Essence, Dust, Gems → P5+
 - **Categorii:** economy, foundation
 - **Dependențe:** SYS-001
 
 ### 2. Data
 ```
-Currency:
+P1 — Economie simplă:
+└── coins: int (se primesc la fiecare rundă în duel)
+
+P5+ — Economie completă:
 ├── gold: int (principală)
 ├── essence: int (specială, pentru blueprint-uri)
 ├── dust: int (pentru upgrade)
 └── gems: int (premium / drops rare)
-
-Transactions:
-├── log: Array[Transaction]
-│   └── Transaction = { type, amount, source, timestamp, hmac_signature }
-└── audit_enabled: bool
 ```
 
 ### 3. Logică
-- Gold se câștigă din dueluri, quest-uri
-- Essence se câștigă din drops speciali
-- Dust se obține din dezasamblare părți
-- Gems sunt premium (sau drops foarte rare)
-- Fiecare tranzacție e semnată HMAC (anti-cheat)
+- **P1:** Coins se primesc la începutul fiecărei runde. Se cheltuie în shop. Atât.
+- **P5+:** Gold, Essence, Dust, Gems, blueprint-uri, upgrade, crafting.
+- Fiecare tranzacție e semnată HMAC (anti-cheat) — doar în P5+
 
 ### 4. UI
 - Balance afișat în top bar
@@ -1153,13 +1149,13 @@ Transactions:
 - Drop rates per raritate
 - Gem exchange rate (dacă există)
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/economy/
-├── CurrencyManager.gd
-├── EconomyUI.gd
-├── Transaction.gd
-└── HmacSigner.gd
+src/features/economy/
+├── CurrencyManager.ts
+├── EconomyUI.ts
+├── Transaction.ts
+└── HmacSigner.ts
 ```
 
 ### 8. Testare
@@ -1219,12 +1215,12 @@ PlayerProfile:
 - Salvarea automată la interval
 - Backup frequency
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/profile/
-├── PlayerProfile.gd
-├── ProfileUI.gd
-└── StatsDisplay.gd
+src/features/profile/
+├── PlayerProfile.ts
+├── ProfileUI.ts
+└── StatsDisplay.ts
 ```
 
 ### 8. Testare
@@ -1284,13 +1280,13 @@ Lobby:
 - Rating range initial
 - Rating range expansion per timeout
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/network/
-├── Matchmaking.gd
-├── Lobby.gd
-├── QueueUI.gd
-└── LobbyUI.gd
+src/features/network/
+├── Matchmaking.ts
+├── Lobby.ts
+├── QueueUI.ts
+└── LobbyUI.ts
 ```
 
 ### 8. Testare
@@ -1347,13 +1343,13 @@ SyncState:
 - Disconnect timeout
 - Max reconnection attempts
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/network/
-├── SyncManager.gd
-├── NetworkMessage.gd
-├── ConnectionIndicator.gd
-└── ReconnectUI.gd
+src/features/network/
+├── SyncManager.ts
+├── NetworkMessage.ts
+├── ConnectionIndicator.ts
+└── ReconnectUI.ts
 ```
 
 ### 8. Testare
@@ -1403,12 +1399,12 @@ Security:
 - HMAC key rotation
 - Ban thresholds
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/security/
-├── TransactionAudit.gd
-├── HmacSigner.gd
-└── (restul pe server, nu în Godot)
+src/features/security/
+├── TransactionAudit.ts
+├── HmacSigner.ts
+└── (restul pe server, nu în client)
 ```
 
 ### 8. Testare
@@ -1438,7 +1434,7 @@ UISystem:
 ├── current_screen: String
 ├── overlay_stack: Array[Overlay]
 ├── transitions: Dictionary { from_to: Animation }
-└── theme: Theme (Godot Theme)
+└── theme: CardTheme
 ```
 
 ### 3. Logică
@@ -1458,27 +1454,27 @@ UISystem:
 - Fonturi
 - Animații tranziții
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://ui/
-├── ScreenManager.gd (Autoload)
+src/ui/
+├── ScreenManager.ts (Autoload)
 ├── screens/
-│   ├── MainMenu.tscn + .gd
-│   ├── Matchmaking.tscn + .gd
-│   ├── RaceSelect.tscn + .gd
-│   ├── BuyPhase.tscn + .gd
-│   ├── Battle.tscn + .gd
-│   ├── Results.tscn + .gd
-│   └── Profile.tscn + .gd
+│   ├── MainMenu.tscn + .ts
+│   ├── Matchmaking.tscn + .ts
+│   ├── RaceSelect.tscn + .ts
+│   ├── BuyPhase.tscn + .ts
+│   ├── Battle.tscn + .ts
+│   ├── Results.tscn + .ts
+│   └── Profile.tscn + .ts
 ├── overlays/
-│   ├── Settings.tscn + .gd
-│   └── ConfirmDialog.tscn + .gd
+│   ├── Settings.tscn + .ts
+│   └── ConfirmDialog.tscn + .ts
 ├── components/
-│   ├── Button.gd
-│   ├── CardDisplay.gd
-│   └── HealthBar.gd
+│   ├── Button.ts
+│   ├── CardDisplay.ts
+│   └── HealthBar.ts
 └── theme/
-    └── cardweave_theme.tres
+    └── cardweave_theme.json
 ```
 
 ### 8. Testare
@@ -1530,12 +1526,12 @@ AudioSystem:
 - Volume default
 - Mute on focus lost
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/audio/
-├── AudioManager.gd (Autoload)
-├── MusicPlayer.gd
-├── SFXPlayer.gd
+src/features/audio/
+├── AudioManager.ts (Autoload)
+├── MusicPlayer.ts
+├── SFXPlayer.ts
 └── audio_files/
     ├── music/
     └── sfx/
@@ -1595,12 +1591,12 @@ Results:
 - Drop rates (șanse per raritate)
 - Streak bonus
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/results/
-├── ResultsUI.gd
-├── RewardAnimation.gd
-└── StatsDisplay.gd
+src/features/results/
+├── ResultsUI.ts
+├── RewardAnimation.ts
+└── StatsDisplay.ts
 ```
 
 ### 8. Testare
@@ -1716,13 +1712,13 @@ CharacterLevel:
 - Bonus per level per stat
 - Cap la bonus (dacă există)
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/leveling/
-├── LevelingManager.gd
-├── XPBar.gd
-├── LevelUpEffect.gd
-└── CharacterLevelDisplay.gd
+src/features/leveling/
+├── LevelingManager.ts
+├── XPBar.ts
+├── LevelUpEffect.ts
+└── CharacterLevelDisplay.ts
 ```
 
 ### 8. Testare
@@ -1782,13 +1778,13 @@ Rankings:
 - Season duration
 - Number of leaderboard entries displayed
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/rankings/
-├── RankingManager.gd
-├── LeaderboardUI.gd
-├── RankingEntry.gd
-└── SeasonTimer.gd
+src/features/rankings/
+├── RankingManager.ts
+├── LeaderboardUI.ts
+├── RankingEntry.ts
+└── SeasonTimer.ts
 ```
 
 ### 8. Testare
@@ -1859,15 +1855,15 @@ Tournament:
 - Monthly: start date, reward tiers
 - Points per win/loss
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/tournaments/
-├── TournamentManager.gd
-├── TournamentHubUI.gd
-├── TournamentEntry.gd
-├── TournamentTimer.gd
-├── RewardsPreview.gd
-└── TournamentHistory.gd
+src/features/tournaments/
+├── TournamentManager.ts
+├── TournamentHubUI.ts
+├── TournamentEntry.ts
+├── TournamentTimer.ts
+├── RewardsPreview.ts
+└── TournamentHistory.ts
 ```
 
 ### 8. Testare
@@ -1980,19 +1976,19 @@ Item:
 - Rarity scaling
 - Material drop rates
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/items/
-├── Item.gd
-├── WeaponItem.gd
-├── ArmorItem.gd
-├── AccessoryItem.gd
-├── ItemManager.gd
-├── InventoryUI.gd
-├── CraftingUI.gd
-├── UpgradeUI.gd
-├── EquipmentSlotsUI.gd
-├── ItemEffectHandler.gd
+src/features/items/
+├── Item.ts
+├── WeaponItem.ts
+├── ArmorItem.ts
+├── AccessoryItem.ts
+├── ItemManager.ts
+├── InventoryUI.ts
+├── CraftingUI.ts
+├── UpgradeUI.ts
+├── EquipmentSlotsUI.ts
+├── ItemEffectHandler.ts
 └── data/
     ├── weapons/
     ├── armors/
@@ -2049,11 +2045,11 @@ Tutorial:
 ### 6. Config
 - Force on first login
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/tutorial/
-├── TutorialManager.gd
-├── TutorialStage.gd
+src/features/tutorial/
+├── TutorialManager.ts
+├── TutorialStage.ts
 ├── TutorialOverlay.tscn
 └── stages/
 ```
@@ -2103,10 +2099,10 @@ Settings:
 ### 6. Config
 - Default values
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/settings/
-├── SettingsManager.gd (Autoload)
+src/features/settings/
+├── SettingsManager.ts (Autoload)
 └── SettingsUI.tscn
 ```
 
@@ -2158,12 +2154,12 @@ Reconnect:
 - Max disconnect time
 - Max attempts
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/network/
-├── ReconnectManager.gd
+src/features/network/
+├── ReconnectManager.ts
 ├── ReconnectUI.tscn
-└── ConnectionMonitor.gd
+└── ConnectionMonitor.ts
 ```
 
 ### 8. Testare
@@ -2214,14 +2210,14 @@ Collection:
 ### 6. Config
 - Max inventory size
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/collection/
-├── CollectionManager.gd
+src/features/collection/
+├── CollectionManager.ts
 ├── CollectionUI.tscn
-├── CollectionCard.gd
-├── CollectionFilters.gd
-└── DisassembleUI.gd
+├── CollectionCard.ts
+├── CollectionFilters.ts
+└── DisassembleUI.ts
 ```
 
 ### 8. Testare
@@ -2271,13 +2267,13 @@ FriendSystem:
 ### 6. Config
 - Max friends
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/social/
-├── FriendManager.gd
+src/features/social/
+├── FriendManager.ts
 ├── FriendListUI.tscn
-├── AddFriendUI.gd
-└── ChallengeUI.gd
+├── AddFriendUI.ts
+└── ChallengeUI.ts
 ```
 
 ### 8. Testare
@@ -2327,12 +2323,12 @@ DailyRewards:
 ### 6. Config
 - Rewards per day
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/daily/
-├── DailyRewardsManager.gd
+src/features/daily/
+├── DailyRewardsManager.ts
 ├── DailyRewardsUI.tscn
-└── RewardAnimation.gd
+└── RewardAnimation.ts
 ```
 
 ### 8. Testare
@@ -2381,10 +2377,10 @@ Report:
 ### 6. Config
 - Reports per day limit
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/moderation/
-├── ReportManager.gd
+src/features/moderation/
+├── ReportManager.ts
 └── ReportUI.tscn
 ```
 
@@ -2435,13 +2431,13 @@ Achievement:
 ### 6. Config
 - Lista completă
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/achievements/
-├── AchievementManager.gd
+src/features/achievements/
+├── AchievementManager.ts
 ├── AchievementUI.tscn
-├── AchievementCard.gd
-├── AchievementPopup.gd
+├── AchievementCard.ts
+├── AchievementPopup.ts
 └── data/achievements.json
 ```
 
@@ -2493,13 +2489,13 @@ MatchRecord:
 ### 6. Config
 - Max history entries
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/history/
-├── MatchHistoryManager.gd
+src/features/history/
+├── MatchHistoryManager.ts
 ├── MatchHistoryUI.tscn
-├── MatchEntry.gd
-└── MatchDetailUI.gd
+├── MatchEntry.ts
+└── MatchDetailUI.ts
 ```
 
 ### 8. Testare
@@ -2549,13 +2545,13 @@ Notification:
 - Max notifications
 - Auto-expire
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/notifications/
-├── NotificationManager.gd (Autoload)
+src/features/notifications/
+├── NotificationManager.ts (Autoload)
 ├── NotificationUI.tscn
-├── NotificationToast.gd
-└── NotificationList.gd
+├── NotificationToast.ts
+└── NotificationList.ts
 ```
 
 ### 8. Testare
@@ -2616,13 +2612,13 @@ ClassDefinition:
 ### 6. Config
 - Respec cost, level requirements, bonus values
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/classes/
-├── ClassDefinition.gd
-├── ClassManager.gd
+src/features/classes/
+├── ClassDefinition.ts
+├── ClassManager.ts
 ├── ClassSelectionUI.tscn
-└── ClassCard.gd
+└── ClassCard.ts
 ```
 
 ### 8. Testare
@@ -2702,14 +2698,14 @@ CompatibilityRules:
 - Synergy multipliers
 - Rarity mismatch penalties
 
-### 7. Godot
+### 7. Implementation (TypeScript + PixiJS)
 ```
-res://features/character_pool/
-├── CharacterCardPool.gd
-├── CardDefinition.gd
-├── CompatibilityCalculator.gd
+src/features/character_pool/
+├── CharacterCardPool.ts
+├── CardDefinition.ts
+├── CompatibilityCalculator.ts
 ├── CardCollectionUI.tscn
-├── SynergyIndicator.gd
+├── SynergyIndicator.ts
 └── data/characters/
 ```
 
@@ -2734,23 +2730,28 @@ res://features/character_pool/
 - **Nume:** AI Opponent
 - **Scop:** Adversar controlat de AI care joacă împotriva jucătorului
 - **Categorii:** core
-- **Dependențe:** SYS-007 (Battle), SYS-009 (Races)
+- **Dependențe:** SYS-007 (Battle), SYS-009 (Races), Cardinal Engine
 
 ### 2. Data
 ```
-AIOpponent:
-├── difficulty: enum { EASY, NORMAL, HARD, EXPERT }
+P1 — Opponent simplu (vezi CARDINAL_ENGINE.md §11):
+├── dna: { aggression, defense, economy, synergy }
 ├── race: RaceDefinition
-├── strategy: { aggressivity, defense, economy }
-├── deck_building_rules: ruleset
-└── behavior_tree: decisions
+├── budget: int (coins per round)
+└── scoring_fn: WeightedRandomSelection
+
+P3+ — Opponent complet (vezi CARDINAL_ENGINE.md §3-4):
+├── dna: { 10 parametri + flow governor }
+├── player_profile: IndexedDB
+├── evolution: Genetic Algorithm
+└── capabilities: { archaeology, tutor, quest }
 ```
 
 ### 3. Logică
-- AI-ul joacă aceleași faze ca jucătorul: shop → assembly → battle
-- AI-ul are strategii diferite per dificultate
-- AI-ul nu trișează — respectă aceleași reguli
-- Dificultatea se adaptează la performanța jucătorului
+- **P1:** AI-ul folosește WeightedRandomSelection pe 4 parametri ADN. Fără profil de jucător. Fără evoluție. Un opponent random per run.
+- **P3:** AI-ul construiește profil jucător + Flow Governor. 10 parametri ADN.
+- **P4+:** Genetic Algorithm, Dynamic Archaeology, Tutor, Empty Chair.
+- AI-ul nu trișează — respectă aceleași reguli ca jucătorul
 
 ### 4. UI
 - Numele adversarului + rasa

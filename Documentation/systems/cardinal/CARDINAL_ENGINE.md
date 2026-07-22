@@ -779,3 +779,55 @@ E înfricoșător și fascinant în același timp."
 
 *Document actualizat: 2026-07-18*
 *Status: Discuție — nimic nu e final. Toate ideile sunt pe masă.*
+
+
+## 11. Roadmap — Cardinal pe Faze
+
+Cardinal e un sistem masiv. Îl împărțim pe faze ca să avem un prototip funcțional cât mai repede.
+
+### P1 (Prototype) — ⚡ Minimum Viable Opponent
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    CARDINAL P1                               │
+│                                                             │
+│  Ce include:                                                 │
+│  • 4 parametri ADN (aggression, defense, economy, synergy)  │
+│  • WeightedRandomSelection pentru cumpărături               │
+│  • Fără Genetic Algorithm (oponentul nu evoluează)          │
+│  • Fără profil de jucător persistent                       │
+│  • Un singur oponent random per run                        │
+│                                                             │
+│  Implementare: ~200-300 linii TypeScript, un singur fișier  │
+│  `src/cardinal/OpponentAI.ts` + `src/cardinal/DNA.ts`      │
+│                                                             │
+│  Suficient pentru:                                          │
+│  • P1 — să ai un opponent care cumpără și atacă             │
+│  • P2 — să simulezi un duel corect                          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### P2 (Card Assembly) — Basic Scoring
+
+Adăugăm:
+- Scoring mai avansat (ține cont de sloturi libere, sinergii)
+- Opponentul reacționează la ce face jucătorul (dacă jucătorul cumpără Attack Jewel, opponentul cumpără Defense)
+- Tot fără GA, fără profil persistent
+
+### P3 (Rase + AI) — Profil Jucător + ADN complet
+
+- Profil jucător în IndexedDB (ultimele 20 run-uri)
+- 10 parametri ADN complet
+- Flow Governor (ajustează dificultatea pe baza win rate-ului)
+- Opponentul se adaptează ușor la stilul jucătorului
+
+### P4+ (Conținut) — Cardinal Complet
+
+- Genetic Algorithm (evoluție opponent)
+- Dynamic Archaeology
+- Quest Emergence
+- The Tutor
+- The Empty Chair
+- Narrative Loom
+
+Vezi secțiunile 4.1-4.7 pentru detaliile complete ale capabilităților din P4+.

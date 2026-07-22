@@ -97,3 +97,23 @@
 - Arhitectura e mai simplă, mai rapid de dezvoltat, zero infrastructură
 
 **Sursa:** Discuție arhitectură (2026-07-18) — user + AI
+
+---
+
+## D009 — Clarificare Stack: PixiJS pur (fără React)
+
+**Data:** 2026-07-22
+**Decizie:** Adoptăm **PixiJS pur** (TypeScript, fără framework UI) ca rendering layer. Se actualizează D006: React rămâne ca opțiune viitoare doar dacă UI-ul devine prea complex pentru PixiJS pur.
+
+**Motiv:** Cardweave e un joc pe un singur canvas. React + PixiJS înseamnă două lumi paralele (DOM + canvas) care trebuie permanent sincronizate — o sursă frecventă de bug-uri și jank. PixiJS pur înseamnă un singur rendering context, un singur event loop, zero bridge-uri. Pentru un joc 2D cu 90% UI canvas, e alegerea corectă.
+
+**Detalii tehnice (din TECH_STACK.md):**
+- Game engine: TypeScript pur (clase, event system, state machine)
+- Rendering: PixiJS (standalone, pur) — WebGL accelerat, sprite batching, 60fps
+- UI: PixiJS (construit intern) — același rendering context ca jocul
+- Desktop: Tauri 2 (~5MB, cross-platform Steam + Web)
+- Web: Vite + deploy static (aceeași bază de cod)
+
+**Status:** ✅ Confirmat — TECH_STACK.md conține detaliile complete.
+
+**Sursa:** Instanță specializată documentație + analiză comparativă (PixiJS pur vs React+PixiJS)

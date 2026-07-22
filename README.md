@@ -4,7 +4,7 @@
 
 Cardweave este un **auto-battler single-player** unde îți construiești singur cărțile din părți (shard-uri) în timpul unui duel. Fiecare carte e unică, fiecare meci e diferit. Inteligentul artificial se adaptează la stilul tău și evoluează odată cu tine.
 
-**Motor:** React + TypeScript + PixiJS  
+**Motor:** PixiJS (TypeScript pur)  
 **Desktop:** Tauri (Steam, cross-platform)  
 **Web:** Itch.io (aceeași bază de cod)  
 **Model:** Offline-first — 100% local, zero server  
@@ -45,12 +45,13 @@ cardweave/
 | Fază | Conținut |
 |------|----------|
 | **P0 — Core Design** | Game Design Document complet + întrebări deschise |
-| **P1 — Prototype** | Grid, auto-battle de bază, o carte, AI opponent |
-| **P2 — Card Assembly** | Toate părțile, Buy Phase, combinare |
-| **P3 — Rase + AI** | 2-3 rase, shop pe rasă, AI adaptiv |
-| **P4 — Run Loop** | 13 win / 3 lose, recompense, progresie |
-| **P5 — Profesii** | Arbore de profesii |
-| **P6 — Blueprint-uri** | Cercetare + crafting |
-| **P7 — Upgrade + Treire** | +0 → +10 |
-| **P8 — Polish** | Balance, UI, VFX, sunet, narrative |
-| **P9 — Release** | Steam, Itch.io |
+|| **P1 — Prototype** | Arena Slots, auto-battle, snap mechanic, AI opponent simplu (Cardinal P1) |
+|| **P2 — Card Assembly** | Toate părțile, Buy Phase, combinare, Cardinal scoring avansat |
+|| **P3 — Rase + AI** | 2-3 rase, shop pe rasă, AI adaptiv (Cardinal mediu) |
+|| **P4 — Run Loop** | 13 win / 3 lose, recompense, progresie |
+|| **P5 — Profesii** | Arbore de profesii |
+|| **P6 — Blueprint-uri** | Cercetare + crafting |
+|| **P7 — Upgrade + Treire** | +0 → +10 |
+|| **P8 — Cardinal complet** | GA, Archaeology, Tutor, Empty Chair |
+|| **P9 — Polish** | Balance, UI, VFX, sunet, narrative |
+|| **P10 — Release** | Steam, Itch.io |

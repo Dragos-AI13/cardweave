@@ -4,7 +4,7 @@
 **Dată:** 2026-07-18
 **Gen:** Auto-battler single-player cu card crafting din părți
 **Platformă:** Steam (Tauri) + Web (itch.io) — aceeași bază de cod
-**Motor:** React + TypeScript + PixiJS
+**Motor:** PixiJS (TypeScript pur) | **Desktop:** Tauri (Steam, cross-platform)  
 **Model:** Offline-first — 100% local, AI opponent adaptiv
 
 ---
@@ -118,14 +118,16 @@ Cărțile sunt formate prin **asamblarea** acestor părți. Poți face aceeași 
 
 ### 2.2 Rarități
 
-| Raritate | Culoare | Putere relativă | Șansă drop |
+| Raritate | Culoare | Putere relativă | Șansă drop (single-player) |
 |---|---|---|---|
-| Common | Alb/Gri | 1× | 60% |
-| Uncommon | Verde | 1.5× | 25% |
-| Rare | Albastru | 2× | 10% |
-| Epic | Violet | 3× | 4% |
-| Legendary | Auriu | 5× | 0.9% |
-| Mythic | Curcubeu | 8× | 0.1% |
+| Common | Alb/Gri | 1× | 40% |
+| Uncommon | Verde | 1.5× | 30% |
+| Rare | Albastru | 2× | 18% |
+| Epic | Violet | 3× | 8% |
+| Legendary | Auriu | 5× | 3% |
+| Mythic | Curcubeu | 8× | 1% |
+
+> **Notă:** Acestea sunt șansele de bază. În plus, există un **pity timer** (vezi Cardinal Engine — Reward Calculator) care garantează o parte Epic+ după X încercări fără drop de acea raritate.
 
 ### 2.3 Upgrade-ul Părților (+0 → +10)
 
@@ -380,16 +382,30 @@ Blueprint „Sabia de Foc" (Pyros, Attack Jewel Rare)
 
 ## 9. Economia Generală
 
+> **P1 scope:** Doar **coins** (gold în duel). Restul economiei (Essence, Dust, Gems, Blueprint-uri, Upgrade, Treire, Profesii) se implementează începând cu P5+.
+
 ### 9.1 Monede
 
-| Monedă | Cum se obține | La ce folosește |
-|---|---|---|
-| **Gold** | Drops din dueluri, quest-uri | Cumpărat părți, blueprint-uri, reroluri |
-| **Essence** | Drops speciali, crafting | Material pentru blueprint-uri |
-| **Dust** | Dezasamblare părți | Upgrade +0 → +10 |
-| **Gems** | Premium (sau drops rare) | Cufere speciale, skin-uri |
+| Monedă | Cum se obține | La ce folosește | Disponibil în |
+|---|---|---|---|
+| **Coins (Gold)** | La începutul fiecărei runde în duel | Cumpărat părți din shop, reroluri | **P1** ✅ |
+| **Essence** | Drops speciali, crafting | Material pentru blueprint-uri | P5+ |
+| **Dust** | Dezasamblare părți | Upgrade +0 → +10 | P5+ |
+| **Gems** | Premium (sau drops rare) | Cufere speciale, skin-uri | P5+ |
 
-### 9.2 Ciclul Economic
+### 9.2 Ciclul Economic — P1
+
+În P1, economia e simplă: fiecare rundă din duel primești coins, cheltui coins în shop. Atât.
+
+```
+ÎN DUEL (P1):
+  • Primești X coins la începutul rundei
+  • Cumperi părți din shop cu coins
+  • Poți rerola shop-ul (costă coins)
+  • Restul economiei (Essence, Dust, upgrade, crafting) → P5+
+```
+
+### 9.3 Ciclul Economic — Complet (P5+)
 
 ```
 DUEL → câștigi Gold + Essence + (poate) Blueprint
@@ -494,16 +510,18 @@ Pentru marketplace/trading viitor:
 
 | Fază | Conținut | Durată |
 |---|---|---|
-| **P0 — Core Design** | Document complet, răspuns la toate întrebările deschise | ACUM |
-| **P1 — Prototype** | Grid-ul, o singură carte cu Attack Jewel + Defense Jewel, auto-battle de bază | 1-2 săptămâni |
-| **P2 — Card Assembly** | Toate părțile, asamblare carte, Buy Phase cu shop + combinare | 1-2 săptămâni |
-| **P3 — Rase + Shop** | 2-3 rase, shop pe rasă, alegere rasă înainte de duel | 1 săptămână |
-| **P4 — Run Loop** | 13 win / 3 lose, coins per rundă, rerol, recompense | 1 săptămână |
-| **P5 — Profesii** | Sistemul de profesii (arbore), 5-10 profesii de bază | 2 săptămâni |
-| **P6 — Blueprint-uri** | Cercetare, crafting, materiale | 2 săptămâni |
-| **P7 — Upgrade + Treire** | +0 → +10, durabilitate | 1 săptămână |
-| **P8 — Polish** | Balance, UI final, efecte vizuale, sunet | 2-3 luni |
-| **P9 — Early Access** | Steam, matchmaking, ranking | — |
+|| **P0 — Core Design** | Document complet, răspuns la toate întrebările deschise | ACUM |
+|| **P1 — Prototype** | Arena Slots (5 sloturi), snap mechanic, o carte cu Attack+Defense, auto-battle de bază | 1-2 săptămâni |
+|| **P1 — Cardinal AI** | Opponent simplu (4 parametri ADN, WeightedRandomSelection, fără GA) | Același sprint |
+|| **P2 — Card Assembly** | Toate cele 6 părți, Buy Phase cu shop + combinare, opponent scoring avansat | 1-2 săptămâni |
+|| **P3 — Rase + Shop** | 2-3 rase, shop pe rasă, alegere rasă înainte de duel | 1 săptămână |
+|| **P3 — Cardinal mediu** | Profil jucător (IndexedDB), 10 parametri ADN, Flow Governor | Același sprint |
+|| **P4 — Run Loop** | 13 win / 3 lose, coins per rundă, rerol, recompense | 1 săptămână |
+|| **P5 — Profesii** | Sistemul de profesii (arbore), 5-10 profesii de bază | 2 săptămâni |
+|| **P6 — Blueprint-uri** | Cercetare, crafting, materiale | 2 săptămâni |
+|| **P7 — Upgrade + Treire** | +0 → +10, durabilitate | 1 săptămână |
+|| **P8 — Cardinal complet** | GA, Dynamic Archaeology, Quest Emergence, Tutor, Empty Chair | 2-3 săptămâni |
+|| **P9 — Polish** | Balance, UI final, efecte vizuale, sunet | 2-3 luni |
 
 ---
 
