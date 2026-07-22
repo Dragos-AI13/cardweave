@@ -1,9 +1,9 @@
 /** Configurații globale ale jocului. */
 
 export const CONFIG = {
-  /** Dimensiunea canvas-ului */
-  CANVAS_WIDTH: 1280,
-  CANVAS_HEIGHT: 720,
+  /** Dimensiunea logică a jocului (se scalează să încapă în fereastră) */
+  GAME_WIDTH: 1280,
+  GAME_HEIGHT: 720,
   /** Culoarea de fundal */
   BG_COLOR: 0x1e1e2e,
   /** Număr maxim sloturi în arenă */

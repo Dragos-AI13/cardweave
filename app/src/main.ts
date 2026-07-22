@@ -13,6 +13,7 @@ async function main(): Promise<void> {
     throw new Error('Container #game not found');
   }
   container.appendChild(engine.canvas);
+  engine.canvas.style.display = 'block';
 
   // Înregistrează scene
   const menu = new MenuScene(engine);

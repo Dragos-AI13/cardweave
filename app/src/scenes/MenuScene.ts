@@ -1,7 +1,7 @@
 /** Scena Main Menu — ecranul principal al jocului. */
 
 import * as PIXI from 'pixi.js';
-import { CONFIG, COLORS, GameState } from '../engine/config';
+import { CONFIG, COLORS } from '../engine/config';
 import { Scene } from '../engine/StateMachine';
 import { GameEngine } from '../engine/GameEngine';
 import { IGNIS } from '../data/characters';
@@ -34,26 +34,28 @@ export class MenuScene implements Scene {
     this.build();
   }
 
-  // =================================================================
-  //  BUILD
-  // =================================================================
-
   private build(): void {
     this.buildBackground();
     this.buildLeftPanel();
     this.buildRightPanel();
   }
 
+  // ---------------------------------------------------------------
+  //  Fundal
+  // ---------------------------------------------------------------
+
   private buildBackground(): void {
     const bg = new PIXI.Graphics();
-    bg.rect(0, 0, CONFIG.CANVAS_WIDTH, CONFIG.CANVAS_HEIGHT);
+    bg.rect(0, 0, CONFIG.GAME_WIDTH, CONFIG.GAME_HEIGHT);
     bg.fill({ color: CONFIG.BG_COLOR });
     this.container.addChild(bg);
   }
 
   // ---------------------------------------------------------------
-  //  LEFT PANEL
+  //  PANOU STÂNGA
   // ---------------------------------------------------------------
+
+  private leftPanel!: PIXI.Container;
 
   private buildLeftPanel(): void {
     this.leftPanel = new PIXI.Container();
@@ -68,11 +70,8 @@ export class MenuScene implements Scene {
     this.buildBrand();
     this.buildButtons();
     this.buildFooter();
-
     this.container.addChild(this.leftPanel);
   }
-
-  private leftPanel!: PIXI.Container;
 
   private txt(style: keyof typeof TEXT_STYLE, text: string, x: number, y: number, alpha = 1): PIXI.Text {
     const t = new PIXI.Text({ text, style: TEXT_STYLE[style] });
@@ -116,13 +115,7 @@ export class MenuScene implements Scene {
         bg.stroke({ width: 1, color: 0xa5d8ff, alpha: 0.3 });
       }
 
-      const label = this.txt(
-        btn.primary ? 'btnPrimary' : 'btnSecondary',
-        btn.label,
-        60,
-        y + 13,
-      );
-
+      const label = this.txt(btn.primary ? 'btnPrimary' : 'btnSecondary', btn.label, 60, y + 13);
       const hint = this.txt('keyHint', `[${btn.key}]`, 430, y + 16, 0.4);
 
       const hit = new PIXI.Graphics();
@@ -150,8 +143,10 @@ export class MenuScene implements Scene {
   }
 
   // ---------------------------------------------------------------
-  //  RIGHT PANEL — Character card
+  //  PANOU DREAPTA — Card personaj
   // ---------------------------------------------------------------
+
+  private rightPanel!: PIXI.Container;
 
   private buildRightPanel(): void {
     this.rightPanel = new PIXI.Container();
@@ -170,29 +165,23 @@ export class MenuScene implements Scene {
     this.rightPanel.addChild(divider);
 
     this.buildCharacterCard();
-
     this.container.addChild(this.rightPanel);
   }
-
-  private rightPanel!: PIXI.Container;
 
   private buildCharacterCard(): void {
     const cx = 280;
     const cy = 70;
 
-    // Card frame
     const card = new PIXI.Graphics();
     card.roundRect(cx - 140, cy, 280, 520, 12);
     card.fill({ color: 0x1c1c30, alpha: 0.6 });
     card.stroke({ width: 1, color: COLORS.GOLD_NUM, alpha: 0.10 });
     this.rightPanel.addChild(card);
 
-    // Rarity
     const rarity = this.txt('rarity', `—  ${IGNIS.rarity.toUpperCase()}  —`, cx, cy + 28, 0.4);
     rarity.anchor.set(0.5, 0);
     this.rightPanel.addChild(rarity);
 
-    // Portrait circle
     const portrait = new PIXI.Graphics();
     portrait.circle(cx, cy + 130, 90);
     portrait.fill({ color: COLORS.PORTRAIT });
@@ -203,18 +192,15 @@ export class MenuScene implements Scene {
     pText.anchor.set(0.5);
     this.rightPanel.addChild(pText);
 
-    // Name
     const name = this.txt('charName', IGNIS.name, cx, cy + 250);
     name.anchor.set(0.5, 0);
     this.rightPanel.addChild(name);
 
-    // Class
     const cls = this.txt('charClass', `${IGNIS.race}  |  ${IGNIS.className}`, cx, cy + 290);
     cls.anchor.set(0.5, 0);
     cls.alpha = 0.6;
     this.rightPanel.addChild(cls);
 
-    // Stats
     const stats: { label: string; value: string; color: string }[] = [
       { label: 'HP', value: `${IGNIS.baseHp}`, color: COLORS.STAT_HP },
       { label: 'Energie', value: `+${IGNIS.energyCapBonus}`, color: COLORS.STAT_ENERGY },
@@ -241,23 +227,22 @@ export class MenuScene implements Scene {
       this.rightPanel.addChild(val);
     });
 
-    // Lore
     const lore = this.txt('lore', IGNIS.lore, cx, cy + 430);
     lore.anchor.set(0.5, 0);
     this.rightPanel.addChild(lore);
 
-    // Arena slots
     const slots = this.txt('slots', '[ @ ] [ @ ] [ @ ] [ O ] [ O ]    3/6 active', cx, cy + 470, 0.35);
     slots.anchor.set(0.5, 0);
     this.rightPanel.addChild(slots);
   }
 
-  // =================================================================
+  // ---------------------------------------------------------------
   //  LIFECYCLE
-  // =================================================================
+  // ---------------------------------------------------------------
 
   enter(): void {
-    this.engine.stage.addChild(this.container);
+    // Adăugăm în gameContainer (care e scalat automat), nu direct în stage
+    this.engine.gameContainer.addChild(this.container);
     this.container.alpha = 0;
     const fade = () => {
       this.container.alpha += 0.05;
@@ -277,7 +262,7 @@ export class MenuScene implements Scene {
       if (this.container.alpha > 0) {
         requestAnimationFrame(fade);
       } else {
-        this.engine.stage.removeChild(this.container);
+        this.engine.gameContainer.removeChild(this.container);
       }
     };
     fade();
