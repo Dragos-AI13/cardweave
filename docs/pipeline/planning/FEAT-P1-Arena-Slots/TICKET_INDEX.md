@@ -18,7 +18,7 @@ T001 (Main Menu) ─→ T002 (Arena Layout) ─→ T003 (Shop + Snap)
 
 | # | Nume | Status | Fișiere | Efort |
 |---|------|--------|---------|-------|
-| T001 | **Main Menu Scene** | 📋 NEXT | src/main.ts, src/engine/*, src/scenes/MenuScene.ts | 1-2h |
+| T001 | **Main Menu Scene** | ✅ DONE | src/main.ts, src/engine/*, src/scenes/MenuScene.ts | DONE |
 | T002 | **Arena Layout + 5 Sloturi** | 📋 | src/scenes/BuyScene.ts, src/systems/Arena.ts | 2-3h |
 | T003 | **Shop + Snap Mechanic** | 📋 | src/systems/Shop.ts, snap logic | 2-3h |
 | T004 | **Auto-Battle Loop** | 📋 | src/scenes/BattleScene.ts, src/systems/Battle.ts | 3-4h |

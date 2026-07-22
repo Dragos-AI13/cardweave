@@ -4,7 +4,24 @@
 
 ---
 
-## 2026-07-22 — Planning P1 + Wireframe Main Menu Aprobat
+## 2026-07-22 — T001 Main Menu Scene — Implementat
+
+### Added
+- Proiect PixiJS + Vite + TypeScript inițializat în `app/`
+- `app/src/engine/` — GameEngine, StateMachine, EventBus, config
+- `app/src/scenes/MenuScene.ts` — Main Menu complet (wireframe aprobat)
+- `app/src/data/characters.ts` — definiție Ignis
+
+### Verified
+- `npx tsc --noEmit` → 0 erori
+- `npm run dev` → Main Menu randat corect, 0 erori consolă
+- Elemente vizibile: CARDWEAVE titlu, buton Joacă, portret Ignis, stats
+
+### Changed
+- NEXT_ACTIONS.md — T001 bifat, T002 promovat next
+- TICKET_INDEX.md — T001 → DONE
+
+---
 
 ### Added
 - Planning package P1 complet: `docs/pipeline/planning/FEAT-P1-Arena-Slots/`
