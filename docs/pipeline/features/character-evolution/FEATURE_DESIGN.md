@@ -281,18 +281,26 @@ Jucătorul poate oricând:
 ## 5. User Flow (P1)
 
 ```
-MENU → Alegi personaj (Țăran) → Level 1, Fame 0, Coins 10
+MAIN MENU → click "Joacă"
   │
   ▼
+HUB (gateway principal)
+  ├── Portret + Stats (level, fame, coins, round)
+  ├── ⚔️ Duel → alege caracter → BUY PHASE
+  ├── 🔧 Crafting → materiale + blueprints + bench-uri
+  ├── 🏋️ Training → profesii + mastery + deblocări
+  └── 🌳 Subalterns Tree → branch-uri + noduri
+  │
+  ▼ (click Duel → OK)
 BUY PHASE:
   ├── Persistent: Coins indicator sus-dreapta, Round counter
   ├── Shop Left: Subalterni (T1-T3, în funcție de faimă)
   │     ├── Tooltip la hover: stats, tier badge, cost
   │     └── Right-click: Sell (50% refund)
-  ├── Shop Right: Items (Sabie 5g, Scut 4g) + Skills (Taie 3g, Păzește 3g)
+  ├── Shop Right: Items (ex: Sabie, Scut) + Skills (ex: Taie, Păzește)
   │     (items/skills apar DOAR dacă le-ai craftat anterior)
   ├── Cumperi subalterni + items + skills
-  ├── Echipezi items + skills pe subalterni (click pe slot → selectează)
+  ├── Echipezi items + skills pe subalterni
   └── Click "Gata de Luptă"
   │
   ▼
@@ -313,15 +321,21 @@ BATTLE PHASE:
 RESULTS:
   ├── Win: +XP (+50), +Coins (10+3×round), +Fame (+20), +Materiale (1-3)
   ├── Lose (personaj viu): +XP (+15), -Fame (-5)
-  ├── Level up? → Deschide SKILL TREE → alege nod
-  └── Butoane: "Next Round" → BUY PHASE  /  "Main Menu" → MENU
+  ├── Level up? → Deschide SUBALTERNS TREE → alege nod
+  └── Butoane: "Next Round" → BUY PHASE  /  "Hub" → HUB
 
 GAME OVER (personaj mort):
   ├── "Run Over" banner
   ├── Stats run-ului: rounduri supraviețuite, subalterni cumparați, win/loss ratio
   ├── Items craftate: rămân în inventar
-  ├── Buton "New Run" → BUY PHASE (coins reset)
+  ├── Buton "New Run" → DUEL POPUP (coins reset)
   └── Buton "Main Menu" → MENU
+
+HUB NAVIGATION:
+  ├── Hub → ⚔️ Duel → Duel Popup (alege caracter) → BUY PHASE
+  ├── Hub → 🔧 Crafting → Crafting Screen → (back) Hub
+  ├── Hub → 🏋️ Training → Training Screen → (back) Hub
+  └── Hub → 🌳 Subalterns Tree → Tree Screen → (back) Hub
 ```
 
 ---

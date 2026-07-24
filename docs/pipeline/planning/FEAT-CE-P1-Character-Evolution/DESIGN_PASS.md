@@ -21,14 +21,20 @@ E:\GitHub Projects\Lowborn\game\lowborn\
 │
 ├── scenes/
 │   ├── main_menu.tscn           ← Scena de titlu
+│   ├── hub.tscn                 ← Gateway principal (Duel, Crafting, Training)
+│   ├── duel_popup.tscn          ← Popup alegere caracter → buy phase
 │   ├── buy_phase.tscn           ← Shop + Arena (buy phase)
 │   ├── battle_phase.tscn        ← Auto-battle vizual
 │   ├── results_screen.tscn      ← Win/Lose + recompense
-│   ├── skill_tree_screen.tscn   ← Skill tree modal
+│   ├── crafting_screen.tscn     ← Materiale, items, blueprints, bench-uri
+│   ├── training_screen.tscn     ← Antrenament profesii
+│   ├── subalterns_tree_screen.tscn ← Branch-uri subalterni (skill tree rebrand)
 │   └── components/              ← Sub-scene reutilizabile
 │       ├── subordinate_slot.tscn
 │       ├── shop_item.tscn
-│       └── skill_node.tscn
+│       ├── skill_node.tscn
+│       ├── profession_card.tscn
+│       └── blueprint_card.tscn
 │
 ├── scripts/
 │   ├── autoloads/
@@ -37,13 +43,14 @@ E:\GitHub Projects\Lowborn\game\lowborn\
 │   │   ├── save_manager.gd      ← Save/load JSON
 │   │   └── audio_manager.gd     ← Muzică, SFX
 │   ├── state_machines/
-│   │   └── game_state_machine.gd ← States: MENU/BUY/BATTLE/RESULTS
+│   │   └── game_state_machine.gd ← States: MENU/HUB/DUEL/BUY/BATTLE/RESULTS
 │   ├── systems/
 │   │   ├── shop_system.gd       ← Shop logic, coins
 │   │   ├── battle_system.gd     ← Cooldown, damage, auto-battle
-│   │   ├── crafting_system.gd   ← Item/skill crafting
+│   │   ├── crafting_system.gd   ← Item/skill crafting + bench-uri
 │   │   ├── fame_system.gd       ← Fame tracking + tier unlocks
-│   │   ├── skill_tree_system.gd ← Evolution paths, nodes
+│   │   ├── subalterns_tree_system.gd ← Branch-uri, noduri, bonusuri
+│   │   ├── training_system.gd   ← Profesii, antrenament, deblocări
 │   │   └── ai_opponent.gd       ← Cardinal P1 adaptat
 │   └── utils/
 │       ├── constants.gd         ← Config, balance values
@@ -53,8 +60,11 @@ E:\GitHub Projects\Lowborn\game\lowborn\
 │   ├── subordinate_data.tres    ← Definiții subalterni (T1-T3)
 │   ├── item_data.tres           ← Definiții items craftable
 │   ├── skill_data.tres          ← Definiții skills
-│   ├── skill_tree_data.tres     ← Node-uri, paths, bonusuri
-│   └── character_data.tres      ← Personaj principal (stat-uri bază)
+│   ├── subalterns_tree_data.tres  ← Branch-uri, paths, bonusuri
+│   ├── profession_data.tres     ← Definiții profesii
+│   ├── blueprint_data.tres      ← Blueprint-uri de crafting
+│   ├── character_data.tres      ← Personaj principal (stat-uri bază)
+│   └── material_data.tres       ← Materiale pentru crafting
 │
 └── shaders/
     └── (placeholder)
@@ -87,12 +97,16 @@ E:\GitHub Projects\Lowborn\game\lowborn\
 
 | Scenă | Fișier | Responsabilitate |
 |-------|--------|-----------------|
-| MainMenu | `scenes/main_menu.tscn` | Titlu joc, background, buton "Joacă", selecție personaj |
+| MainMenu | `scenes/main_menu.tscn` | Titlu joc, background, buton "Joacă" |
+| Hub | `scenes/hub.tscn` | Gateway principal: portret + stats, butoane Duel/Crafting/Training |
+| DuelPopup | `scenes/duel_popup.tscn` | Popup alegere caracter → buy phase |
 | BuyPhase | `scenes/buy_phase.tscn` | 2 paneluri (subalterni stânga, items/skills dreapta), arena slots sus |
 | BattlePhase | `scenes/battle_phase.tscn` | Auto-battle vizual, HP bars, cooldown indicators, damage numbers |
-| ResultsScreen | `scenes/results_screen.tscn` | Win/Lose, XP, coins, fame, material drops, buton "Next" / "Menu" |
+| ResultsScreen | `scenes/results_screen.tscn` | Win/Lose, XP, coins, fame, material drops, buton "Hub" / "Next Round" |
 | GameOverScreen | `scenes/game_over_screen.tscn` | Run stats, New Run / Main Menu, items păstrate |
-| SkillTreeScreen | `scenes/skill_tree_screen.tscn` | Modal overlay — branching paths, noduri, confirmare |
+| CraftingScreen | `scenes/crafting_screen.tscn` | Materiale, blueprints, bench-uri, buton craft |
+| TrainingScreen | `scenes/training_screen.tscn` | Listă profesii, mastery, antrenament, deblocări |
+| SubalternsTreeScreen | `scenes/subalterns_tree_screen.tscn` | Branch-uri, noduri, confirmare (fost SkillTreeScreen) |
 
 ### 2.3 Sisteme de Joc
 
@@ -101,9 +115,10 @@ E:\GitHub Projects\Lowborn\game\lowborn\
 | GameStateMachine | `scripts/state_machines/game_state_machine.gd` | Tranziții între scene, `enter()`/`exit()` per stare |
 | ShopSystem | `scripts/systems/shop_system.gd` | Populează shop-ul, gestionează cumpărarea, coins |
 | BattleSystem | `scripts/systems/battle_system.gd` | Cooldown per subaltern, damage calc, target selection |
-| CraftingSystem | `scripts/systems/crafting_system.gd` | Item/skill crafting din materiale, deblocare skills |
-| FameSystem | `scripts/systems/fame_system.gd` | Fame tracking, tier unlocks, modificatori din skill tree |
-| SkillTreeSystem | `scripts/systems/skill_tree_system.gd` | Încarcă tree-ul, aplică bonusuri la level-up |
+| CraftingSystem | `scripts/systems/crafting_system.gd` | Item/skill crafting din materiale, bench-uri, blueprints |
+| FameSystem | `scripts/systems/fame_system.gd` | Fame tracking, tier unlocks, modificatori |
+| SubalternsTreeSystem | `scripts/systems/subalterns_tree_system.gd` | Încarcă tree-ul, aplică bonusuri la level-up |
+| TrainingSystem | `scripts/systems/training_system.gd` | Profesii, mastery, antrenament, deblocări în tree |
 | AIOpponent | `scripts/systems/ai_opponent.gd` | Alege subalterni + items, auto-battle, adaptare |
 
 ### 2.4 Resurse (Date)
@@ -113,20 +128,44 @@ E:\GitHub Projects\Lowborn\game\lowborn\
 | SubordinateData | `resources/subordinate_data.tres` | Array de subalterni: nume, tier, HP, ATK, DEF, cost |
 | ItemData | `resources/item_data.tres` | Items craftable: tip, bonus, material cost, skill unlocked |
 | SkillData | `resources/skill_data.tres` | Skills: efect, damage bonus, cost craft |
-| SkillTreeData | `resources/skill_tree_data.tres` | Paths + noduri: level requirement, bonus type, valoare |
+| SubalternsTreeData | `resources/subalterns_tree_data.tres` | Branch-uri + noduri: level requirement, bonus type, valoare |
+| ProfessionData | `resources/profession_data.tres` | Profesii: nume, mastery levels, deblocări, cost antrenament |
+| BlueprintData | `resources/blueprint_data.tres` | Blueprint-uri: item/skill rezultat, materiale necesare, bench necesar |
 | CharacterData | `resources/character_data.tres` | Personaj principal: HP bază, ATK bază, DEF bază |
+| MaterialData | `resources/material_data.tres` | Materiale: tip, raritate, icon |
 
 ---
 
 ## 3. Game Flow
 
+### 3.1 High-Level View
+
 ```
 MAIN MENU
   ├── Titlu joc ("Lowborn")
   ├── Background art
-  ├── Buton "Joacă"
-  ├── Selecție personaj (Țăran — singurul disponibil P1)
-  └── Click "Joacă" → BUY PHASE
+  ├── Buton "Joacă" (prima dată / după Game Over)
+  └── Click "Joacă" → HUB
+        │
+        ▼
+HUB (gateway principal)
+  ├── Portret personaj + stats rezumate (level, fame, coins)
+  ├── [⚔️ Duel] → popup alegere caracter → BUY PHASE
+  ├── [🔧 Crafting] → CRAFTING SCREEN
+  ├── [🏋️ Training] → TRAINING SCREEN (profesii)
+  └── Buton "Main Menu" → MAIN MENU
+```
+
+### 3.2 Duel Flow
+
+```
+[HUB] → click "⚔️ Duel"
+  │
+  ▼
+DUEL POPUP
+  ├── Listă caractere disponibile (P1: doar Țăran)
+  ├── Click pe caracter → vezi stats sumare
+  └── Click "OK" → BUY PHASE
         │
         ▼
 BUY PHASE
@@ -167,38 +206,142 @@ RESULTS SCREEN
   │     ├── +Coins (10 + 3 × round)
   │     ├── +Fame (20 win / -5 lose)
   │     └── +Materiale (1-3 random, doar win)
-  ├── Dacă level-up → deschide SKILL TREE
+  ├── Dacă level-up → deschide SUBALTERNS TREE
   │     ├── Alege un nod (dacă ai suficiente level-uri)
   │     ├── Confirmă → primești bonus
-  │     └── Închide skill tree
-  ├── Buton "Main Menu" → MAIN MENU
-  └── Buton "Next Round" → BUY PHASE
+  │     └── Închide subalterns tree
+  ├── Buton "Hub" → HUB
+  └── Buton "Next Round" → BUY PHASE (continuă run-ul)
 
 GAME OVER SCREEN
   ├── "Run Over" banner
   ├── Stats run-ului: rounduri, win/loss, subalterni cumpărați
   ├── Items craftate rămân în inventar (persistent)
-  ├── Buton "New Run" → BUY PHASE (coins reset)
+  ├── Buton "New Run" → DUEL POPUP (coins reset)
   └── Buton "Main Menu" → MAIN MENU
 ```
 
-#### StateMachine States
+### 3.3 Hub Sections Detail
+
+| Element | Acțiune |
+|---------|---------|
+| **Portret + Stats** | Level, Fame, Coins, Round curent (dacă e în run) |
+| **⚔️ Duel** | Deschide DUEL POPUP → alege caracter → buy → battle |
+| **🔧 Crafting** | Deschide CRAFTING SCREEN (vezi secțiunea dedicată) |
+| **🏋️ Training** | Deschide TRAINING SCREEN (vezi secțiunea dedicată) |
+| **Main Menu** | Revino la ecranul de titlu |
+| **Subalterns Tree** | Accesibil și din Results (la level-up) și din Hub (icon dedicat) |
+
+### 3.4 Crafting Screen
 
 ```
-MENU → BUY → BATTLE → RESULTS → MENU (sau BUY)
-                       ↘ GAME_OVER → MENU (sau BUY)
+[HUB] → click "🔧 Crafting"
+  │
+  ▼
+CRAFTING SCREEN
+  ├── Stânga: Materialele tale (lemn, fier, piatră, cristal, etc.)
+  ├── Centru: Blueprint-uri disponibile
+  │     ├── Items (arme, armuri, accesorii)
+  │     └── Skills (deblocate de items)
+  ├── Dreapta: Bench-uri de crafting
+  │     ├── Forjă (arme + armuri)
+  │     ├── Alchimiă (potiuni, accesorii)
+  │     └── Fiecare bench deblocat prin Training
+  ├── Click pe blueprint → vezi materiale necesare
+  │     ├── Dacă ai materiale → buton "Craft" (verde)
+  │     └── Dacă nu ai → buton gri + ce-ți lipsește
+  ├── Click "Craft" → consumă materiale → item/skill creat
+  │     ├── Itemul apare în inventar
+  │     └── Skill-ul apare în shop (Buy Phase)
+  └── Buton "Back" → HUB
+```
+
+### 3.5 Training & Professions Screen
+
+```
+[HUB] → click "🏋️ Training"
+  │
+  ▼
+TRAINING SCREEN
+  ├── Centru: Listă profesii disponibile (P1: 2-3)
+  │     ├── Fierar → deblochează subalterni războinici + bench Forjă
+  │     ├── Alchimist → deblochează subalterni magici + bench Alchimiă
+  │     └── Strateg → deblochează subalterni comandant + cooldown reduction
+  │
+  ├── Click pe o profesie → vezi:
+  │     ├── Nume, descriere
+  │     ├── Nivel curent / Mastery
+  │     ├── Ce deblochează (subalterni, bench-uri, bonusuri)
+  │     ├── Ce resurse / condiții necesare pentru antrenament
+  │     └── Buton "Antrenează" (dacă îndeplinești condițiile)
+  │
+  ├── La antrenament:
+  │     ├── Consumă resurse (coins, materiale, sau timp — P1 simplu: coins)
+  │     ├── Crește mastery-ul profesiei
+  │     ├── La milestone-uri: deblochează branch-uri din Subalterns Tree
+  │     └── Bonus pasiv: items din profesia respectivă sunt mai puternice
+  │
+  └── Buton "Back" → HUB
+```
+
+### 3.6 Subalterns Tree (fost Skill Tree)
+
+Rebrand de la "Skill Tree" → "Subalterns Tree" — același sistem, dar focus pe deblocarea branch-urilor de subalterni:
+
+```
+                    ┌── Războinic ──┐
+                    │   (ATK boost)  │
+                    │   Lv3 → Lv6   │
+                   ┌┘               └┐
+Țăran (Lv1) ───────┤                  ├── Comandant (Lv8)
+                    │                  │   (ATK + DEF boost)
+                    └┐               ┌┘
+                     │   Magician ───┘
+                     │   (Skill boost)
+                     │   Lv3 → Lv6
+                     │
+                     └── Negustor ────┐
+                         (Shop discount)│
+                         Lv3 → Lv6    ├── Mecena (Lv8)
+                                       │   (Shop rare items)
+                                       │
+                                       └── Haiduc ────┐
+                                           (Fame boost)│
+                                           Lv3 → Lv6  ├── Legendă (Lv8)
+                                                       │   (Max fame gain)
+```
+
+**Cum interacționează cu Training:**
+- Training-ul într-o profesie (ex: Fierar) **deblochează ramuri suplimentare** în Subalterns Tree
+- Antrenând Fierar → deblochezi noduri războinice avansate în tree
+- Antrenând Alchimist → deblochezi noduri magice avansate
+- **Training + Tree** = două sisteme care se completează: tree-ul e vertical (level-up), training-ul e orizontal (profesii)
+
+### StateMachine States
+
+```
+MENU → HUB → DUEL → BUY → BATTLE → RESULTS → HUB (sau BUY)
+                                        ↘ GAME_OVER → MENU (sau HUB)
+              HUB → CRAFTING → HUB
+              HUB → TRAINING → HUB
+              HUB → SUBALTERNS_TREE → HUB
 ```
 
 Tranziții:
-- `MENU → BUY`: click "Joacă", selectează personaj
+- `MENU → HUB`: click "Joacă"
+- `HUB → DUEL`: click "⚔️ Duel"
+- `DUEL → BUY`: click "OK" (caracter selectat)
 - `BUY → BATTLE`: click "Gata de Luptă"
 - `BATTLE → RESULTS`: o rundă se termină (win sau lose cu personaj viu)
 - `BATTLE → GAME_OVER`: personaj principal mort
 - `RESULTS → BUY`: click "Next Round"
-- `RESULTS → MENU`: click "Main Menu"
-- `GAME_OVER → BUY`: click "New Run"
+- `RESULTS → HUB`: click "Hub"
+- `GAME_OVER → HUB`: click "New Run" (→ DUEL)
 - `GAME_OVER → MENU`: click "Main Menu"
-- (opțional) `BUY → MENU`: abandon rundă
+- `HUB → CRAFTING → HUB`: navigare crafting screen
+- `HUB → TRAINING → HUB`: navigare training screen
+- `HUB → SUBALTERNS_TREE → HUB`: navigare tree (accesibil și din Results)
+- `BUY → HUB`: abandon rundă (opțional)
 
 ---
 
@@ -342,9 +485,9 @@ const COOLDOWN_MAX := 3.0
 
 ---
 
-## 6. Main Menu (P1)
+## 6. Main Menu + Hub + Duel Popup (P1)
 
-### 6.1 Layout
+### 6.1 Main Menu Layout
 
 ```
 ┌─────────────────────────────────────┐
@@ -354,40 +497,88 @@ const COOLDOWN_MAX := 3.0
 │                                     │
 │    ┌─────────────────────────┐      │
 │    │                         │      │
-│    │   Portret Personaj      │      │
-│    │   (Țăran placeholder)   │      │
+│    │   Background art       │      │
+│    │   (statuary / atmosferă)│      │
 │    │                         │      │
 │    └─────────────────────────┘      │
 │                                     │
-│    Nume: Țăran Gheorghe             │
-│    (generat random)                 │
-│                                     │
 │    ┌──────────┐                     │
-│    │  JOACĂ   │  ← buton principal  │
+│    │  JOACĂ   │  → deschide HUB    │
 │    └──────────┘                     │
 │                                     │
-│    Alte personaje: [blocate/gri]    │
-│    (P1 — doar Țăran disponibil)     │
-│                                     │
 │    ┌─────────────────────────┐      │
-│    │  "Un țăran devine       │      │
-│    │   legendă..."           │      │
+│    │  &quot;Un țăran devine       │      │
+│    │   legendă...&quot;           │      │
 │    │   (subtitle / flavor)   │      │
 │    └─────────────────────────┘      │
 │                                     │
 └─────────────────────────────────────┘
 ```
 
-### 6.2 Funcționalități
+### 6.2 Hub Layout
+
+```
+┌────────────────────────────────────────────┐
+│                 H U B                       │
+│                                            │
+│   ┌──────────┐   Stats:                    │
+│   │ Portret  │   Level 3 | Fame 120       │
+│   │ Personaj │   Coins 45 | Run: Round 4  │
+│   └──────────┘                             │
+│                                            │
+│   ┌────────────────────────────────┐       │
+│   │  ⚔️ Duel                       │       │
+│   ├────────────────────────────────┤       │
+│   │  🔧 Crafting                   │       │
+│   ├────────────────────────────────┤       │
+│   │  🏋️ Training                   │       │
+│   ├────────────────────────────────┤       │
+│   │  🌳 Subalterns Tree            │       │
+│   └────────────────────────────────┘       │
+│                                            │
+│   [Main Menu]                              │
+└────────────────────────────────────────────┘
+```
+
+### 6.3 Duel Popup Layout
+
+```
+┌─────── DUEL — Alege Caracter ────────┐
+│                                       │
+│   ┌─────────────────────────────┐    │
+│   │  Țăran Gheorghe             │ ← │
+│   │  Lv.3 • HP: 100/100        │    │
+│   │  Fame: 120 • ATK: 10       │    │
+│   └─────────────────────────────┘    │
+│                                       │
+│   ┌─────────────────────────────┐    │
+│   │  [blocat] Războinic         │ P2+│
+│   └─────────────────────────────┘    │
+│                                       │
+│   ┌─────────────────────────────┐    │
+│   │  [blocat] Mage              │ P2+│
+│   └─────────────────────────────┘    │
+│                                       │
+│          [OK]  [Back]                 │
+└───────────────────────────────────────┘
+```
+
+### 6.4 Funcționalități
 
 | Element | Acțiune |
 |---------|---------|
-| Titlu "LOWBORN" | Decorativ, animat (opțional) |
-| Portret personaj | Placeholder (icon-ul jocului sau un sprite simple) |
-| Nume generat | Random din listă (ex: Gheorghe, Ion, Andrei, Maria) |
-| Buton "JOACĂ" | Click → inițializează round 1 → BUY PHASE |
-| Personaje blocate | Gri, tooltip "Disponibil în update-uri viitoare" |
-| Flavor text | Decorativ, schimbă la fiecare încărcare |
+| Main Menu — Titlu "LOWBORN" | Decorativ, animat (opțional) |
+| Main Menu — Background art | Imagine statică sau animată |
+| Main Menu — Buton "JOACĂ" | Click → deschide HUB |
+| Main Menu — Flavor text | Decorativ, schimbă la fiecare încărcare |
+| Hub — Portret + Stats | Level, Fame, Coins, Round curent |
+| Hub — ⚔️ Duel | Click → Duel Popup → alege caracter → OK |
+| Hub — 🔧 Crafting | Click → Crafting Screen |
+| Hub — 🏋️ Training | Click → Training Screen |
+| Hub — 🌳 Subalterns Tree | Click → Subalterns Tree (accesibil și din Results) |
+| Duel Popup — Caracter | Click selectare, vezi stats sumare |
+| Duel Popup — OK | Click → BUY PHASE |
+| Duel Popup — Back | Click → HUB |
 
 ---
 
@@ -397,28 +588,37 @@ const COOLDOWN_MAX := 3.0
 
 | # | Component | Prioritizare |
 |---|-----------|-------------|
-| 1 | **Main Menu** — titlu, buton Joacă, selecție personaj | Must-have |
-| 2 | **Buy Phase** — 2 paneluri (subalterni + items/skills), arena slots | Must-have |
-| 3 | **Battle Phase** — auto-battle, cooldown, damage, target selection | Must-have |
-| 4 | **Visual Feedback** — damage numbers, tween sprite, HP bar animate | Must-have |
-| 5 | **Results Screen** — win/lose, recompense, buton Next/Menu | Must-have |
-| 6 | **Game Over Screen** — run stats, New Run / Main Menu | Must-have |
-| 7 | **Skill Tree** — 4 paths, 2-3 noduri fiecare, level-up unlock | Must-have |
-| 8 | **Fame System** — tracking, tier unlocks | Must-have |
-| 9 | **Round Progression** — AI budget scaling per round | Must-have |
-| 10 | **Crafting** — 3-4 items, skills deblocate de items | Must-have |
-| 11 | **AI Opponent** — Cardinal P1 (același shop pool, budget per round) | Must-have |
-| 12 | **Tooltip** — hover pe subalterni/items: stats, cost, tier | Should-have |
-| 13 | **Sell Subaltern** — 50% refund, right-click | Should-have |
-| 14 | **Coins Indicator** — persistent în UI, orice fază | Should-have |
-| 15 | **Tier Badge** — T1/T2/T3 pe subalterni în shop și arenă | Should-have |
-| 16 | **Save/Load** — stare joc în JSON local | Should-have |
-| 17 | **Restart** — reset personaj, păstrează items craftate | Should-have |
+| 1 | **Main Menu** — titlu, background, buton Joacă | Must-have |
+| 2 | **Hub** — portret + stats, butoane Duel/Crafting/Training/Tree | Must-have |
+| 3 | **Duel Popup** — alegere caracter, OK → buy phase | Must-have |
+| 4 | **Buy Phase** — 2 paneluri (subalterni + items/skills), arena slots | Must-have |
+| 5 | **Battle Phase** — auto-battle, cooldown, damage, target selection | Must-have |
+| 6 | **Visual Feedback** — damage numbers, tween sprite, HP bar animate | Must-have |
+| 7 | **Results Screen** — win/lose, recompense, buton Hub/Next Round | Must-have |
+| 8 | **Game Over Screen** — run stats, New Run / Main Menu | Must-have |
+| 9 | **Subalterns Tree** — 4 paths, 2-3 noduri fiecare, level-up unlock | Must-have |
+| 10 | **Fame System** — tracking, tier unlocks | Must-have |
+| 11 | **Round Progression** — AI budget scaling per round | Must-have |
+| 12 | **Crafting Screen** — materiale, blueprints, bench-uri, buton craft | Must-have |
+| 13 | **Training Screen** — 2-3 profesii, mastery, antrenament (coins) | Should-have |
+| 14 | **AI Opponent** — Cardinal P1 (același shop pool, budget per round) | Must-have |
+| 15 | **Tooltip** — hover pe subalterni/items: stats, cost, tier | Should-have |
+| 16 | **Sell Subaltern** — 50% refund, right-click | Should-have |
+| 17 | **Coins Indicator** — persistent în UI, orice fază | Should-have |
+| 18 | **Tier Badge** — T1/T2/T3 pe subalterni în shop și arenă | Should-have |
+| 19 | **Subordinate Data** — 3 tier-uri, 8+ subalterni | Must-have |
+| 20 | **Item/Skill Data** — 3-4 items, skills deblocate de items | Must-have |
+| 21 | **Profession Data** — 2-3 profesii cu mastery levels | Should-have |
+| 22 | **Blueprint Data** — blueprints pentru items + skills | Should-have |
+| 23 | **Material Data** — 4+ materiale (lemn, fier, piatră, cristal) | Should-have |
+| 24 | **Save/Load** — stare joc în JSON local | Should-have |
+| 25 | **Restart** — reset personaj, păstrează items craftate | Should-have |
 
 ### NOT in P1 (P2+)
 
 | Feature | Target |
 |---------|--------|
+| Colecția caractere (multiple characters) | P2 |
 | Sunet / Muzică | P8 |
 | Speed control (1×/2×/3×) | P3 |
 | Battle log | P2 |
@@ -456,27 +656,32 @@ const COOLDOWN_MAX := 3.0
 | **Main Menu** | Punctul de intrare | P1 — prima componentă |
 | **GameManager** | Stare globală | P1 — înainte de orice |
 | **StateMachine** | Tranziții între scene | P1 — după Main Menu |
-| **ShopSystem** | Cumpărare subalterni + items/skills | P1 — după Main Menu |
+| **Hub** | Gateway principal | P1 — după Main Menu, înainte de Duel |
+| **Duel Popup** | Alegere caracter → Buy Phase | P1 — după Hub |
+| **ShopSystem** | Cumpărare subalterni + items/skills | P1 — după Duel |
 | **Arena Slots** | Sloturi fizice pentru subalterni | P1 — după Shop |
 | **BattleSystem** | Auto-battle, damage, cooldown | P1 — după Arena |
 | **FameSystem** | Fame tracking + tier unlocks | P1 — după Battle |
-| **SkillTree** | Evolution paths | P1 — după Level System |
-| **CraftingSystem** | Item/skill crafting | P1 — după Shop |
+| **SubalternsTree** | Branch-uri, noduri | P1 — după Level System |
+| **TrainingSystem** | Profesii, mastery, deblocări | P1 — după Hub, paralel cu Duel |
+| **CraftingSystem** | Item/skill crafting, bench-uri, blueprints | P1 — după Hub, paralel cu Duel |
 | **AIOpponent** | Cardinal P1 adaptat | P1 — paralel cu Battle |
 
 **Ordine de implementare (recomandată):**
-1. Main Menu + GameManager + StateMachine
-2. Buy Phase + ShopSystem + Arena Slots
-3. Battle Phase + BattleSystem + Visual Feedback
-4. Results Screen + Game Over Screen
-5. FameSystem + Fame tracking
-6. Round Progression (AI budget scaling)
-7. Skill Tree + SkillTreeSystem
-8. CraftingSystem + Items/Skills
-9. AIOpponent
-10. Tooltip + Coins Indicator + Tier Badge
-11. Sell Subaltern
-12. Save/Load + Restart
+1. **Main Menu** + GameManager + StateMachine
+2. **Hub** + Duel Popup
+3. **Buy Phase** + ShopSystem + Arena Slots
+4. **Battle Phase** + BattleSystem + Visual Feedback
+5. **Results Screen** + Game Over Screen
+6. **FameSystem** + Fame tracking
+7. **Round Progression** (AI budget scaling)
+8. **Subalterns Tree** + SubalternsTreeSystem
+9. **Crafting Screen** + CraftingSystem + Item/Blueprint Data
+10. **Training Screen** + TrainingSystem + Profession Data
+11. **AI Opponent**
+12. Tooltip + Coins Indicator + Tier Badge
+13. Sell Subaltern
+14. Save/Load + Restart
 
 ---
 
@@ -488,5 +693,5 @@ const COOLDOWN_MAX := 3.0
 
 ---
 
-*Document actualizat: 2026-07-24*
-*Status: G1 aprobat → pregătit pentru UI_SPEC și tickete*
+*Document actualizat: 2026-07-24 (v2 — Hub + Duel + Training adăugate)*
+*Status: Design aprobat → pregătit pentru UI_SPEC și tickete*
