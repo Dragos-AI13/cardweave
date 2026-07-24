@@ -1,6 +1,6 @@
 # WORKFLOW.md — Instrucțiuni pentru Agent
 
-> Flow-ul de development pentru Cardweave. Offline-first.
+> Flow-ul de development pentru Lowborn. Offline-first.
 
 ---
 

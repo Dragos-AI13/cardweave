@@ -1,4 +1,4 @@
-# Cardweave — TICKET_INDEX.md
+# Lowborn — TICKET_INDEX.md
 
 > Feature-uri definite ca epics, fiecare cu task-uri. Status: ✅ COMPLETAT / 🔄 IN PROGRESS / 📋 NEXT / ⏳ BACKLOG
 

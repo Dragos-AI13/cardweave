@@ -1,6 +1,13 @@
-# Arena Slots — Snap Mechanic + Auto-Battle
+> **SUPERSEDED** — 2026-07-24
+> Acest design (Arena Slots + card parts + snap mechanic) a fost **înlocuit** de **Character Evolution + Subordinates System**.
+> Vezi `docs/pipeline/features/character-evolution/FEATURE_DESIGN.md` pentru designul curent.
+> Păstrat pentru referință istorică.
 
-**Feature:** Arena Slots
+---
+
+# ~~ Arena Slots — Snap Mechanic + Auto-Battle ~~
+
+**Feature:** Arena Slots (archived)
 **Status:** 🟡 Game Design (post-GDD, pre-G1)
 **Data:** 2026-07-22
 **Departament:** Game Design → Production
@@ -10,14 +17,14 @@
 
 ## 1. Context
 
-Designul final al Cardweave folosește **Arena Slots** în loc de Grid 6×6 sau 12×8. 
+Designul final al Lowborn folosește **Arena Slots** în loc de Grid 6×6 sau 12×8. 
 Jucătorul are o arenă cu sloturi, fiecare slot ține o carte. Fiecare carte are 6 subsloturi (Frame, Name, Icon, Attack Jewel, Defense Jewel, Skill Rectangle).
 
 Părțile se cumpără din shop și **snap direct** într-un subslot liber — fără inventar, fără drag & drop.
 
 Vezi documentația completă:
 - `Documentation/mechanics/SYSTEM_FINAL_CONFIRMARE.md` — confirmare design
-- `Documentation/mechanics/CARDWEAVE_GDD.md` §4 — Arena Slots
+- `Documentation/mechanics/LOWBORN_GDD.md` §4 — Arena Slots
 - `Documentation/mechanics/SYSTEMS_CATALOG.md` SYS-005 (Arena Slots), SYS-007 (Duel)
 
 ---

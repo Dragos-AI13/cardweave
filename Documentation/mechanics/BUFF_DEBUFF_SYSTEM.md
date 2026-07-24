@@ -1,6 +1,6 @@
-# Cardweave — Buff & Debuff System
+# Lowborn — Buff & Debuff System
 
-> Blueprint complet pentru crearea oricărui buff sau debuff în Cardweave.
+> Blueprint complet pentru crearea oricărui buff sau debuff în Lowborn.
 > Sistem adaptat la mecanica de duel: energy, attack speed, card HP, shield.
 > Fiecare buff/debuff e construit pe același schelet — consistență și extensibilitate.
 
@@ -8,7 +8,7 @@
 
 ## 1. Filosofie
 
-**Nu copiem Backpack Battles/Backpack Brawl.** În acele jocuri, buff-urile sunt legate de **iteme fizice** poziționate într-un backpack. În Cardweave, buff-urile sunt **caracteristice cărților** — vin din:
+**Nu copiem Backpack Battles/Backpack Brawl.** În acele jocuri, buff-urile sunt legate de **iteme fizice** poziționate într-un backpack. În Lowborn, buff-urile sunt **caracteristice cărților** — vin din:
 
 | Sursă | Exemple |
 |---|---|

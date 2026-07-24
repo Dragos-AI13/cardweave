@@ -1,4 +1,10 @@
-# FEATURE.md — FEAT-P1: Arena Slots Prototype
+> **ARHIVAT** — 2026-07-24
+> Acest planning (Arena Slots cu card parts) a fost **înlocuit** de Character Evolution + Subordinates.
+> Vezi `docs/pipeline/features/character-evolution/FEATURE_DESIGN.md` pentru designul curent.
+
+---
+
+# ~~ FEATURE.md — FEAT-P1: Arena Slots Prototype ~~
 
 **ID:** FEAT-P1
 **Status:** planning
@@ -10,7 +16,7 @@
 
 ## 1. Context
 
-Cardweave e un auto-battler single-player unde jucătorul își construiește cărțile din părți. Designul final folosește **Arena Slots** (5 sloturi, 6 subsloturi per carte) cu snap mechanic direct din shop.
+Lowborn e un auto-battler single-player unde jucătorul își construiește cărțile din părți. Designul final folosește **Arena Slots** (5 sloturi, 6 subsloturi per carte) cu snap mechanic direct din shop.
 
 P1 e primul prototip funcțional — cel mai mic cerc care poate rula: Main Menu → Buy Phase (shop + snap) → Battle Phase (auto-battle + energy) → AI opponent.
 
@@ -45,7 +51,7 @@ Să avem un loop jucabil cap-la-cap: jucătorul deschide jocul, vede meniul, int
 
 ## 5. Acceptanță
 
-- [ ] Jocul pornește și arată Main Menu cu CARDWEAVE + Ignis + buton Joacă
+- [ ] Jocul pornește și arată Main Menu cu LOWBORN + Ignis + buton Joacă
 - [ ] Click Joacă → intrare în Buy Phase cu 5 sloturi goale + shop
 - [ ] Poți cumpăra o parte din shop → snap în slot → apare vizual
 - [ ] Când ești gata, treci la Battle Phase

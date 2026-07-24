@@ -1,4 +1,12 @@
-# Cardweave — Game Design Document
+> **SUPERSEDED** — 2026-07-24
+> Acest GDD descrie designul VECHI (card crafting din părți, 6 subsloturi, assembly, rune upgrade).
+> A fost **înlocuit** de **Character Evolution + Subordinates System**.
+> Vezi `docs/pipeline/features/character-evolution/FEATURE_DESIGN.md` pentru designul curent.
+> Păstrat pentru referință istorică.
+
+---
+
+# ~~ Lowborn — Game Design Document (v1) ~~
 
 **Status:** Design phase — viziune completă, offline-first
 **Dată:** 2026-07-18
@@ -13,7 +21,7 @@
 
 > „Nu găsești cărți gata făcute. **Ți le construiești singur, din părți.**"
 
-Cardweave este un **PvP auto-battler** unde jucătorii își construiesc singuri cărțile din părți (shard-uri) în timpul unui duel. Fiecare carte e unică, fiecare meci e diferit. Stratul de **profesii** și **blueprint-uri** între dueluri oferă progresie profundă și personalizare.
+Lowborn este un **PvP auto-battler** unde jucătorii își construiesc singuri cărțile din părți (shard-uri) în timpul unui duel. Fiecare carte e unică, fiecare meci e diferit. Stratul de **profesii** și **blueprint-uri** între dueluri oferă progresie profundă și personalizare.
 
 ---
 
@@ -526,11 +534,11 @@ Pentru marketplace/trading viitor:
 
 ## 13. Moștenire din Tower Run
 
-Cardweave preia **8 sisteme** din Tower Run (adaptate) și lasă **3** în urmă.
+Lowborn preia **8 sisteme** din Tower Run (adaptate) și lasă **3** în urmă.
 
-### Ce trece în Cardweave
+### Ce trece în Lowborn
 
-| Sistem Tower Run | Devine în Cardweave |
+| Sistem Tower Run | Devine în Lowborn |
 |---|---|
 | 🔥 6 elemente | 6 rase (Pyros, Aqua, Sylph, Terra, Arcanum, Human) |
 | ⭐ Rarități (Common→Mythic) | Identic |
@@ -545,13 +553,13 @@ Cardweave preia **8 sisteme** din Tower Run (adaptate) și lasă **3** în urmă
 
 | Sistem | Motiv |
 |---|---|
-| Hub (6 clădiri) | Redesign complet pentru Cardweave — nu copiem |
-| Character Collection (187) | Prea mult — Cardweave are ~5-10 caractere per rasă |
+| Hub (6 clădiri) | Redesign complet pentru Lowborn — nu copiem |
+| Character Collection (187) | Prea mult — Lowborn are ~5-10 caractere per rasă |
 | Procedural Map + Noduri | PvP nu are hartă de explorat |
 | NPC alive flavor / Living Cortex | Prea devreme — poate după launch |
 | Momentum / Synergy | Mecanici specifice Tower Run |
 | Aegis, Alacrity, Overcharge | Prea legate de Tower Run |
-| Minioni | Nu există în Cardweave |
+| Minioni | Nu există în Lowborn |
 | Duel turn-based | Înlocuit cu auto-battle |
 
 ---
@@ -588,4 +596,4 @@ Items se echipează înainte de duel, nu se cumpără din shop.
 
 Vezi SYS-037 — Character Card Pool + Compatibility în Systems Catalog.
 
-> Tower Run rămâne un proiect separat — nu îl abandonăm, dar focusul acum e pe Cardweave. Când Cardweave e lansat și stabil, poate reveni ca mod single-player.
+> Tower Run rămâne un proiect separat — nu îl abandonăm, dar focusul acum e pe Lowborn. Când Lowborn e lansat și stabil, poate reveni ca mod single-player.

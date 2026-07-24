@@ -1,4 +1,4 @@
-# Development Constitution — Cardweave
+# Development Constitution — Lowborn
 
 > Regulile fundamentale de development pentru un joc **offline-first**.
 > Zero server, zero infrastructură. Totul e local.
@@ -9,24 +9,29 @@
 
 ```
 ┌──────────────────────────────────────────────────────┐
-│                    CARDWEAVE                          │
+│                    LOWBORN                          │
 │                                                       │
 │  ┌────────────────────────────────────────────┐      │
-│  │              TAURI (desktop)                 │      │
-│  │         WebView / Browser (web)             │      │
-│  ├────────────────────────────────────────────┤      │
-│  │          REACT APP (UI layer)                │      │
-│  │  Menus, Shop, Assembly, Crafting, HUD       │      │
-│  ├────────────────────────────────────────────┤      │
-│  │          PIXIJS (game rendering)             │      │
-│  │  Grid, cards, battle animations, VFX        │      │
-│  ├────────────────────────────────────────────┤      │
-│  │          GAME ENGINE (TypeScript)            │      │
-│  │  BattleSimulator, AI, Quest Factory,        │      │
-│  │  Progression, Economy, Save/Load            │      │
-│  ├────────────────────────────────────────────┤      │
-│  │          STORAGE (IndexedDB / SQLite)        │      │
-│  │  Player profile, collection, settings       │      │
+│  │           GODOT 4.x (engine)                │      │
+│  │  ┌────────────────────────────────────┐    │      │
+│  │  │     Scene Tree (Control + 2D)       │    │      │
+│  │  │  ┌────────┐ ┌──────┐ ┌─────────┐  │    │      │
+│  │  │  │  MENU  │→│ BUY  │→│ BATTLE  │→│ ...│      │
+│  │  │  │ Scene  │ │Phase │ │ Phase   │  │    │      │
+│  │  │  └────────┘ └──────┘ └─────────┘  │    │      │
+│  │  └────────────────────────────────────┘    │      │
+│  │                                             │      │
+│  │  ┌────────────────────────────────────┐    │      │
+│  │  │      Autoloads (Singletons)         │    │      │
+│  │  │  GameManager, EventBus, SaveLoad   │    │      │
+│  │  │  CardinalAI, CraftingSystem        │    │      │
+│  │  └────────────────────────────────────┘    │      │
+│  │                                             │      │
+│  │  ┌────────────────────────────────────┐    │      │
+│  │  │         RESOURCES (.tres)          │    │      │
+│  │  │  SubordinateData, ItemData,        │    │      │
+│  │  │  SkillData, SkillTreeData          │    │      │
+│  │  └────────────────────────────────────┘    │      │
 │  └────────────────────────────────────────────┘      │
 │                                                       │
 │  FĂRĂ server. FĂRĂ backend. Totul pe client.         │
@@ -326,15 +331,17 @@ Toate fișierele de save sunt JSON. Jucătorul le poate deschide, edita, backup-
 
 | Categorie | Ce folosim | Motiv |
 |-----------|------------|-------|
-| State management | Zustand | Simplu, tipat, performant |
-| Form validation | Zod | Runtime type checking |
-| Game rendering | PixiJS 8 | Grid, cards, battle animations |
-| Desktop wrapper | Tauri 2 | Cross-platform, lightweight |
-| Storage | idb (IndexedDB wrapper) | Save/load fișiere |
-| Audio | Howler.js | Sound effects, music |
-| Testing | Vitest | Rapid, compatibil Vite |
-| Linting (TS) | ESLint + Prettier | Consistent |
-| CI/CD | GitHub Actions | Build + test la fiecare PR |
+| **Game Engine** | Godot 4.x | 2D auto-battler cu character evolution, skill tree, animații |
+| **Scripting** | GDScript | Nativ Godot, rapid de dezvoltat |
+| **Data** | Godot Resources (.tres / .res) | Tipate, editabile în editor, fără runtime loading |
+| **UI** | Godot Control nodes | Built-in (Panel, Button, Label, TextureRect, Tree) |
+| **Animations** | AnimationPlayer | Built-in — tween-uri, sprite animații, efecte |
+| **Particles** | GPUParticles2D | Built-in — efecte de skills, buffs, VFX |
+| **Audio** | AudioStreamPlayer2D | Built-in |
+| **Storage** | Godot FileAccess + ConfigFile | Save/load JSON local |
+| **Version control** | Git + GitHub | Standard |
+| **Desktop export** | Godot native export | Steam, cross-platform |
+| **Web export** | Godot Web export | Itch.io — aceeași bază de cod |
 
 ---
 

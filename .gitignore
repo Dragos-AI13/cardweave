@@ -1,0 +1,11 @@
+# Godot — editor cache & imports
+game/lowborn/.godot/
+game/lowborn/*.import
+*.translation
+
+# Export builds
+game/lowborn/export/
+
+# OS files
+Thumbs.db
+.DS_Store

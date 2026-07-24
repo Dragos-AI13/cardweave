@@ -46,7 +46,7 @@ Primul ecran pe care îl vede jucătorul. Trebuie să arate bine, să transmită
 
 1. **Inițializare proiect:**
    ```bash
-   mkdir cardweave-p1 && cd cardweave-p1
+   mkdir lowborn-p1 && cd lowborn-p1
    npm init -y
    npm install pixi.js@8 typescript vite
    npx tsc --init
@@ -64,7 +64,7 @@ Primul ecran pe care îl vede jucătorul. Trebuie să arate bine, să transmită
 ## Acceptanță
 
 - [ ] `npm run dev` → browser → se vede canvasul cu Main Menu
-- [ ] Titlul "CARDWEAVE" e vizibil auriu
+- [ ] Titlul "LOWBORN" e vizibil auriu
 - [ ] Butonul "> JOACA" e vizibil și evidențiat
 - [ ] Portretul lui Ignis e vizibil (cerc violet)
 - [ ] Click "Joacă" → console.log("START_GAME") sau tranziție la starea următoare

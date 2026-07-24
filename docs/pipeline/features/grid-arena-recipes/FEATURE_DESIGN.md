@@ -21,7 +21,7 @@
 
 Inspirația principală e Backpack Battles — nu prin clonare, ci prin **extinderea conceptului**:
 - În BB, aranjezi itemi 1×1, 1×2, 2×2 într-un grid și poziționarea creează sinergii
-- La Cardweave, **blocurile sunt mai mari** (cărți 3×3, 4×4, 2×2) și **terenul însuși are proprietăți**
+- La Lowborn, **blocurile sunt mai mari** (cărți 3×3, 4×4, 2×2) și **terenul însuși are proprietăți**
 - Adăugăm și **Recipes**: combini cărți complete între dueluri pentru a crea unele mai puternice
 
 ---
@@ -208,7 +208,7 @@ Același sistem ca la părțile de carte. Fiecare nivel +X adaugă +1% la efect:
 
 ### 5.1 Concept
 
-În BB combini itemi individuali. La Cardweave mergem mai departe:
+În BB combini itemi individuali. La Lowborn mergem mai departe:
 combini **cărți complete** (asamblate din părți) pentru a crea una nouă, mai puternică.
 
 ### 5.2 Când și Unde
@@ -390,7 +390,7 @@ DUPĂ DUEL — AI CÂȘTIGAT 2 RUN-URI LA RÂND:
 
 ### Diferențele față de Backpack Battles
 
-| BB | Cardweave |
+| BB | Lowborn |
 |----|-----------|
 | Grid 4×4 sau extins la 6×8 | Grid **12×8** (96 celule) |
 | Item 1×1, 1×2, 2×2 | Cărți **2×2, 3×3, 4×4 + itemi 1×1** |

@@ -4,7 +4,51 @@
 
 ---
 
-## 2026-07-22 — T001 Main Menu Scene — Implementat
+## 2026-07-24 — Pivot Character Evolution + Doc Cleanup (D010)
+
+### Added
+- **D011** — Godot 4.x înlocuiește PixiJS + TypeScript + Tauri ca stack
+- Skill lowborn-development actualizat: Godot 4.x / GDScript
+
+### Changed
+- README.md — complet rescris cu Godot + character evolution
+- DEVELOPMENT_CONSTITUTION.md — arhitectură + dependințe Godot
+- FEATURE_DESIGN.md (character-evolution) — arhitectură Godot
+- PROJECT_STATUS.md — motor Godot
+- docs/pipeline/README.md — Godot în header
+- design/wireframes/README.md — Main Menu marcat vechi design
+- CURRENT_SESSION.md — updated with Godot switch
+
+### Removed
+- `app/` — tot codul PixiJS + TypeScript + Vite + Tauri (șters)
+
+### Archived (SUPERSEDED)
+- `Documentation/tech/TECH_STACK.md` — stack-ul vechi PixiJS
+
+## 2026-07-24 — Pivot Character Evolution + Doc Cleanup (D010)
+- `docs/pipeline/planning/FEAT-CE-P1-Character-Evolution/TICKET_INDEX.md` — 9 ticket-uri noi
+- `app/src/data/characters.ts` — rescris: MainCharacter + SkillTree + Subordinates + Items + Skills
+- Skill tree pentru Human (4 paths: Războinic, Magician, Negustor, Haiduc)
+- 10 subalterni (T1-T3), 4 items, 3 skills (date P1)
+- Config actualizat: fără SLOT_SUBSLOTS/BOOST_COMPLETE, cu FAME_TIERS/etc.
+
+### Changed
+- DESIGN_PIPELINE.md — Character Evolution adăugat, vechi features arhivate
+- DECISION_LOG.md — D010 adăugat
+- CURRENT_SESSION.md — pivot session tracking
+- NEXT_ACTIONS.md — resetat pentru noul design
+- PROJECT_STATUS.md — fază + decizii actualizate
+- `app/src/engine/config.ts` — rescris pentru noul model
+
+### Archived (SUPERSEDED)
+- Arena Slots (card parts) FEATURE_DESIGN.md
+- Card Part System FEATURE_DESIGN.md
+- Character Card Population FEATURE_DESIGN.md
+- LOWBORN_GDD.md (v1)
+- CHARACTERS_v1.md
+- CHARACTER_DESIGN_PROPUNERE.md
+- SYSTEM_FINAL_CONFIRMARE.md
+- Planning FEAT-P1-Arena-Slots (T001-T005)
 
 ### Added
 - Proiect PixiJS + Vite + TypeScript inițializat în `app/`
@@ -15,7 +59,7 @@
 ### Verified
 - `npx tsc --noEmit` → 0 erori
 - `npm run dev` → Main Menu randat corect, 0 erori consolă
-- Elemente vizibile: CARDWEAVE titlu, buton Joacă, portret Ignis, stats
+- Elemente vizibile: LOWBORN titlu, buton Joacă, portret Ignis, stats
 
 ### Changed
 - NEXT_ACTIONS.md — T001 bifat, T002 promovat next
@@ -66,7 +110,7 @@
 
 ### Changed
 - README.md — direcție offline-first, fără server/PvP
-- CARDWEAVE_GDD.md — single-player, offline-first
+- LOWBORN_GDD.md — single-player, offline-first
 - PROJECT_STATUS.md — identitate + model actualizate
 - DECISION_LOG.md — D008 adăugat
 - GOVERNANCE.md — redus la o singură echipă (fără dual pipeline)

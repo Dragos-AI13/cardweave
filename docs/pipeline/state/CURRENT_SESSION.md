@@ -4,21 +4,24 @@
 
 ---
 
-## Sesiune: 2026-07-22 — Cleanup Documentație + Arena Slots Final
+## Sesiune: 2026-07-24 — Pivot Character Evolution + Godot Switch
 
-**Obiectiv:** Alinierea întregii documentații cu designul final Arena Slots. Curățare referințe Grid 12×8, Godot, React.
+**Obiectiv:** Pivotare completă: Character Evolution înlocuiește card parts (D010), Godot înlocuiește PixiJS (D011). Arhivare doc-uri vechi, rescriere FEATURE_DESIGN, ștergere cod PixiJS.
 
 **Progres:**
 
-- [x] Merge documentation → main (documentație nouă integrată)
-- [x] SYSTEMS_CATALOG.md — Godot șters, toate referințele → TypeScript/PixiJS
-- [x] CARDINAL_ENGINE.md — roadmap pe faze (P1: opponent simplu, P4+: complet)
-- [x] Drop rates ajustate pentru single-player offline (fără gacha)
-- [x] Economie tăiată pentru P1 (doar coins)
-- [x] D009 — Stack clarificat: PixiJS pur, fără React
-- [x] State files actualizate (NEXT_ACTIONS, PROJECT_STATUS, CHANGELOG)
-- [x] DESIGN_PIPELINE.md — Grid Arena → Arena Slots
-- [x] grid-arena-recipes arhivat, Arena Slots feature design creat
-- [ ] G1 — Aprobare Arena Slots design de la Dragoș
-
-**Următorul pas:** Aștept G1, apoi inițializare proiect Tauri + PixiJS.
+- [x] Discuție brainstorming — user propune character evolution, AI confirmă direcția
+- [x] Clarificare: subalternii se deblochează pe orizontală (faimă + rang), nu se evoluvează individual
+- [x] Clarificare: items craftable → shop → equip pe subalterni; items deblochează skills (craftable)
+- [x] Doc-uri vechi arhivate cu SUPERSEDED (7 documente)
+- [x] Noul FEATURE_DESIGN.md scris — `docs/pipeline/features/character-evolution/FEATURE_DESIGN.md`
+- [x] DESIGN_PIPELINE.md actualizat cu noul feature
+- [x] DECISION_LOG.md — D010 + D011 adăugate
+- [x] NEXT_ACTIONS.md — resetat pentru noul design
+- [x] Codul PixiJS (`app/`) șters
+- [x] `game/` — proiect Godot 4.x de inițializat
+- [x] G1 — Aprobare Character Evolution design de la Dragoș
+- [x] DESIGN_PASS.md scris — P1 scope documentat
+- [x] P1 scope ajustat: Round Progression, Visual Feedback, Game Over, Tooltip, Sell, Tier Badge, Coins Indicator
+- [x] Structură repo: Godot project mutat în game/lowborn/, .gitignore updatat
+- [ ] UI_SPEC + TICKET_INDEX + tickete — următorul pas

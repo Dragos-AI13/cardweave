@@ -1,6 +1,6 @@
 # Card Part System
 
-> Primul feature din pipeline Cardweave.
+> Primul feature din pipeline Lowborn.
 > Folder pregătit, urmează Game Design.
 
 ---

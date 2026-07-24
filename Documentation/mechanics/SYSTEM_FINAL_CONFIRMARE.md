@@ -1,4 +1,12 @@
-# Cardweave — Sistemul Final (confirmare)
+> **SUPERSEDED** — 2026-07-24
+> Acest document confirmă designul VECHI (card parts, 6 subsloturi, boost complet).
+> A fost **înlocuit** de **Character Evolution + Subordinates System**.
+> Vezi `docs/pipeline/features/character-evolution/FEATURE_DESIGN.md` pentru designul curent.
+> Păstrat pentru referință istorică.
+
+---
+
+# ~~ Lowborn — Sistemul Final (confirmare) ~~
 
 > Tot ce am decis despre cărți, arena slots, părți, battle.
 > Scris să verific că am înțeles corect.

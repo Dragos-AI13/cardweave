@@ -1,6 +1,6 @@
-# Cardweave — Systems & Mechanics Catalog
+# Lowborn — Systems & Mechanics Catalog
 
-> Catalogul complet al tuturor sistemelor necesare pentru Cardweave.
+> Catalogul complet al tuturor sistemelor necesare pentru Lowborn.
 > Fiecare sistem are o anatomie care descrie exact cum e construit.
 > Când creăm un sistem nou sau îmbunătățim unul existent, folosim acest format.
 
@@ -1474,7 +1474,7 @@ src/ui/
 │   ├── CardDisplay.ts
 │   └── HealthBar.ts
 └── theme/
-    └── cardweave_theme.json
+    └── lowborn_theme.json
 ```
 
 ### 8. Testare

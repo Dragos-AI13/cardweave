@@ -1,6 +1,13 @@
-# FEATURE_DESIGN.md — Card Part System
+> **SUPERSEDED** — 2026-07-24
+> Acest design (Card Part System — 6 părți per carte, assembly, synergy score) a fost **înlocuit** de **Character Evolution + Subordinates System**.
+> Vezi `docs/pipeline/features/character-evolution/FEATURE_DESIGN.md` pentru designul curent.
+> Păstrat pentru referință istorică.
 
-**Feature:** Card Part System
+---
+
+# ~~ FEATURE_DESIGN.md — Card Part System ~~
+
+**Feature:** Card Part System (archived)
 **Status:** 🟡 Game Design
 **Dată:** 2026-07-18
 **Pipeline:** docs/pipeline/features/card-part-system/

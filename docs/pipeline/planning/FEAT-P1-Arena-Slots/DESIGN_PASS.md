@@ -1,4 +1,10 @@
-# DESIGN_PASS.md — P1 Arena Slots
+> **ARHIVAT** — 2026-07-24
+> Acest design pass (card parts, snap mechanic, 6 subsloturi) a fost **înlocuit** de Character Evolution + Subordinates.
+> Vezi `docs/pipeline/features/character-evolution/FEATURE_DESIGN.md` pentru designul curent.
+
+---
+
+# ~~ DESIGN_PASS.md — P1 Arena Slots ~~
 
 **Feature:** FEAT-P1
 **Data:** 2026-07-22

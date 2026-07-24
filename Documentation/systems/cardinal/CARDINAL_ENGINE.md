@@ -1,4 +1,4 @@
-# Cardinal Engine — Cardweave
+# Cardinal Engine — Lowborn
 
 > **Nu e un AI care "gândește". E un sistem care CREEZĂ jocul în jurul tău, în timp real, pe baza a CUM joci.**
 

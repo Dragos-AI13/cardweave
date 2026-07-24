@@ -19,7 +19,7 @@ Link: https://excalidraw.com/#json=pECltdr-NdsErA3vsjv3X,qJTCJlvAtYxOtPTB9lZiGA
 | fundal | `PIXI.Graphics` | Dreptunghi 1280×720, culoare #1e1e2e |
 | panou_stânga | `PIXI.Container` | 520×720, offset 40×40, #252538 |
 | panou_dreapta | `PIXI.Container` | 560×720, offset 600×40, #1a1a2e |
-| titlu | `PIXI.Text` | "CARDWEAVE", font 52px, #ffd43b |
+| titlu | `PIXI.Text` | "LOWBORN", font 52px, #ffd43b |
 | subtitlu | `PIXI.Text` | "Auto-battle card crafting", 18px, #a5d8ff |
 | btn_joaca | `PIXI.Container` | Dreptunghi verde (#2f9e44) + text "> JOACA" |
 | btn_colectie | `PIXI.Container` | Dreptunghi #2a2a42 + text "<> Colectie" |
@@ -37,7 +37,7 @@ Link: https://excalidraw.com/#json=pECltdr-NdsErA3vsjv3X,qJTCJlvAtYxOtPTB9lZiGA
 │  ┌─ stânga (520px) ──┐ │ ┌─ dreapta (560px) ─┐ │
 │  │                    │ │ │                    │ │
 │  │  NOUS RESEARCH     │ │ │   — STARTER —     │ │
-│  │  CARDWEAVE         │ │ │                    │ │
+│  │  LOWBORN         │ │ │                    │ │
 │  │  Auto-battle...    │ │ │   (portret cerc)   │ │
 │  │                    │ │ │                    │ │
 │  │  ┌──────────────┐  │ │ │    IGNIS           │ │

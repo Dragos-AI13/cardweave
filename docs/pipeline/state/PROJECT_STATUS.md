@@ -1,6 +1,6 @@
 # Project Status
 
-> Statusul general al proiectului Cardweave.
+> Statusul general al proiectului Lowborn.
 
 ---
 
@@ -8,10 +8,10 @@
 
 | Proprietate | Valoare |
 |-------------|---------|
-| **Nume** | Cardweave |
-| **Gen** | Auto-battler single-player cu card crafting din părți |
-| **Motor** | PixiJS (TypeScript pur) |
-| **Desktop** | Tauri (Steam) |
+| **Nume** | Lowborn |
+| **Gen** | Auto-battler single-player cu character evolution + subordinates |
+| **Motor** | Godot 4.x (GDScript) |
+| **Desktop** | Godot native export (Steam) |
 | **Web** | Itch.io (aceeași bază de cod) |
 | **Model** | Offline-first — 100% local, zero server |
 | **AI** | Opponent adaptiv (Cardinal P1: ADN + WeightedSelection) |
@@ -21,13 +21,15 @@
 
 ## Current Phase
 
-**Planning P1 — Arena Slots Prototype**
-Feature spec + arhitectură + wireframe + 5 ticket-uri gata. Așteaptă T001.
+**Planning P1 — Character Evolution + Subordinates System**
+Feature design scris. Așteaptă G1.
 
 | Feature | Status |
 |---------|--------|
-| **FEAT-P1: Arena Slots Prototype** | 🟠 **Planning** (tickets gata, pre-implementare) |
-| Card Part System | 💡 Backlog (P2) |
+| **FEAT-CE-P1: Character Evolution Prototype** | 🟡 **Game Design** (FEATURE_DESIGN.md scris, pre-G1) |
+| Character Skill Tree (PoE-lite) | 💡 Backlog (P2) |
+| Multiple Races | 💡 Backlog (P2) |
+| Procedural Evolution (80%) | 💡 Backlog (P3) |
 
 ---
 
@@ -38,6 +40,7 @@ Feature spec + arhitectură + wireframe + 5 ticket-uri gata. Așteaptă T001.
 | D006 | Tech stack (actualizat D009): PixiJS pur | ✅ Decis |
 | D008 | Offline-first: 100% local, zero server | ✅ Decis |
 | D009 | Stack: PixiJS pur (TypeScript), fără React | ✅ Decis |
+| D010 | Pivot: Card parts → Character Evolution + Subordinates | ✅ Decis |
 
 ---
 
@@ -45,33 +48,31 @@ Feature spec + arhitectură + wireframe + 5 ticket-uri gata. Așteaptă T001.
 
 | Faza | Status | Progres |
 |------|--------|---------|
-| P0 — Core Design | ✅ GDD complet + Systems Catalog | 100% |
-| **P1 — Arena Slots Prototype** | 🟠 **Planning** | 95% (planning complet) |
-| P2 — Card Assembly | ⬜ | 0% |
-| P3 — Rase + AI | ⬜ | 0% |
-| P4 — Run Loop | ⬜ | 0% |
-| P5 — Professions | ⬜ | 0% |
-| P6 — Blueprints | ⬜ | 0% |
-| P7 — Upgrade + Tier | ⬜ | 0% |
-| P8 — Cardinal complet | ⬜ | 0% |
-| P9 — Polish | ⬜ | 0% |
-| P10 — Release | ⬜ | 0% |
+| P0 — Core Design (pivotat) | ✅ Arhivat | — |
+| **P1 — Character Evolution Prototype** | 🟡 **Game Design** | 80% (FEATURE_DESIGN gata) |
+| P2 — Skill Tree + Rase | ⬜ | 0% |
+| P3 — Procedural Evolution | ⬜ | 0% |
+| P4 — Polish + Release | ⬜ | 0% |
 
 ---
 
 ## Last Session Summary
 
-*2026-07-22 — Planning P1 complet + Wireframe Main Menu*
-- Wireframe Main Menu aprobat → `design/wireframes/`
-- Planning package P1 creat: FEATURE.md, DESIGN_PASS.md, UI_SPEC.md
-- 5 ticket-uri P1 definite (T001-T005) cu dependințe
-- Main Menu wireframe oficial în `design/wireframes/`
-- Următorul pas: T001 — Main Menu Scene (inițializare proiect + cod)
+*2026-07-24 — Pivot Character Evolution + Cleanup*
+- Brainstorming: character evolution înlocuiește card parts
+- 6 doc-uri vechi arhivate (SUPERSEDED)
+- Noul FEATURE_DESIGN.md scris — `docs/pipeline/features/character-evolution/FEATURE_DESIGN.md`
+- D010 adăugat în DECISION_LOG
+- DESIGN_PIPELINE, NEXT_ACTIONS, CURRENT_SESSION actualizate
+- config.ts + characters.ts rescrise pentru noul model
+- TICKET_INDEX nou creat (CE-P1-01 → CE-P1-09)
+- Următorul pas: G1 — aprobare Character Evolution design
 
 ---
 
 ## Notes
 
-- **Planning P1:** `docs/pipeline/planning/FEAT-P1-Arena-Slots/`
-- **Wireframe oficial:** `design/wireframes/main-menu.excalidraw`
-- **Branch strategy:** `main` (stabil), `feat/p1-arena-slots` (implementare)
+- **Planning P1:** `docs/pipeline/planning/FEAT-CE-P1-Character-Evolution/`
+- **Feature design:** `docs/pipeline/features/character-evolution/FEATURE_DESIGN.md`
+- **Branch strategy:** `main` (stabil), `feat/ce-p1-character-evolution` (implementare)
+- **Design vechi arhivat:** Arena Slots (card parts), Card Part System, Character Card Population, GDD v1, CHARACTERS_v1, CHARACTER_DESIGN_PROPUNERE, SYSTEM_FINAL_CONFIRMARE

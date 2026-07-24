@@ -1,4 +1,11 @@
-# Character Design System — Propunere
+> **SUPERSEDED** — 2026-07-24
+> Această propunere (character blueprint, card pool, 10 rase × 6 clase) a fost **înlocuită** de **Character Evolution + Subordinates System**.
+> Vezi `docs/pipeline/features/character-evolution/FEATURE_DESIGN.md` pentru designul curent.
+> Păstrat pentru referință istorică.
+
+---
+
+# ~~ Character Design System — Propunere ~~
 
 > Bazat pe review-ul întregii documentații existente și analiza sistemelor de caracter din alte jocuri auto-battler/card builder.
 
@@ -196,15 +203,15 @@ Card Pool:
 
 ## 7. Scurtă Analiză — Ce Au Alte Jocuri
 
-| Joc | Sistem caractere | Diferența față de Cardweave |
+| Joc | Sistem caractere | Diferența față de Lowborn |
 |---|---|---|
-| **Slay the Spire** | 4 caractere, fiecare cu card pool propriu | Cardweave = carduri construite din părți, nu găsite gata făcute |
-| **Backpack Battles** | Clase cu item pool diferit | Cardweave = caractere cu identitate, nu doar clase funcționale |
-| **Legends of Runeterra** | Campioni cu abilități unice | Cardweave = caracterele definesc un ECOSYSTEM de cărți, nu doar o abilitate |
-| **Monster Train** | 5 clanuri cu cărți proprii | Cardweave = caractere + clase combinabile (hibrid) |
-| **Hearthstone** | Eroi cu power pasiv | Cardweave = mai profund, caracterul influențează tot shop-ul |
+| **Slay the Spire** | 4 caractere, fiecare cu card pool propriu | Lowborn = carduri construite din părți, nu găsite gata făcute |
+| **Backpack Battles** | Clase cu item pool diferit | Lowborn = caractere cu identitate, nu doar clase funcționale |
+| **Legends of Runeterra** | Campioni cu abilități unice | Lowborn = caracterele definesc un ECOSYSTEM de cărți, nu doar o abilitate |
+| **Monster Train** | 5 clanuri cu cărți proprii | Lowborn = caractere + clase combinabile (hibrid) |
+| **Hearthstone** | Eroi cu power pasiv | Lowborn = mai profund, caracterul influențează tot shop-ul |
 
-**Poziționarea Cardweave:** Un caracter Cardweave e mai aproape de conceptul de **clan din Monster Train** (defilează un întreg pool) dar cu **identitatea unui campion LoR**.
+**Poziționarea Lowborn:** Un caracter Lowborn e mai aproape de conceptul de **clan din Monster Train** (defilează un întreg pool) dar cu **identitatea unui campion LoR**.
 
 ---
 
@@ -222,5 +229,5 @@ Care e părerea ta?
 
 ---
 
-*Document bazat pe review-ul complet al documentației Cardweave.*
+*Document bazat pe review-ul complet al documentației Lowborn.*
 *Sisteme consultate: SYS-007, SYS-009, SYS-010, SYS-025, SYS-036, SYS-037, SYS-041 + GDD.*

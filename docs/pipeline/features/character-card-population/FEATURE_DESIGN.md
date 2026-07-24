@@ -1,4 +1,11 @@
-# Feature: Character Card Population
+> **SUPERSEDED** — 2026-07-24
+> Acest design (popularea caracterelor cu cărți bazate pe card pool) a fost **înlocuit** de **Character Evolution + Subordinates System**.
+> Vezi `docs/pipeline/features/character-evolution/FEATURE_DESIGN.md` pentru designul curent.
+> Păstrat pentru referință istorică.
+
+---
+
+# ~~ Feature: Character Card Population ~~
 
 **ID:** FEATURE-CARDS-001
 **Status:** 💡 Backlog

@@ -1,4 +1,11 @@
-# Cardweave — Characters (v1)
+> **SUPERSEDED** — 2026-07-24
+> Acest design (10 caractere cu 9 skill-uri fiecare, card pool per caracter) a fost **înlocuit** de **Character Evolution + Subordinates System**.
+> Vezi `docs/pipeline/features/character-evolution/FEATURE_DESIGN.md` pentru designul curent.
+> Păstrat pentru referință istorică.
+
+---
+
+# ~~ Lowborn — Characters (v1) ~~
 
 > Cele 10 caractere inițiale — unul per rasă.
 > Fiecare caracter e definit complet conform blueprint-ului din CHARACTER_DESIGN_PROPUNERE.md.

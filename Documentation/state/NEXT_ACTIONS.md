@@ -1,4 +1,4 @@
-# Next Actions — Cardweave
+# Next Actions — Lowborn
 
 1. [x] **Sistem final confirmat** — Arena Slots cu 6 subsloturi, snap direct, părți active independent, boost la 6/6, raritate prin rune
 2. [x] **SYS-004** rescris (Card Assembly → Snap în Arena Slot)

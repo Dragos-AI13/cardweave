@@ -1,8 +1,15 @@
-# Tech Stack — Cardweave
+> **SUPERSEDED** — 2026-07-24
+> Acest document descrie stack-ul VECHI (PixiJS + TypeScript + Tauri).
+> A fost **înlocuit** de **Godot 4.x (GDScript)** — vezi D011.
+> Păstrat pentru referință istorică.
+
+---
+
+# ~~ Tech Stack — Lowborn ~~
 
 **Status:** ✅ Final
 **Dată:** 2026-07-18
-**Descriere:** Stack-ul tehnologic ales pentru Cardweave.
+**Descriere:** Stack-ul tehnologic ales pentru Lowborn.
 
 ---
 
@@ -75,7 +82,7 @@
 ## Structura proiectului
 
 ```
-cardweave/
+lowborn/
 ├── src/
 │   ├── main.ts              ← Entry point Tauri
 │   ├── engine/              ← Game engine
@@ -163,10 +170,10 @@ cardweave/
 
 ```bash
 # 1. Creezi proiectul Tauri gol
-npm create tauri-app@latest cardweave -- --template vanilla-ts
+npm create tauri-app@latest lowborn -- --template vanilla-ts
 
 # 2. Intri și instalezi PixiJS + plugins
-cd cardweave
+cd lowborn
 npm install pixi.js @pixi/ui @pixi/particle-emitter howler
 
 # 3. Gata — începi să scrii cod

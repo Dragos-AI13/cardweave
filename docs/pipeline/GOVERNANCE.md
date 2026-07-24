@@ -1,6 +1,6 @@
 # GOVERNANCE.md — Regulile Jocului
 
-> Acest document definește cum operăm în proiectul Cardweave.
+> Acest document definește cum operăm în proiectul Lowborn.
 > **Offline-first** — totul e client-side, zero server.
 
 ---
