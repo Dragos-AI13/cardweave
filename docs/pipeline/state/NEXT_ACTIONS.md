@@ -1,37 +1,20 @@
-# NEXT_ACTIONS
+# Next Actions
 
-> Ordinea de execuție. Un singur item activ la un moment dat.
-> **Notă:** Direcția jocului s-a schimbat (D010 — Character Evolution + Subordinates).
-> Vezi `docs/pipeline/features/character-evolution/FEATURE_DESIGN.md` pentru noul design.
+## Prioritar
 
----
+1. **Discutare GDD secțiune cu secțiune** (core loop + structura cărții — în curs de validare în chat)
+2. **Prototip Godot (minim)** — proiect nou `game/lowborn/`:
+   - Card scene (3 sloturi de părți vizibile)
+   - Mână de cărți + energie + target simplu
+   - Un adversar cu AI basic
+3. **Primul feature ticket** după validarea prototipului
 
-## 🎯 Active Feature
+## Pe termen mediu
 
-**Feature:** FEAT-CE-P1 — Character Evolution + Subordinates (Minimal Viable Loop)
-**Phase:** Game Design — pregătit pentru UI_SPEC
-**Model:** Offline-first
-**Superseeds:** FEAT-P1 Arena Slots (arhivat)
+- Detalierea sistemului de meserii (skill tree per meserie — Fierar, Alchimist, Vrăjitor de rune, Bucătar)
+- Card art pipeline cu ComfyUI (30 asset-uri modulare de bază)
+- Sistemul de materiale + rețete + dezasamblare
 
----
+## Așteaptă decizia userului
 
-## 📋 Current Sprint
-
-| # | Acțiune | Status |
-|---|---------|--------|
-| 1 | ✅ **Brainstorm + pivot** — Character evolution înlocuiește card parts | ✅ |
-| 2 | ✅ **Doc-uri vechi arhivate** (6 documente marcate SUPERSEDED) | ✅ |
-| 3 | ✅ **Noul FEATURE_DESIGN.md** scris | ✅ |
-| 4 | ✅ **DESIGN_PIPELINE + DECISION_LOG + CURRENT_SESSION** actualizate | ✅ |
-| 5 | ✅ **G1 — Aprobare Character Evolution design** | ✅ |
-| 6 | ✅ **DESIGN_PASS.md scris** — P1 scope documentat | ✅ |
-| 7 | ✅ **Hub + Training + Duel Popup** adăugate în DESIGN_PASS (v2) | ✅ |
-| 8 | **Scris UI_SPEC.md + TICKET_INDEX + ticket-uri** ← NEXT | ⬜ |
-| 9 | Implementare cod Godot | ⬜ |
-
----
-
-## 📌 Detalii
-
-Vezi `docs/pipeline/features/character-evolution/FEATURE_DESIGN.md` pentru spec-ul complet al noului design.
-Vezi `docs/pipeline/planning/FEAT-CE-P1-Character-Evolution/DESIGN_PASS.md` pentru planul detaliat (v2 cu Hub + Training).
+- Numele final al jocului (Lowborn rămâne? sau revenim la Cardweave?)

@@ -1,176 +1,20 @@
-# DECISION_LOG.md
+# Decision Log
 
-> Jurnalul deciziilor de design și arhitectură. Se adaugă în SUS.
-> Fiecare decizie e datată, motivată și semnată (AI / User).
+## D013 — Pivot Lowborn v3: Card Game Roguelike (2026-08-12)
 
----
+**Decizie:** Auto-battler single-player (v2) → card game roguelike turn-based cu
+card crafting din 3 părți + meserii MMORPG.
 
-## D001 — Pipeline Structure
+**Context:**
+- Analiză de piață (aug 2026): auto-battler/inventory saturat — 59+ jocuri "backpack" pe Steam;
+  deckbuilder-urile turn-based au mega-hit-uri (Balatro 5M+, Slay the Spire 5M+)
+- Crafting-ul profund se simte în turn-based (fiecare carte = decizie conștientă)
+- GDD-ul v1 (Cardweave, card crafting din părți) era deja exact direcția — fuzionat cu
+  Character Evolution din v2
 
-**Data:** 2026-07-13
-**Decizie:** Adoptăm pipeline cu 6 departamente (Vision → Game Design → Production → Development → QA → Release) și 4 gates (G1–G4).
+**Consecințe:**
+- Clean slate: șters proiectul Godot v2, documentația superseded, feature-uri vechi
+- GDD v3 în `docs/design/GDD.md`
+- Se păstrează: AI Cardinal, Character Evolution, arhitectura Godot offline-first
 
-**Motiv:** Necesităm un sistem formal care să prevină săritul peste etape și să ofere vizibilitate clară asupra progresului fiecărui feature.
-
-**Sursa:** Discuție din 2026-07-13, user + AI
-
----
-
-## D002 — Features locuiesc în `docs/pipeline/features/`
-
-**Data:** 2026-07-13
-**Decizie:** Fiecare feature are un folder dedicat `docs/pipeline/features/<nume-feature>/` cu FEATURE_DESIGN.md, DESIGN_PASS.md, și `tickets/` pentru ticket-uri.
-
-**Motiv:** Separare clară între template-uri (reutilizabile) și feature-uri (instanțe). Ușor de găsit și navigat.
-
-**Sursa:** AI, post-analiză pipeline
-
----
-
-## D003 — Git workflow: branch per feature, merge pe `game-development`
-
-**Data:** 2026-07-13
-**Decizie:** Lucrăm pe branch-ul `game-development` ca bază. Fiecare feature are branch `feat/<nume>`. După G3 bifat, userul aprobă merge-ul.
-
-**Motiv:** Separare clară între main (stabil), game-development (work in progress), și feature branches (izolare).
-
-**Sursa:** AI, bazat pe pattern-ul din godot orchestrator
-
----
-
-## D004 — Primul feature: Card Part System
-
-**Data:** 2026-07-13
-**Decizie:** Primul feature care intră în pipeline este **Card Part System** — fundația mecanicii de carduri.
-
-**Motiv:** Tot ce construim după (assembly, shop, upgrade) depinde de sistemul de părți ale cărților.
-
-**Sursa:** Discuție — user a fost de acord cu propunerea AI
-
----
-
-## D005 — Dual Pipeline: Design + Development
-
-**Data:** 2026-07-13
-**Decizie:** Separăm pipeline-ul în două: DESIGN_PIPELINE.md (VPS) și DEV_PIPELINE.md (PC). Designul se face pe VPS, codul pe PC.
-
-**Motiv:** Userul face design cu mine (VPS) și development cu o instanță locală Hermes pe PC. Era nevoie de un handoff clar între cele două.
-
-**Sursa:** Discuție design pipeline
-
----
-
-## D006 — Tech Stack Final
-
-**Data:** 2026-07-18
-**Decizie:** Adoptăm stack-ul web-first: **React + TypeScript + PixiJS** (client), **Tauri 2** (desktop), **Rust + Axum** (server), **PostgreSQL + Redis** (date). Se renunță la Godot 4 și Rust+wgpu+egui.
-
-**Motiv:** Lowborn e 90% UI — HTML/CSS e cel mai bun sistem UI din lume. PixiJS face grid + battle animations. Rust server pentru PvP ghost battles. Aceeași bază de cod pentru Steam, Web și Mobile. Ciclu de dezvoltare mult mai rapid decât orice game engine.
-
-**Sursa:** Analiză completă tech stack (2026-07-18) — user + AI
-
----
-
-## D007 — Game Model: Ghost Battles + Offline
-
-**Data:** 2026-07-18
-**Decizie:** Jocul funcționează în 2 moduri: **Offline** (AI adversar, progres local) și **Online Ghost Battles** (snapshot PvP asincron, server-authoritative). Live PvP (Arena) rămâne ca opțiune viitoare.
-
-**Motiv:** Ghost battles (Backpack Battles model) oferă anti-cheat natural (serverul validează snapshot-ul atomic înainte de battle). Offline-ul permite joc fără internet. Server-authoritative înseamnă zero cheat posibil — serverul decide tot.
-
-**Sursa:** Discuție securitate + arhitectură (2026-07-18) — user + AI
-
----
-
-## D008 — Offline-First
-
-**Data:** 2026-07-18
-**Decizie:** Lowborn devine un joc **offline-first complet**. Zero server, zero PostgreSQL, zero ghost battles. Jocul e 100% local, cu AI opponent adaptiv și sisteme procedurale (quests, rewards, narrative) generate dinamic pe client.
-
-**Motiv:** Analiza a arătat că un auto-battler single-player nu are nevoie de online ca să fie extraordinar. Fără server: zero costuri, zero cheat, zero downtime, zero DevOps. AI-ul poate oferi aceeași varietate și provocare ca un opponent uman, fără complexitatea și riscurile unui sistem PvP.
-
-**Implicații:**
-- Se elimină: Rust server, PostgreSQL, Redis, ghost battles, matchmaking, trading
-- Se păstrează: React + PixiJS + Tauri (desktop, Steam, web)
-- Sistemele anti-cheat server-side devin irelevante — jocul e single-player
-- Focusul se mută pe: AI opponent adaptiv + quest factory + reward system
-- Arhitectura e mai simplă, mai rapid de dezvoltat, zero infrastructură
-
-**Sursa:** Discuție arhitectură (2026-07-18) — user + AI
-
----
-
-## D009 — Clarificare Stack: PixiJS pur (fără React)
-
-**Data:** 2026-07-22
-**Decizie:** Adoptăm **PixiJS pur** (TypeScript, fără framework UI) ca rendering layer. Se actualizează D006: React rămâne ca opțiune viitoare doar dacă UI-ul devine prea complex pentru PixiJS pur.
-
-**Motiv:** Lowborn e un joc pe un singur canvas. React + PixiJS înseamnă două lumi paralele (DOM + canvas) care trebuie permanent sincronizate — o sursă frecventă de bug-uri și jank. PixiJS pur înseamnă un singur rendering context, un singur event loop, zero bridge-uri. Pentru un joc 2D cu 90% UI canvas, e alegerea corectă.
-
-**Detalii tehnice (din TECH_STACK.md):**
-- Game engine: TypeScript pur (clase, event system, state machine)
-- Rendering: PixiJS (standalone, pur) — WebGL accelerat, sprite batching, 60fps
-- UI: PixiJS (construit intern) — același rendering context ca jocul
-- Desktop: Tauri 2 (~5MB, cross-platform Steam + Web)
-- Web: Vite + deploy static (aceeași bază de cod)
-
-**Status:** ✅ Confirmat — TECH_STACK.md conține detaliile complete.
-
----
-
-## D010 — Pivot la Character Evolution + Subordinates System
-
-**Data:** 2026-07-24
-**Decizie:** Lowborn părăsește sistemul de **card crafting din părți** (6 subsloturi, assembly, synergy) și adoptă **Character Evolution + Subordinates System**. Jucătorul alege un personaj care evoluează pe un skill tree, cumpără subalterni din shop, îi echipează cu items/skills craftable, și luptă în auto-battle.
-
-**Motiv:** Designul cu card parts era abstract și complicat pentru un auto-battler. Character evolution e mai intuitiv ("îmi aleg un personaj și crește"), oferă atașament emoțional mai puternic ("țăran → împărat"), și are un pitch mai clar. Subalternii deblocați orizontal pe faimă înlocuiesc card pooling-ul.
-
-**Implicații:**
-- Se arhivează: Arena Slots (card parts), Card Part System, Character Card Population, CHARACTERS_v1, CHARACTER_DESIGN_PROPUNERE, LOWBORN_GDD_v1, SYSTEM_FINAL_CONFIRMARE
-- Se păstrează: arhitectura (GameEngine, StateMachine, EventBus), Arena Slots conceptul (5 sloturi), auto-battle loop, shop + coins, AI opponent, offline-first
-- Se rescrie: FEATURE_DESIGN pentru Character Evolution, config.ts, characters.ts, ticket-urile
-- P1 rămâne ca scope minim: 1 caracter (Țăran), 3-4 căi de evoluție, 3 tier-uri de subalterni, items/skills craftable, auto-battle
-- PoE skill tree-ul complet și procedural generation (80%) rămân pentru P3+
-
-## D011 — Godot 4.x înlocuiește PixiJS + TypeScript + Tauri
-
-**Data:** 2026-07-24
-**Decizie:** Lowborn trece de la **PixiJS pur (TypeScript + Tauri)** la **Godot 4.x (GDScript)** ca motor de joc.
-
-**Motiv:** Direcția jocului s-a schimbat (D010 — Character Evolution + Subordinates). Noile cerințe (animații 2D pentru subalterni, skill tree vizual, efecte, particule, procedural generation) sunt mult mai ușor de implementat în Godot decât în PixiJS. Userul are deja experiență cu Godot (Tower Run). Se economisesc luni de dezvoltare față de a construi aceleași sisteme manual în PixiJS.
-
-**Implicații:**
-- Se șterge: `app/` (tot codul PixiJS + TypeScript + Vite + Tauri)
-- Se arhivează: `Documentation/tech/TECH_STACK.md` (SUPERSEDED)
-- Se creează: `game/` (proiect Godot 4.x)
-- Se actualizează: DEVELOPMENT_CONSTITUTION.md, FEATURE_DESIGN.md, state files
-- Arhitectura (StateMachine, EventBus) rămâne ca pattern — se rescrie în GDScript
-- Offline-first (D008) rămâne — Godot e nativ offline
-- Cardinal AI (TypeScript/seed engine) — de decis dacă rămâne în GDScript pur sau se rescrie
-
-**Sursa:** Discuție brainstorming (2026-07-24) — user + AI
-
----
-
-## D012 — P1 Scope Extins cu Feedback Vizual, Round Progression, Game Over și UI Polish
-
-**Data:** 2026-07-24
-**Decizie:** P1 scope se extinde cu următoarele:
-- **Round Progression** — AI budget + dificultate escaladează cu round number (T1→T2→T3)
-- **Visual Feedback** — damage numbers animate, tween sprite, HP bar update
-- **Game Over Screen** — run stats, New Run restart (coins reset, items păstrate)
-- **Tooltip** pe subalterni/items — hover cu stats, cost, tier
-- **Sell subaltern** — 50% refund prin right-click
-- **Coins indicator persistent** — în UI, vizibil în orice fază
-- **Tier badge** (T1/T2/T3) pe subalterni în shop și arenă
-
-**Motiv:** Fără Round Progression jocul e plat și jucătorul se plictisește repede. Fără Visual Feedback, battle-ul pare broken. Game Over e necesar pentru claritatea run vs round (personaj mort = run pierdut, nu doar rundă). Tooltip, Sell, Coins Indicator, și Tier Badge sunt elemente de UI polish care fac jocul să se simtă profesionist.
-
-**Implicații:**
-- FEATURE_DESIGN.md actualizat cu noile componente + round progresie tabel
-- DESIGN_PASS.md actualizat cu scena Game Over, Visual Feedback, și ordinea de implementare extinsă
-- StateMachine extinsă cu `GAME_OVER` stare
-- Balance updates: AI coins per round, sell refund 50%, material drops
-- Acceptance Criteria actualizate (de la 12 la 21 criterii)
-
-**Status:** ✅ Aprobat de user în aceeași sesiune
+**Alternativă respinsă:** continuarea pe auto-battler cu hook (risc comercial pe gen saturat).

@@ -1,21 +1,23 @@
-# CURRENT_SESSION
+# Current Session
 
-> Focusul sesiunii curente. Se actualizează pe parcurs.
+**Dată:** 2026-08-12
+**Context:** Pivot Lowborn v3 — clean slate.
 
----
+## Ce s-a întâmplat
 
-## Sesiune: 2026-07-24 — Hub + Training + DESIGN_PASS v2
+1. **Decizie de direcție:** auto-battler single-player (v2) → **card game roguelike turn-based** (v3).
+   Motiv: piața auto-battler saturată (59+ jocuri "backpack" pe Steam); deckbuilder-urile
+   au istoric de hit-uri (Balatro, Slay the Spire).
+2. **Revival concept Cardweave v1:** cărți compuse din părți + profesii — fuzionat cu
+   Character Evolution din v2.
+3. **Model ales:** carte = 3 părți (Rasă + Rol + Esență). Crafting tip MMORPG
+   (skill tree, materiale rare, rețete, dezasamblare).
+4. **Clean slate:** șters proiectul Godot (`game/`), documentația veche superseded,
+   feature-uri vechi. Păstrat: constitution, templates, pipeline, CARDINAL_ENGINE.
+5. **GDD v3 aprobat:** `docs/design/GDD.md`.
 
-**Obiectiv:** Integrare Hub ca gateway principal (Main Menu → Hub → Duel/Crafting/Training/Tree). Training/Profesii ca sistem orizontal care completează Subalterns Tree. Actualizare DESIGN_PASS + FEATURE_DESIGN.
+## Starea repo-ului
 
-**Progres:**
-
-- [x] Brainstorm Hub — Main Menu → Hub → Duel/Crafting/Training/Tree
-- [x] Duel Popup — alegere caracter → Buy Phase (P1: doar Țăran)
-- [x] Training/Profesii — 2-3 profesii (Fierar, Alchimist, Strateg), mastery, deblocări în tree
-- [x] Crafting Screen — materiale, blueprints, bench-uri (deblocate prin Training)
-- [x] Subalterns Tree — rebrand de la Skill Tree, completat de Training
-- [x] DESIGN_PASS.md actualizat (v2) — arhitectură + flow + P1 scope + dependințe
-- [x] FEATURE_DESIGN.md actualizat — User Flow cu Hub
-- [x] Push pe GitHub (commit 7a47539)
-- [ ] UI_SPEC + TICKET_INDEX + tickete — următorul pas
+- Branch `main`, working tree curat după commit-ul de clean slate
+- Proiectul Godot NU există — se creează la primul feature (prototip)
+- Documentație: `docs/design/` (GDD) + `docs/pipeline/` (workflow) + `Documentation/systems/cardinal/`

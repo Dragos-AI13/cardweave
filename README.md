@@ -1,53 +1,29 @@
 # Lowborn
 
-> Un auto-battler single-player unde îți alegi un personaj, îl crești din țăran în legendă, cumperi subalterni, craftezi items și te bați în arenă.
+> Un card game roguelike unde nu găsești cărți — ți le forjezi singur, din părți.
 
-**Motor:** Godot 4.x (GDScript)  
-**Desktop:** Godot native export  
-**Web:** Godot Web export (Itch.io)  
-**Model:** Offline-first — 100% local, zero server  
-**Direcție:** Character Evolution + Subordinates System (D010)
+**Motor:** Godot 4.x (GDScript)
+**Desktop:** Godot native export (Steam)
+**Web:** Godot Web export (itch.io)
+**Model:** Offline-first — 100% local, AI opponent adaptiv
+**Direcție:** Card Crafting (3 părți) + Professions MMORPG + Character Evolution (v3)
 
 ---
+
+## Concept
+
+Deckbuilder turn-based unde fiecare carte e compusă din 3 părți: **Rasă + Rol + Esență**.
+Le creezi cu meserii (Fierar, Alchimist, Vrăjitor de rune, Bucătar), le rafineză cu rețete
+și materiale rare, le dezasamblezi când nu-ți mai trebuie. Între run-uri, personajul
+evoluează din țăran în legendă — și cariera lui se vede în fiecare carte din pachet.
 
 ## Documentație
 
+- [Game Design Document](./docs/design/GDD.md) — viziunea completă (aprobară 2026-08-12)
 - [Development Constitution](./docs/pipeline/DEVELOPMENT_CONSTITUTION.md) — regulile de development
-- [Feature Design — Character Evolution](./docs/pipeline/features/character-evolution/FEATURE_DESIGN.md) — designul curent
-- [Pipeline README](./docs/pipeline/README.md) — cum funcționează pipeline-ul
+- [AI Cardinal](./Documentation/systems/cardinal/CARDINAL_ENGINE.md) — opponent adaptiv
+- [Workflow](./docs/pipeline/WORKFLOW.md) — cum lucrăm (tickets, design passes)
 
----
+## Status
 
-## Structură
-
-```
-lowborn/
-├── Documentation/
-│   ├── mechanics/            ← Design docs (unele arhivate)
-│   ├── systems/              ← System designs (Cardinal)
-│   ├── state/                ← State files vechi (Documentation/)
-│   ├── tech/                 ← Tech stack
-│   └── art/                  ← Concept art, style guide
-├── docs/pipeline/            ← Pipeline design docs + state files
-│   ├── features/             ← Feature designs
-│   ├── planning/             ← Ticket-uri + planning per feature
-│   ├── state/                ← State files active
-│   └── templates/            ← Template-uri
-├── design/                   ← Wireframe-uri (Excalidraw)
-│   ├── mockups/              ← Drafts
-│   └── wireframes/           ← Aprobate
-├── game/                     ← Cod sursă (Godot 4.x)
-└── README.md
-```
-
----
-
-## Roadmap
-
-| Fază | Conținut |
-|------|----------|
-| **P0 — Core Design** | ✅ Arhivat (designul vechi cu card parts) |
-| **P1 — Character Evolution Prototype** | 🟡 Game Design — FEATURE_DESIGN scris, așteaptă G1 |
-| **P2 — Skill Tree + Multiple Races** | 💡 Backlog |
-| **P3 — Procedural Evolution (80%)** | 💡 Backlog |
-| **P4 — Polish + Release** | ⬜ |
+Design phase — GDD v3 aprobat, prototip neînceput. Vezi [NEXT_ACTIONS](./docs/pipeline/state/NEXT_ACTIONS.md).
