@@ -18,3 +18,19 @@ card crafting din 3 părți + meserii MMORPG.
 - Se păstrează: AI Cardinal, Character Evolution, arhitectura Godot offline-first
 
 **Alternativă respinsă:** continuarea pe auto-battler cu hook (risc comercial pe gen saturat).
+
+---
+
+## D014 — Tooling: Varianta B + Defalcare Completă Per Fază (2026-08-12)
+
+**Decizie:**
+1. Documentație + ticket-uri rămân ÎN REPO (markdown versionat, templates existente),
+   iar **GitHub Projects** oferă board-ul vizual (Todo / In Progress / Done).
+   Fără tool extern (Linear/Notion) — zero cost, offline-first, zero lock-in, zero duplicare.
+2. **Principiu de lucru:** fiecare fază de development se defalchează COMPLET
+   (cerințe, sub-task-uri, exit criteria) înainte de execuție; design-ul fiecărei faze
+   e bine pus la punct înainte să trecem mai departe; nicio fază nu se sare.
+
+**Consecințe:**
+- `docs/design/DEVELOPMENT_PLAN.md` — planul de development cu fazele, exit criteria și checklist
+- Faza 1 (Design complet) începe cu Design Pillars

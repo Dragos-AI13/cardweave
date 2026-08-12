@@ -20,10 +20,11 @@ evoluează din țăran în legendă — și cariera lui se vede în fiecare cart
 ## Documentație
 
 - [Game Design Document](./docs/design/GDD.md) — viziunea completă (aprobară 2026-08-12)
+- [Development Plan](./docs/design/DEVELOPMENT_PLAN.md) — fazele, exit criteria, principiul defalcării complete
 - [Development Constitution](./docs/pipeline/DEVELOPMENT_CONSTITUTION.md) — regulile de development
 - [AI Cardinal](./Documentation/systems/cardinal/CARDINAL_ENGINE.md) — opponent adaptiv
 - [Workflow](./docs/pipeline/WORKFLOW.md) — cum lucrăm (tickets, design passes)
 
 ## Status
 
-Design phase — GDD v3 aprobat, prototip neînceput. Vezi [NEXT_ACTIONS](./docs/pipeline/state/NEXT_ACTIONS.md).
+Faza 1 — Design complet (Design Pillars urmează). Vezi [NEXT_ACTIONS](./docs/pipeline/state/NEXT_ACTIONS.md).
