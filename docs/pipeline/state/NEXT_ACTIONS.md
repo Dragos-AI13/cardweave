@@ -3,6 +3,7 @@
 ## FAZA 1 — Design complet (activă)
 
 Conform DEVELOPMENT_PLAN.md — fiecare secțiune se defalchează, se discută în chat, se aprobă.
+Pachetele de design: `Documentation/design/` (pack-00 → pack-08).
 
 1. **Design Pillars** (început — propuneri în pregătire)
 2. Combat detaliat

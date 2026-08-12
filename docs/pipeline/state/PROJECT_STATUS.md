@@ -7,10 +7,11 @@
 
 | Domeniu | Status | Note |
 |---------|--------|------|
-| GDD v3 | ✅ Aprobat | `docs/design/GDD.md` |
-| Development Plan | ✅ Aprobat | `docs/design/DEVELOPMENT_PLAN.md` (faze + exit criteria + tooling D014) |
+| GDD v3 | ✅ Aprobat | `Documentation/design/GDD.md` |
+| Development Plan | ✅ Aprobat | `Documentation/design/DEVELOPMENT_PLAN.md` (faze + exit criteria + tooling D014) |
 | Tooling | ✅ Decis (B) | Docs în repo + GitHub Projects (de configurat) |
-| Design Pillars | 📝 Următorul | Începe Faza 1 |
+| Pachete de design (9) | 📝 Structurate | `Documentation/design/pack-00` → `pack-08`, fiecare cu README de descriere |
+| Design Pillars | 📝 Următorul | Pack 00 — începe Faza 1 |
 | Combat / Meserii / Run / Meta / Content / UI-UX / Art / Business | 📝 De detaliat | Ordinea în DEVELOPMENT_PLAN §4 |
 | Proiect Godot | ❌ Nu există | Se creează la prototip (Faza 2) |
 | AI Cardinal | ✅ Documentat | `Documentation/systems/cardinal/CARDINAL_ENGINE.md` |

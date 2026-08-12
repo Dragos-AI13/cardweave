@@ -32,5 +32,6 @@ card crafting din 3 părți + meserii MMORPG.
    e bine pus la punct înainte să trecem mai departe; nicio fază nu se sare.
 
 **Consecințe:**
-- `docs/design/DEVELOPMENT_PLAN.md` — planul de development cu fazele, exit criteria și checklist
-- Faza 1 (Design complet) începe cu Design Pillars
+- `Documentation/design/DEVELOPMENT_PLAN.md` — planul de development cu fazele, exit criteria și checklist
+- Pachetele de design: `Documentation/design/pack-00` → `pack-08` (structurate, README per pachet)
+- Faza 1 (Design complet) începe cu Pack 00 — Design Pillars
